@@ -2,23 +2,18 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-
-import java.util.ArrayList;
+import jig.Entity;
 
 public class DraculaPunchGame extends StateBasedGame {
 
-//    public BounceGame(String title, int width, int height) {
-//        super(title);
-//        ScreenHeight = height;
-//        ScreenWidth = width;
-//
-//        Entity.setCoarseGrainedCollisionBoundary(Entity.AABB);
-//        explosions = new ArrayList<Bang>(10);
-//
-//    }
+    public final int screenWidth, screenHeight;
 
     public DraculaPunchGame(String name, int width, int height) {
         super(name);
+        screenWidth = width;
+        screenHeight = height;
+
+        Entity.setCoarseGrainedCollisionBoundary(Entity.AABB);
     }
 
     @Override
