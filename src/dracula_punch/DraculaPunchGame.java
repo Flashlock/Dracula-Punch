@@ -1,3 +1,4 @@
+import States.TestState;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -5,6 +6,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import jig.Entity;
 
 public class DraculaPunchGame extends StateBasedGame {
+    //region State ID's
+    public static int TEST_STATE = -1;
+    //endregion
 
     public final int screenWidth, screenHeight;
 
@@ -18,7 +22,7 @@ public class DraculaPunchGame extends StateBasedGame {
 
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
-
+        addState(new TestState());
     }
 
     public static void main(String[] args) {
