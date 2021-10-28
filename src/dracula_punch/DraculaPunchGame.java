@@ -1,4 +1,6 @@
-import States.TestState;
+package dracula_punch;
+
+import dracula_punch.States.TestState;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -9,6 +11,8 @@ public class DraculaPunchGame extends StateBasedGame {
     //region State ID's
     public static int TEST_STATE = -1;
     //endregion
+
+    public static final String MAP = "dracula_punch/Resources/Tiled/test.tmx";
 
     public final int screenWidth, screenHeight;
 
