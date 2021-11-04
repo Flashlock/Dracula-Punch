@@ -41,9 +41,16 @@ public class TestState extends BasicGameState {
         int height = 50;
         int pxHeight = height * tiledMap.getTileHeight();
 
-        // point it starts rendering from is the top of the diamond
+        // point it starts rendering from is the top of the diamond, each call to render
+        // renders layer individually.
         tiledMap.render(dpg.screenWidth /2,dpg.screenHeight / 2 - pxHeight / 2-200,
-                0,0,width,height, true);
+          0,0,width,height, 0, true);
+        tiledMap.render(dpg.screenWidth /2,dpg.screenHeight / 2 - pxHeight / 2-200,
+          0,0,width,height, 1, true);
+        tiledMap.render(dpg.screenWidth /2,dpg.screenHeight / 2 - pxHeight / 2-200,
+          0,0,width,height, 2, true);
+        tiledMap.render(dpg.screenWidth /2,dpg.screenHeight / 2 - pxHeight / 2-200,
+          0,0,width,height, 3, true);
     }
 
     @Override
