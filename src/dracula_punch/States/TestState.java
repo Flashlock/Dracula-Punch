@@ -23,7 +23,7 @@ public class TestState extends BasicGameState {
     public void enter(GameContainer container, StateBasedGame game) throws SlickException {
         super.enter(container, game);
         tiledMap = new DPTiledMap(DraculaPunchGame.MAP);
-        int floorID = tiledMap.getLayerIndex("Floor");
+        //int floorID = tiledMap.getLayerIndex("Floor");
     }
 
     @Override
