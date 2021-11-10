@@ -21,11 +21,13 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         ServerSocket listener = new ServerSocket(PORT);
-        System.out.println("[SERVER] Waiting for client conenction...");
         while(true) {
+            if(clients.size() < 3) {
+                System.out.println("[SERVER] Waiting for client conenction...");
+            }
             Socket client = listener.accept();          // make the connection
             System.out.println("[SERVER] Connected to client: " + client);
-            ClientHandler clientThread = new ClientHandler(client); // creating possible multiple clients
+            ClientHandler clientThread = new ClientHandler(client, clients); // creating possible multiple clients
             clients.add(clientThread);
 
             // ask executor to run

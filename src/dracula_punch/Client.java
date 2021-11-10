@@ -13,11 +13,15 @@ public class Client {
     public static void main(String[] args) throws IOException {
         Socket socket = new Socket(SERVER_IP, SERVER_PORT);
 
+        ServerConnection serverConnection = new ServerConnection(socket);
         // We will probably not use BufferedReader, but keyboard inputs to send to server.
         // I used bufferedReader for the tutorial and understand how sockets work.
-        BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);  // flush sockets = true
+
+        // we don't want a pool of threads, just multiple single threads
+        new Thread(serverConnection).start();
+
 
         while(true) {
             System.out.print("> ");
@@ -26,9 +30,6 @@ public class Client {
             if(command.equals("quit")){ break; }
 
             out.println(command);
-
-            String serverResponse = input.readLine();
-            System.out.println("Server says: " + serverResponse);
         }
         socket.close();
         System.exit(0);
