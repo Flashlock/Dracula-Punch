@@ -1,31 +1,41 @@
 package dracula_punch.Networking;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
-    public static int PORT = 4999;
+    private static String[] characters = {"Austin", "Amanda", "Ritta"};
+    private static String[] adjs = {"The Brave", "The Wicked", "The Sorcerer"};
+    private static final int PORT = 9090;
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        new Server();
+    // a way to store our clients
+    private static ArrayList<ClientHandler> clients = new ArrayList<>();
+    private static ExecutorService pool = Executors.newFixedThreadPool(3);
+
+    public static void main(String[] args) throws IOException {
+        ServerSocket listener = new ServerSocket(PORT);
+        while(true) {
+            if(clients.size() < 3) {
+                System.out.println("[SERVER] Waiting for client conenction...");
+            }
+            Socket client = listener.accept();          // make the connection
+            System.out.println("[SERVER] Connected to client: " + client);
+            ClientHandler clientThread = new ClientHandler(client, clients); // creating possible multiple clients
+            clients.add(clientThread);
+
+            // ask executor to run
+            pool.execute(clientThread);
+        }
     }
 
-    public Server() throws IOException, ClassNotFoundException {
-        ServerSocket serverSocket = new ServerSocket(PORT);
-        Socket socket = serverSocket.accept();
-
-        // Create I/O streams
-        ObjectOutputStream outStream = new ObjectOutputStream(socket.getOutputStream());
-        ObjectInputStream inStream = new ObjectInputStream(socket.getInputStream());
-
-        Packet recPacket = (Packet) inStream.readObject();
-
-        System.out.println(recPacket.message);
-        Packet packet = new Packet("Hi from Server");
-        outStream.writeObject(packet);
-
-        socket.close();
-        serverSocket.close();
+    public static String selectRandomCharacter() {
+        String character = characters[(int)(Math.random()*characters.length)];
+        String adj = adjs[(int)(Math.random()*adjs.length)];
+        return character + " " + adj;
     }
 }
+

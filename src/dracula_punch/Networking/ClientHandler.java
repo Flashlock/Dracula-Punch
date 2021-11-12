@@ -1,4 +1,4 @@
-package dracula_punch;
+package dracula_punch.Networking;
 
 
 import java.io.BufferedReader;
