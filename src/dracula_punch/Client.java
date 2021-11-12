@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
-    private static final String SERVER_IP = "172.28.128.1"; // open cmd and type "ipconfig -all", copy the ipv4 address here
+    private static final String SERVER_IP =  "24.22.56.165"; // "24.22.56.165"; public address for desktop at home
     private static final int SERVER_PORT = 9090;
 
     public static void main(String[] args) throws IOException {
