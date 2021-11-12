@@ -1,6 +1,6 @@
 package dracula_punch;
 
-import dracula_punch.States.TestState;
+import dracula_punch.States.TestLevelState;
 import jig.ResourceManager;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -36,7 +36,7 @@ public class DraculaPunchGame extends StateBasedGame {
 
   @Override
   public void initStatesList(GameContainer gameContainer) throws SlickException {
-    addState(new TestState());
+    addState(new TestLevelState());
 
     ResourceManager.loadImage(AMANDA_RUN_0_DEG);
     ResourceManager.loadImage(AMANDA_RUN_90_DEG);
