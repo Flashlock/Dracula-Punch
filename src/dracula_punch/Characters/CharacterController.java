@@ -1,21 +1,24 @@
 package dracula_punch.Characters;
 
-import dracula_punch.DraculaPunchGame;
+import dracula_punch.States.LevelState;
 import jig.Entity;
-import jig.ResourceManager;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
-public class CharacterController extends Entity {
-    private Animation run;
+public abstract class CharacterController extends Entity {
+    protected Animation curAnim;
+    protected float moveSpeed, scaleFactor;
+    protected int xRenderOffset, yRenderOffset;
+    protected LevelState curLevelState;
 
-    public CharacterController(final float x, final float y){
+    public CharacterController(final float x, final float y, LevelState curLevelState){
         super(x, y);
-        run = new Animation(
-                ResourceManager.getSpriteSheet(DraculaPunchGame.AMANDA_RUN_0_DEG, 580,900),
-                50
-                );
-        addAnimation(run);
-        run.setLooping(true);
+        this.curLevelState = curLevelState;
     }
 
+    public abstract void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta);
+
+    public abstract void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics);
 }
