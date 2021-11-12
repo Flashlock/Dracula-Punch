@@ -11,11 +11,10 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import dracula_punch.DraculaPunchGame;
-import org.newdawn.slick.tiled.TiledMap;
 
 public class TestState extends BasicGameState {
 
-  private TiledMap map;
+  private DPTiledMap map;
   private Camera camera;
   private DraculaPunchGame dpg;
 
@@ -42,8 +41,8 @@ public class TestState extends BasicGameState {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawString("Test State", 10, 25);
     graphics.scale(camera.zoomFactor, camera.zoomFactor);
-    int tilesInWindowX = 100;
-    int tilesInWindowY = 100;
+    int tilesInWindowX = map.getWidth();
+    int tilesInWindowY = map.getHeight();
     float screenOffsetX = DraculaPunchGame.screenWidth / camera.zoomFactor / 2;
     float screenOffsetY = DraculaPunchGame.screenHeight / camera.zoomFactor / 2;
     int x = (int)(camera.isometric.x+screenOffsetX);
@@ -52,8 +51,8 @@ public class TestState extends BasicGameState {
     map.render(x, y, 0, 0, tilesInWindowX, tilesInWindowY, 0, true);
     map.render(x, y, 0, 0, tilesInWindowX, tilesInWindowY, 1, true);
     map.render(x, y, 0, 0, tilesInWindowX, tilesInWindowY, 2, true);
-    map.render(x, y, 0, 0, tilesInWindowX, tilesInWindowY, 3, true);
-    map.render(x, y, 0, 0, tilesInWindowX, tilesInWindowY, 5, true);
+    //map.render(x, y, 0, 0, tilesInWindowX, tilesInWindowY, 3, true);
+    //map.render(x, y, 0, 0, tilesInWindowX, tilesInWindowY, 5, true);
     graphics.fillOval(screenOffsetX - 5, screenOffsetY - 5, 10, 10);
     Coordinate test = new Coordinate(1,0);
     test = test.getIsometricFromTile(map);

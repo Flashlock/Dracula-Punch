@@ -12,7 +12,7 @@ public class DraculaPunchGame extends StateBasedGame {
   public static int TEST_STATE = -1;
   //endregion
 
-  public static final String MAP = "dracula_punch/Resources/Tiled/test.tmx";
+  public static final String MAP = "dracula_punch/Resources/Tiled/testEdges.tmx";
 
   public static int screenWidth, screenHeight;
 
@@ -42,3 +42,4 @@ public class DraculaPunchGame extends StateBasedGame {
 
   }
 }
+
