@@ -2,6 +2,7 @@ package dracula_punch.Characters;
 
 import dracula_punch.States.LevelState;
 import jig.Entity;
+import jig.Vector;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -18,7 +19,25 @@ public abstract class CharacterController extends Entity {
         this.curLevelState = curLevelState;
     }
 
+    /**
+     * Update the controller each frame
+      * @param gameContainer
+     * @param stateBasedGame
+     * @param delta
+     */
     public abstract void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta);
 
+    /**
+     * Render the controller each frame
+     * @param gameContainer
+     * @param stateBasedGame
+     * @param graphics
+     */
     public abstract void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics);
+
+    /**
+     * Animate the controller's movement
+     * @param direction The direction to move
+     */
+    public abstract void animateMove(Vector direction);
 }

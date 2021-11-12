@@ -1,8 +1,12 @@
 package dracula_punch.Characters;
 
+import dracula_punch.Actions.InputMoveAction;
 import dracula_punch.Camera;
+import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
 import jig.Vector;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -18,32 +22,16 @@ public class AmandaController extends CharacterController{
         xRenderOffset = 10;
         yRenderOffset = 30;
         scaleFactor = .2f;
-        camera = curLevelState.camera;
 
+        camera = curLevelState.camera;
         setScale(scaleFactor);
 
-//        moveUp = new Animation(
-//                ResourceManager.getSpriteSheet(DraculaPunchGame.AMANDA_RUN_0_DEG, 580,900),
-//                50
-//        );
-//        moveUp.setLooping(true);
-//        moveUp.stop();
-//        addAnimation(moveUp);
-//
-//        moveDown = new Animation(
-//                ResourceManager.getSpriteSheet(DraculaPunchGame.AMANDA_RUN_180_DEG, 580, 900),
-//                50
-//        );
-//        moveDown.setLooping(true);
-//        moveDown.stop();
-        //addAnimation(moveDown);
+        // Add a movement action - for animation switching
+        curLevelState.inputMoveEvent.add(new InputMoveAction(this));
     }
 
     @Override
-    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-        // Animate for the directions
-
-    }
+    public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {}
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
@@ -54,5 +42,50 @@ public class AmandaController extends CharacterController{
 
         setPosition(x, y);
         render(graphics);
+    }
+
+    @Override
+    public void animateMove(Vector direction) {
+        int x = (int) direction.getX();
+        int y = (int) direction.getY();
+
+        //region Find Sheet
+        String sheet = null;
+        if(x == 1 && y == 0){
+            // right
+            sheet = DraculaPunchGame.AMANDA_RUN_270_DEG;
+        }
+        else if(x == -1 && y == 0){
+            // left
+            sheet = DraculaPunchGame.AMANDA_RUN_90_DEG;
+        }
+        else if(x == 0 && y == 1){
+            // up
+            sheet = DraculaPunchGame.AMANDA_RUN_0_DEG;
+        }
+        else if(x == 0 && y == -1){
+            // down
+            sheet = DraculaPunchGame.AMANDA_RUN_180_DEG;
+        }
+        else if(x == 0 && y == 0){
+            // stop
+            curAnim.stop();
+        }
+        else{
+            System.out.println("Invalid Direction: Unable to Animate");
+        }
+        //endregion
+
+        if(sheet != null){
+            removeAnimation(curAnim);
+            curAnim = new Animation(
+                    ResourceManager.getSpriteSheet(
+                            sheet, RUN_WIDTH, RUN_HEIGHT
+                    ),
+                    DraculaPunchGame.ANIMATION_DURATION
+            );
+            curAnim.setLooping(true);
+            addAnimation(curAnim);
+        }
     }
 }

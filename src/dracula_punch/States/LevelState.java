@@ -1,14 +1,19 @@
 package dracula_punch.States;
 
+import dracula_punch.Actions.Action;
 import dracula_punch.Camera;
 import dracula_punch.DraculaPunchGame;
 import jig.Vector;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.tiled.TiledMap;
 
+import java.util.ArrayList;
+
 public abstract class LevelState extends BasicGameState {
     public TiledMap map;
     public Camera camera;
+
+    public ArrayList<Action> inputMoveEvent = new ArrayList<>();
 
     public Vector getCameraPosition(){
         Vector screenOffset = getScreenOffset();

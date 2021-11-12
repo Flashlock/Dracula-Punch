@@ -13,6 +13,8 @@ public class DraculaPunchGame extends StateBasedGame {
   public static int TEST_STATE = -1;
   //endregion
 
+  public static final int ANIMATION_DURATION = 50;
+
   public static final String MAP = "dracula_punch/Resources/Tiled/test.tmx";
 
   public static final String AMANDA_RUN_0_DEG =

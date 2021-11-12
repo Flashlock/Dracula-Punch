@@ -1,5 +1,6 @@
 package dracula_punch.States;
 
+import dracula_punch.Actions.Action;
 import dracula_punch.Camera;
 import dracula_punch.Characters.AmandaController;
 import dracula_punch.Characters.CharacterController;
@@ -91,10 +92,46 @@ public class TestLevelState extends LevelState {
   }
 
   public void controls(Input input){
-    camera.moveLeft = input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT);
-    camera.moveRight = input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT);
-    camera.moveUp = input.isKeyDown(Input.KEY_W) || input.isKeyDown(Input.KEY_UP);
-    camera.moveDown = input.isKeyDown(Input.KEY_S) || input.isKeyDown(Input.KEY_DOWN);
+    // Observe input changes
+    boolean left = input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT);
+    boolean right = input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT);
+    boolean up = input.isKeyDown(Input.KEY_W) || input.isKeyDown(Input.KEY_UP);
+    boolean down = input.isKeyDown(Input.KEY_S) || input.isKeyDown(Input.KEY_DOWN);
+    boolean isMoving = camera.moveLeft || camera.moveRight || camera.moveDown || camera.moveUp;
+
+    // Trigger event on change
+    if(!camera.moveLeft && left){
+      for(Action action : inputMoveEvent){
+        action.Execute(new Vector(-1, 0));
+      }
+    }
+    else if(!camera.moveRight && right){
+      for(Action action : inputMoveEvent){
+        action.Execute(new Vector(1, 0));
+      }
+    }
+    else if(!camera.moveUp && up){
+      for(Action action : inputMoveEvent){
+        action.Execute(new Vector(0, 1));
+      }
+    }
+    else if(!camera.moveDown && down){
+      // change down
+      for(Action action : inputMoveEvent){
+        action.Execute(new Vector(0, -1));
+      }
+    }
+    else if(isMoving && !(left || right || up || down)){
+      for(Action action : inputMoveEvent){
+        action.Execute(new Vector(0, 0));
+      }
+    }
+
+    // Apply movement to camera
+    camera.moveLeft = left;
+    camera.moveRight = right;
+    camera.moveUp = up;
+    camera.moveDown = down;
     camera.zoomOut = input.isKeyDown(Input.KEY_O);
     camera.zoomIn = input.isKeyDown(Input.KEY_I);
   }
