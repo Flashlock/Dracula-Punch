@@ -14,9 +14,11 @@ public class DraculaPunchGame extends StateBasedGame {
   //endregion
 
   public static final int ANIMATION_DURATION = 50;
+  public static int SCREEN_WIDTH, SCREEN_HEIGHT;
 
   public static final String MAP = "dracula_punch/Resources/Tiled/test.tmx";
 
+  //region Amanda
   public static final String AMANDA_RUN_0_DEG =
           "dracula_punch/Resources/Sprite_Sheets/Amanda_Run/Amanda_Run_0_Deg.png";
   public static final String AMANDA_RUN_90_DEG =
@@ -25,8 +27,29 @@ public class DraculaPunchGame extends StateBasedGame {
           "dracula_punch/Resources/Sprite_Sheets/Amanda_Run/Amanda_Run_180_Deg.png";
   public static final String AMANDA_RUN_270_DEG =
           "dracula_punch/Resources/Sprite_Sheets/Amanda_Run/Amanda_Run_270_Deg.png";
+  //endregion
 
-  public static int SCREEN_WIDTH, SCREEN_HEIGHT;
+  //region Austin
+  public static final String AUSTIN_RUN_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Austin_Run/Austin_Run_0_Deg.png";
+  public static final String AUSTIN_RUN_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Austin_Run/Austin_Run_90_Deg.png";
+  public static final String AUSTIN_RUN_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Austin_Run/Austin_Run_180_Deg.png";
+  public static final String AUSTIN_RUN_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Austin_Run/Austin_Run_270_Deg.png";
+  //endregion
+
+  //region Ritta
+  public static final String RITTA_RUN_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ritta_Run/Ritta_Run_0_Deg.png";
+  public static final String RITTA_RUN_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ritta_Run/Ritta_Run_90_Deg.png";
+  public static final String RITTA_RUN_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ritta_Run/Ritta_Run_180_Deg.png";
+  public static final String RITTA_RUN_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ritta_Run/Ritta_Run_270_Deg.png";
+  //endregion
 
   public DraculaPunchGame(String name, int width, int height) {
     super(name);
@@ -44,6 +67,16 @@ public class DraculaPunchGame extends StateBasedGame {
     ResourceManager.loadImage(AMANDA_RUN_90_DEG);
     ResourceManager.loadImage(AMANDA_RUN_180_DEG);
     ResourceManager.loadImage(AMANDA_RUN_270_DEG);
+
+    ResourceManager.loadImage(AUSTIN_RUN_0_DEG);
+    ResourceManager.loadImage(AUSTIN_RUN_90_DEG);
+    ResourceManager.loadImage(AUSTIN_RUN_180_DEG);
+    ResourceManager.loadImage(AUSTIN_RUN_270_DEG);
+
+    ResourceManager.loadImage(RITTA_RUN_0_DEG);
+    ResourceManager.loadImage(RITTA_RUN_90_DEG);
+    ResourceManager.loadImage(RITTA_RUN_180_DEG);
+    ResourceManager.loadImage(RITTA_RUN_270_DEG);
   }
 
   public static void main(String[] args) {
