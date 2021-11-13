@@ -1,7 +1,7 @@
 package dracula_punch.States;
 
 import dracula_punch.Actions.Action;
-import dracula_punch.Camera;
+import dracula_punch.Camera.Camera;
 import dracula_punch.DraculaPunchGame;
 import jig.Vector;
 import org.newdawn.slick.state.BasicGameState;

@@ -1,4 +1,4 @@
-package dracula_punch;
+package dracula_punch.Camera;
 
 import org.newdawn.slick.tiled.TiledMap;
 
