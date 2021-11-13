@@ -1,6 +1,6 @@
 package dracula_punch.Characters;
 
-import dracula_punch.Actions.InputMoveAction;
+import dracula_punch.Actions.Input.InputMoveAction;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
 import org.newdawn.slick.GameContainer;

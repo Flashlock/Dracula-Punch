@@ -1,9 +1,10 @@
-package dracula_punch.Actions;
+package dracula_punch.Actions.Input;
 
+import dracula_punch.Actions.Action;
 import dracula_punch.Characters.CharacterController;
 import jig.Vector;
 
-public class InputMoveAction extends Action{
+public class InputMoveAction extends Action {
     private final CharacterController characterController;
 
     /**

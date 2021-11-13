@@ -2,6 +2,7 @@ package dracula_punch.States;
 
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.UI.Buttons.CharSelectButton;
+import dracula_punch.Actions.Character_Select.*;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -46,6 +47,17 @@ public class CharacterSelectState extends BasicGameState {
                         2
                 )
         };
+
+        // Assign actions to each button's events
+        DraculaPunchGame dpg = (DraculaPunchGame) game;
+        for(int i = 0; i < charSelectButtons.length; i++){
+            /*
+            TODO Implement click action so the character gets selected and the state is changed.
+             */
+            charSelectButtons[i].clickEvent.add(new CharSelectClickAction(dpg, charSelectButtons[i]));
+            charSelectButtons[i].hoverEvent.add(new CharSelectHoverAction(dpg, charSelectButtons[i]));
+            charSelectButtons[i].unHoverEvent.add(new CharSelectUnHoverAction(dpg, charSelectButtons[i]));
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class CharSelectButton extends Button{
     private final int charID;
+    public int getCharID(){ return charID; }
 
     public CharSelectButton(float x, float y, String image, int charID) {
         super(x, y);
@@ -18,20 +19,5 @@ public class CharSelectButton extends Button{
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         render(graphics);
-    }
-
-    @Override
-    protected void hover() {
-        System.out.println("Hovering: " + charID);
-    }
-
-    @Override
-    protected void unHover() {
-        System.out.println("Unhovering: " + charID);
-    }
-
-    @Override
-    protected void click() {
-        System.out.println("Clicking: " + charID);
     }
 }
