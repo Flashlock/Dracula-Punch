@@ -1,15 +1,11 @@
 package dracula_punch.States;
 
-import dracula_punch.Actions.Action;
+import dracula_punch.Actions.*;
 import dracula_punch.Camera.Camera;
-import dracula_punch.Characters.CharacterController;
-import dracula_punch.Characters.RittaController;
+import dracula_punch.Characters.*;
 import dracula_punch.TiledMap.DPTiledMap;
 import jig.Vector;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 import dracula_punch.DraculaPunchGame;
@@ -17,7 +13,7 @@ import dracula_punch.DraculaPunchGame;
 import java.util.ArrayList;
 
 public class TestLevelState extends LevelState {
-  private ArrayList<CharacterController> characters;
+  private ArrayList<GameObject> gameObjects;
 
   @Override
   public int getID() {
@@ -27,12 +23,12 @@ public class TestLevelState extends LevelState {
   @Override
   public void enter(GameContainer container, StateBasedGame game) throws SlickException {
     super.enter(container, game);
-    characters = new ArrayList<>();
+    gameObjects = new ArrayList<>();
 
     map = new DPTiledMap(DraculaPunchGame.MAP);
     camera = new Camera(map);
 
-    characters.add(
+    gameObjects.add(
             new RittaController(
                     DraculaPunchGame.SCREEN_WIDTH / 2f,
                     DraculaPunchGame.SCREEN_HEIGHT / 2f,
@@ -59,10 +55,9 @@ public class TestLevelState extends LevelState {
     // Render layers individually to avoid Slick2d bug
     map.render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 0, true);
 
-    for(CharacterController characterController : characters){
-      characterController.render(gameContainer, stateBasedGame, graphics);
+    for(GameObject gameObject : gameObjects){
+      gameObject.render(gameContainer, stateBasedGame, graphics);
     }
-    // Will also want to render enemies, objects, etc. here
 
     map.render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 1, true);
     map.render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 2, true);
@@ -81,8 +76,8 @@ public class TestLevelState extends LevelState {
     controls(gameContainer.getInput());
     camera.update(delta);
 
-    for(CharacterController characterController : characters){
-      characterController.update(gameContainer, stateBasedGame, delta);
+    for(GameObject gameObject : gameObjects){
+      gameObject.update(gameContainer, stateBasedGame, delta);
     }
   }
 

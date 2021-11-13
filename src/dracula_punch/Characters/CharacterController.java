@@ -2,7 +2,6 @@ package dracula_punch.Characters;
 
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
-import jig.Entity;
 import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.Animation;
@@ -10,7 +9,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-public abstract class CharacterController extends Entity {
+/**
+ * All Characters - including enemies - will inherit from this class
+ */
+public abstract class CharacterController extends GameObject {
     protected Animation curAnim;
     protected float scaleFactor;
     protected int xRenderOffset, yRenderOffset;
@@ -21,20 +23,7 @@ public abstract class CharacterController extends Entity {
         this.curLevelState = curLevelState;
     }
 
-    /**
-     * Update the controller each frame
-      * @param gameContainer
-     * @param stateBasedGame
-     * @param delta
-     */
-    public abstract void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta);
-
-    /**
-     * Render the controller each frame
-     * @param gameContainer
-     * @param stateBasedGame
-     * @param graphics
-     */
+    @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
         // No idle pose yet, so everything is based off of curAnim
         if(curAnim == null) return;
