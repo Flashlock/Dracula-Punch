@@ -11,7 +11,7 @@ Austin:
     Height: 772
 
 Ritta:
-    x: 535
-    y: 12
+    x: 534
+    y: 88
     Width: 850
-    Height: 836
+    Height: 750
