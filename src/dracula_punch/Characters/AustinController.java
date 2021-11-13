@@ -6,14 +6,14 @@ import dracula_punch.States.LevelState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class AmandaController extends CharacterController{
-    public static final int RUN_HEIGHT = 900;
-    public static final int RUN_WIDTH = 580;
+public class AustinController extends CharacterController{
+    public static final int RUN_HEIGHT = 772;
+    public static final int RUN_WIDTH = 540;
 
-    public AmandaController(float x, float y, LevelState curLevelState) {
+    public AustinController(float x, float y, LevelState curLevelState) {
         super(x, y, curLevelState);
-        xRenderOffset = 10;
-        yRenderOffset = 30;
+        xRenderOffset = 0;
+        yRenderOffset = 35;
         scaleFactor = .2f;
 
         setScale(scaleFactor);
@@ -30,19 +30,19 @@ public class AmandaController extends CharacterController{
         String sheet = null;
         if(x == 1 && y == 0){
             // right
-            sheet = DraculaPunchGame.AMANDA_RUN_270_DEG;
+            sheet = DraculaPunchGame.AUSTIN_RUN_270_DEG;
         }
         else if(x == -1 && y == 0){
             // left
-            sheet = DraculaPunchGame.AMANDA_RUN_90_DEG;
+            sheet = DraculaPunchGame.AUSTIN_RUN_90_DEG;
         }
         else if(x == 0 && y == 1){
             // up
-            sheet = DraculaPunchGame.AMANDA_RUN_0_DEG;
+            sheet = DraculaPunchGame.AUSTIN_RUN_0_DEG;
         }
         else if(x == 0 && y == -1){
             // down
-            sheet = DraculaPunchGame.AMANDA_RUN_180_DEG;
+            sheet = DraculaPunchGame.AUSTIN_RUN_180_DEG;
         }
         else if(x == 0 && y == 0){
             // stop - do nothing for now. No idle pose/anim
