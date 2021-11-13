@@ -1,5 +1,6 @@
 package dracula_punch;
 
+import dracula_punch.States.CharacterSelectState;
 import dracula_punch.States.TestLevelState;
 import jig.ResourceManager;
 import org.newdawn.slick.AppGameContainer;
@@ -11,12 +12,13 @@ import jig.Entity;
 public class DraculaPunchGame extends StateBasedGame {
   //region State ID's
   public static int TEST_STATE = -1;
+  public static int CHARACTER_SELECT_STATE = 0;
   //endregion
 
   public static final String MAP = "dracula_punch/Resources/Tiled/testEdges.tmx";
   public static final int ANIMATION_DURATION = 50;
   public static int SCREEN_WIDTH, SCREEN_HEIGHT;
-  
+
 
   //region Amanda
   public static final String AMANDA_RUN_0_DEG =
@@ -27,6 +29,9 @@ public class DraculaPunchGame extends StateBasedGame {
           "dracula_punch/Resources/Sprite_Sheets/Amanda_Run/Amanda_Run_180_Deg.png";
   public static final String AMANDA_RUN_270_DEG =
           "dracula_punch/Resources/Sprite_Sheets/Amanda_Run/Amanda_Run_270_Deg.png";
+
+  public static final String AMANDA_CHAR_SELECT =
+          "dracula_punch/Resources/Character_Select/Amanda.png";
   //endregion
 
   //region Austin
@@ -38,6 +43,9 @@ public class DraculaPunchGame extends StateBasedGame {
           "dracula_punch/Resources/Sprite_Sheets/Austin_Run/Austin_Run_180_Deg.png";
   public static final String AUSTIN_RUN_270_DEG =
           "dracula_punch/Resources/Sprite_Sheets/Austin_Run/Austin_Run_270_Deg.png";
+
+  public static final String AUSTIN_CHAR_SELECT =
+          "dracula_punch/Resources/Character_Select/Austin.png";
   //endregion
 
   //region Ritta
@@ -49,6 +57,9 @@ public class DraculaPunchGame extends StateBasedGame {
           "dracula_punch/Resources/Sprite_Sheets/Ritta_Run/Ritta_Run_180_Deg.png";
   public static final String RITTA_RUN_270_DEG =
           "dracula_punch/Resources/Sprite_Sheets/Ritta_Run/Ritta_Run_270_Deg.png";
+
+  public static final String RITTA_CHAR_SELECT =
+          "dracula_punch/Resources/Character_Select/Ritta.png";
   //endregion
 
   public DraculaPunchGame(String name, int width, int height) {
@@ -61,22 +72,26 @@ public class DraculaPunchGame extends StateBasedGame {
 
   @Override
   public void initStatesList(GameContainer gameContainer) throws SlickException {
+    addState(new CharacterSelectState());
     addState(new TestLevelState());
 
     ResourceManager.loadImage(AMANDA_RUN_0_DEG);
     ResourceManager.loadImage(AMANDA_RUN_90_DEG);
     ResourceManager.loadImage(AMANDA_RUN_180_DEG);
     ResourceManager.loadImage(AMANDA_RUN_270_DEG);
+    ResourceManager.loadImage(AMANDA_CHAR_SELECT);
 
     ResourceManager.loadImage(AUSTIN_RUN_0_DEG);
     ResourceManager.loadImage(AUSTIN_RUN_90_DEG);
     ResourceManager.loadImage(AUSTIN_RUN_180_DEG);
     ResourceManager.loadImage(AUSTIN_RUN_270_DEG);
+    ResourceManager.loadImage(AUSTIN_CHAR_SELECT);
 
     ResourceManager.loadImage(RITTA_RUN_0_DEG);
     ResourceManager.loadImage(RITTA_RUN_90_DEG);
     ResourceManager.loadImage(RITTA_RUN_180_DEG);
     ResourceManager.loadImage(RITTA_RUN_270_DEG);
+    ResourceManager.loadImage(RITTA_CHAR_SELECT);
   }
 
   public static void main(String[] args) {
