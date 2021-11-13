@@ -1,4 +1,4 @@
-package dracula_punch;
+package dracula_punch.Camera;
 
 import dracula_punch.TiledMap.DPTiledMap;
 

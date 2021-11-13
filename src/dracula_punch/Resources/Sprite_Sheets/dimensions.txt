@@ -1,0 +1,17 @@
+Amanda:
+    x: 670
+    y: 30
+    Width: 580
+    Height: 900
+
+Austin:
+    x: 690
+    y: 73
+    Width: 540
+    Height: 772
+
+Ritta:
+    x: 534
+    y: 88
+    Width: 850
+    Height: 750
