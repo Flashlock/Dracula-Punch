@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="left-up" width="100" height="100" tilewidth="64" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="1">
+ <tileset firstgid="1" source="test_set.tsx"/>
+ <tileset firstgid="2" source="Desert.tsx"/>
+ <layer id="14" name="Floor" width="100" height="100" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3ZTY4rIQwE4ChHyPu7/02fZtFShKAbTNlVgBdeJUpwfW3CMO/X6/UWrM+hxc49TdJDudiZp8laJn8bxc7sVJOWxwku7OxLhzThO1g8djaZyRD52VfOvR67mnh6jH5XesR69H53r8eOJkyP2hpGLHb0mDFBr2PUYtYkqq8IDxWLURNWfyvNhyX/1t6m/tztOiN3vzfIZ45lorBOi8fdGQBhEW3y76sU1mjxuDNBWES6zHj81K+iWDNSM0FbRJigPRAuVo/IivBAm8y4qHt4mZQeacI1qXl8FjI5wWMVE+salV3uPGb7Rf/Ot4ptEenh0e+OHqi+Wh7eJmgbtkWER2ni1Xea2GZE3YRtwZoRj95zRtJkZY80ie2jxyPCJD20TFAebJNID8+zMNJjdZNRD+TdipcH04QxI2gTDw+WC9MDYeJ137iyCcLD2neER7QJ02PGxPM+nukS6VF7v6VnhkWUSbTH51V36Ol99P9Ufyql7oJYm/VvQs+qWaBdVvWItujxUDTZ1aLXQ80F1buSg8VD5XfFy4NtYfFQmBWkBzt/lAfbpecz2dkyPFouo3bpgfVAzBTaQ9XkqSeGScsG7aFo8tQb06M0Qc2I1xkgwkPBBj0jnueyn/pdlJcH2w01I9Z9btTBYuLhoWJi6dnDotfEy8LbZHZGZva6GY8nE28PL5PRNVj69vJomURYeJlEeIyajHiUJpEWCh5ltjOWKI/LJNqi1+Tj7PGd7ex8oTxYFk8mZW9eHle2Ch5si5rHU48eHjOOu3l8m/Tuy0omdy4rWvQ8Z70miutf0WMHk1YPJ3mUJuwean2s6rGrycoeVhO1fStNNE2uXlb3sNionYHTRNvkfaCJ130Kw2QFl1kTFReUSa1/NRPv+2AVl7sMVvS47svYJqMu36VggvZgzTnCpGf/Zlqs7GFx6T13RhtYTRQ9vEzuerRkfJKHpwmrVvcYdWHnjTBZwaPXhJ31SR6nmKzksbtJ+R521ieb1F5n54w0YWc9YtJ6jZ0xyoSdMarY+abH2h5vgczS4xwTdq7psYfHribsTNNjH48dTdh5pkd6KBc7zzRJD+ViZ5ke6aFc/wGH+ZWnQJwAAA==
+  </data>
+ </layer>
+ <layer id="13" name="Walls_1" width="100" height="100" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3UsQkAIAxFwczmUI7mSM4hWMXGNgp3VcoHHxIBAAAAAAAAAAAAAAAAd706gK1VB3Cwxx9GdQBAMtPtPwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwNsWJ1PP0kCcAAA=
+  </data>
+ </layer>
+ <layer id="12" name="Walls_2" width="100" height="100" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3RsQkAIBAEwa/JoizZegQzw49OYaaCha0CAAAAAAAAAAAAAAB4y0wHcIx0ABc/AOha6QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICPbbLvh4BAnAAA
+  </data>
+ </layer>
+ <layer id="11" name="Walls_3" width="100" height="100" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3RsQkAIBAEwa/FoizZugQzwwfhAmcqWNgqAAAAAAAAAAAAAAD420wHcIx0ABc/AOha6QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4aAPZG8k8QJwAAA==
+  </data>
+ </layer>
+ <layer id="10" name="Props" width="100" height="100" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BMQEAAADCoPVP7WULoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBt5RKnmQJwAAA==
+  </data>
+ </layer>
+ <layer id="15" name="test" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3XsQ2AQAADMX7/pWnoqUAnxZbS3QI517vzTPd9BwAA8Jf6P9Lp/HMAAGBB/R/pdP45AACwoP6PdDr/HAAAWFD/Rzqdfw4AACyo/yOdzj8HAAAW1P+RTuefAwAAC+r/SKfzzwEAgAX1f6TT+ecAAMCC+j/S6fxzAABgQf0frXU3e1iDOkCcAAA=
+  </data>
+ </layer>
+</map>
