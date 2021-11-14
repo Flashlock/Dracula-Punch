@@ -19,18 +19,21 @@ public class DraculaPunchGame extends StateBasedGame {
   public static final int ANIMATION_DURATION = 50;
   public static int SCREEN_WIDTH, SCREEN_HEIGHT;
   public static charIdEnum characterChoice = charIdEnum.UNCHOSEN;
-  public enum charIdEnum {UNCHOSEN, AMANDA, AUSTIN, RITTA}
+  public enum charIdEnum { UNCHOSEN, AMANDA, AUSTIN, RITTA }
 
 
   //region Amanda
   public static final String AMANDA_RUN_0_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Amanda_Run/Amanda_Run_0_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_0_Deg.png";
   public static final String AMANDA_RUN_90_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Amanda_Run/Amanda_Run_90_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_90_Deg.png";
   public static final String AMANDA_RUN_180_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Amanda_Run/Amanda_Run_180_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_180_Deg.png";
   public static final String AMANDA_RUN_270_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Amanda_Run/Amanda_Run_270_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_270_Deg.png";
+
+  public static final String AMANDA_IDLE =
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Idle/Amanda_Idle.png";
 
   public static final String AMANDA_CHAR_SELECT =
           "dracula_punch/Resources/Character_Select/Amanda.png";
@@ -38,13 +41,16 @@ public class DraculaPunchGame extends StateBasedGame {
 
   //region Austin
   public static final String AUSTIN_RUN_0_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Austin_Run/Austin_Run_0_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_0_Deg.png";
   public static final String AUSTIN_RUN_90_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Austin_Run/Austin_Run_90_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_90_Deg.png";
   public static final String AUSTIN_RUN_180_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Austin_Run/Austin_Run_180_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_180_Deg.png";
   public static final String AUSTIN_RUN_270_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Austin_Run/Austin_Run_270_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_270_Deg.png";
+
+  public static final String AUSTIN_IDLE =
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Idle/Austin_Idle.png";
 
   public static final String AUSTIN_CHAR_SELECT =
           "dracula_punch/Resources/Character_Select/Austin.png";
@@ -52,13 +58,16 @@ public class DraculaPunchGame extends StateBasedGame {
 
   //region Ritta
   public static final String RITTA_RUN_0_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Ritta_Run/Ritta_Run_0_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_0_Deg.png";
   public static final String RITTA_RUN_90_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Ritta_Run/Ritta_Run_90_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_90_Deg.png";
   public static final String RITTA_RUN_180_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Ritta_Run/Ritta_Run_180_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_180_Deg.png";
   public static final String RITTA_RUN_270_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Ritta_Run/Ritta_Run_270_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_270_Deg.png";
+
+  public static final String RITTA_IDLE =
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Idle/Ritta_Idle.png";
 
   public static final String RITTA_CHAR_SELECT =
           "dracula_punch/Resources/Character_Select/Ritta.png";
@@ -82,18 +91,21 @@ public class DraculaPunchGame extends StateBasedGame {
     ResourceManager.loadImage(AMANDA_RUN_180_DEG);
     ResourceManager.loadImage(AMANDA_RUN_270_DEG);
     ResourceManager.loadImage(AMANDA_CHAR_SELECT);
+    ResourceManager.loadImage(AMANDA_IDLE);
 
     ResourceManager.loadImage(AUSTIN_RUN_0_DEG);
     ResourceManager.loadImage(AUSTIN_RUN_90_DEG);
     ResourceManager.loadImage(AUSTIN_RUN_180_DEG);
     ResourceManager.loadImage(AUSTIN_RUN_270_DEG);
     ResourceManager.loadImage(AUSTIN_CHAR_SELECT);
+    ResourceManager.loadImage(AUSTIN_IDLE);
 
     ResourceManager.loadImage(RITTA_RUN_0_DEG);
     ResourceManager.loadImage(RITTA_RUN_90_DEG);
     ResourceManager.loadImage(RITTA_RUN_180_DEG);
     ResourceManager.loadImage(RITTA_RUN_270_DEG);
     ResourceManager.loadImage(RITTA_CHAR_SELECT);
+    ResourceManager.loadImage(RITTA_IDLE);
   }
 
   public static void main(String[] args) {

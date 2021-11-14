@@ -1,16 +1,22 @@
-Amanda:
+Amanda Run/Idle:
     x: 670
     y: 30
     Width: 580
     Height: 900
 
-Austin:
+Austin Run:
     x: 690
     y: 73
     Width: 540
     Height: 772
 
-Ritta:
+Austin Idle:
+    x: 0
+    y: 61
+    Width: 940
+    Height: 778
+
+Ritta Run/Idle:
     x: 534
     y: 88
     Width: 850
