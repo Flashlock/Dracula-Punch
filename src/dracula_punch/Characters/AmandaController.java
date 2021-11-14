@@ -9,6 +9,8 @@ import org.newdawn.slick.state.StateBasedGame;
 public class AmandaController extends CharacterController{
     public static final int RUN_HEIGHT = 900;
     public static final int RUN_WIDTH = 580;
+    public static final int IDLE_HEIGHT = RUN_HEIGHT;
+    public static final int IDLE_WIDTH = RUN_WIDTH;
 
     public AmandaController(float x, float y, LevelState curLevelState) {
         super(x, y, curLevelState);
@@ -26,7 +28,7 @@ public class AmandaController extends CharacterController{
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {}
 
     @Override
-    public String getSheet(int x, int y) {
+    public String getRunSheet(int x, int y) {
         String sheet = null;
         if(x == 1 && y == 0){
             // right
@@ -61,5 +63,20 @@ public class AmandaController extends CharacterController{
     @Override
     public int getRunHeight() {
         return RUN_HEIGHT;
+    }
+
+    @Override
+    public String getIdleSheet() {
+        return DraculaPunchGame.AMANDA_IDLE;
+    }
+
+    @Override
+    public int getIdleWidth() {
+        return IDLE_WIDTH;
+    }
+
+    @Override
+    public int getIdleHeight() {
+        return IDLE_HEIGHT;
     }
 }
