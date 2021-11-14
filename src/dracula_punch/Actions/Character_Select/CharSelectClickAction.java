@@ -9,8 +9,8 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import static dracula_punch.DraculaPunchGame.TEST_STATE;
 
 public class CharSelectClickAction extends Action {
-  private DraculaPunchGame dpg;
-  private CharSelectButton button;
+  private final DraculaPunchGame dpg;
+  private final CharSelectButton button;
 
   public CharSelectClickAction(DraculaPunchGame dpg, CharSelectButton button){
     this.dpg = dpg;

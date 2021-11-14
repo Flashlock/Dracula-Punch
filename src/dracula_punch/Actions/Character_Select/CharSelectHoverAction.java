@@ -5,8 +5,8 @@ import dracula_punch.DraculaPunchGame;
 import dracula_punch.UI.Buttons.CharSelectButton;
 
 public class CharSelectHoverAction extends Action {
-    private DraculaPunchGame dpg;
-    private CharSelectButton button;
+    private final DraculaPunchGame dpg;
+    private final CharSelectButton button;
 
     public CharSelectHoverAction(DraculaPunchGame dpg, CharSelectButton button){
         this.dpg = dpg;
