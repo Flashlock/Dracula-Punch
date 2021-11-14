@@ -28,13 +28,29 @@ public class TestLevelState extends LevelState {
     map = new DPTiledMap(DraculaPunchGame.MAP);
     camera = new Camera(map);
 
-    gameObjects.add(
-            new RittaController(
-                    DraculaPunchGame.SCREEN_WIDTH / 2f,
-                    DraculaPunchGame.SCREEN_HEIGHT / 2f,
-                    this
-            )
-    );
+    GameObject chosenPlayer;
+    if (DraculaPunchGame.characterChoice == DraculaPunchGame.charIdEnum.AMANDA) {
+      chosenPlayer = new AmandaController(
+          DraculaPunchGame.SCREEN_WIDTH / 2f,
+          DraculaPunchGame.SCREEN_HEIGHT / 2f,
+          this
+      );
+    }
+    else if (DraculaPunchGame.characterChoice == DraculaPunchGame.charIdEnum.AUSTIN) {
+      chosenPlayer = new AustinController(
+          DraculaPunchGame.SCREEN_WIDTH / 2f,
+          DraculaPunchGame.SCREEN_HEIGHT / 2f,
+          this
+      );
+    }
+    else{
+      chosenPlayer = new RittaController(
+          DraculaPunchGame.SCREEN_WIDTH / 2f,
+          DraculaPunchGame.SCREEN_HEIGHT / 2f,
+          this
+      );
+    }
+    gameObjects.add(chosenPlayer);
   }
 
   @Override
@@ -45,8 +61,8 @@ public class TestLevelState extends LevelState {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawString("Test State", 10, 25);
     graphics.scale(camera.zoomFactor, camera.zoomFactor);
-    int tilesInWindowX = 100;
-    int tilesInWindowY = 100;
+    int tilesInWindowX = map.getWidth();
+    int tilesInWindowY = map.getHeight();
 
     Vector camPos = getCameraPosition();
     int camX = (int) camPos.getX();

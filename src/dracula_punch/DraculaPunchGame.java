@@ -18,6 +18,8 @@ public class DraculaPunchGame extends StateBasedGame {
   public static final String MAP = "dracula_punch/Resources/Tiled/testEdges.tmx";
   public static final int ANIMATION_DURATION = 50;
   public static int SCREEN_WIDTH, SCREEN_HEIGHT;
+  public static charIdEnum characterChoice = charIdEnum.UNCHOSEN;
+  public enum charIdEnum {UNCHOSEN, AMANDA, AUSTIN, RITTA}
 
 
   //region Amanda
