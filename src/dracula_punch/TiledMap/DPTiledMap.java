@@ -1,6 +1,6 @@
 package dracula_punch.TiledMap;
 
-import dracula_punch.Coordinate;
+import dracula_punch.Camera.*;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
