@@ -11,7 +11,7 @@ public class Camera {
   private final float MINIMUM_ZOOM = 0.8f;
   private final float MAXIMUM_ZOOM = 3f;
   private final float ZOOM_INCREMENT_SIZE = 0.2f;
-  private Coordinate currentTile = new Coordinate();
+  public Coordinate currentTile = new Coordinate();
   private Coordinate previousTile = new Coordinate();
   private final float TOTAL_MOVE_TIME = 100;
   private float movingTime = 99; // one less than total to trigger calculation once on startup
