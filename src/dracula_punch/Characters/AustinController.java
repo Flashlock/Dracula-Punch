@@ -16,7 +16,7 @@ public class AustinController extends CharacterController{
         super(x, y, curLevelState);
         xRenderOffset = 0;
         yRenderOffset = 35;
-        scaleFactor = .2f;
+        scaleFactor = .5f;  // changed scaling to new tiledmap!
 
         setScale(scaleFactor);
 
