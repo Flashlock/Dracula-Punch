@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" width="100" height="100" tilewidth="256" tileheight="128" infinite="0" nextlayerid="16" nextobjectid="1">
+ <tileset firstgid="1" source="spritesheet-2.tsx"/>
+ <layer id="5" name="death" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt0bENwCAAA0HYJlNk/7HS0KSigy/uJPeWfgwAaHlvH+BHjxY9WvRo0QMAAACAsrlGgx4terTo0aJHix4terTo0aJHix4terTo0aJHix4terToAQAAAAAAAAAAAAAAAAAAcM+zGWfpAQAAAAAAAAAAcMYHPzgD1w==
+  </data>
+ </layer>
+ <layer id="1" name="path" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt0aENw0AQAMEPcBHfQapI/2WZmDvs1vKA4SvtXmttAAj5BRrwo8qPFj9a/AAAAACg7HOZ7sCPIj9a/Gjxo8WPFj9a/Gjxo8WPFj9a/Gjxo8WPFj9a/AAAAAAAAAAAAAAAAAAAAJjz/cN045v40XPcmO57g7sH3rQ/+NH64Efrgx+9F360XvjR+eBH74UfrRd+tF740XrhR+uFH348xcQLP/x4Cj9a/Gjxo8WPFj9a/Gjxo2Xqxwl8N6AZ
+  </data>
+ </layer>
+ <layer id="7" name="wall" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2LENg1AAA1EaZskM2X+xLJBITgHyQz7pN1R3GJp/Hsdx7jz+jP/ZHl1sjy62Rxfbo4vt0cX26GJ7dLE9utgeXWyPLr69x9eP59vjevZ/dLE9utgeXWyPLrZHF9uji+3RxfboYnt0sT262B5dbI8utkcX26OL7dHF9uhie3SxPbrYHl1sjy62RxdXbfG+M+JB7FvuYnt0sT262B5dbI8utkcX26OL7dHF9uhie3SxPbp48h5X3pVedc+6PbbHXYhtonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4htonOK2CY6p4ht507d+QCmqBl/
+  </data>
+ </layer>
+ <layer id="13" name="stairs" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt0TENAAAIBDHM4N8iMwIIP7QKLrkqAAAAAIBf/R3A4kcWP7L4kcUPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODKAFyYALo=
+  </data>
+ </layer>
+ <layer id="14" name="stairs 2" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+ <layer id="15" name="stairs 3" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+ <layer id="9" name="wall 2" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt27EJADEMADE3GSr7L/YrPCGEKyRwb3y118ysy8M592vRo0WPFj1a9GjRo0WPFj1a9GjRo0WPFj1a9GjRo0WPFj1a9GjRo0WPFj1a9GjRo0WPFj1a9GjRo0WPFj1a9GjRo0WPFj1abv/i7LfrAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/fEyuAac=
+  </data>
+ </layer>
+ <layer id="11" name="object" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt0TEKgDAQBMAUKRWCT7HK/19mCBa2ysEpzsDCVcvClcLb1DMRtsu9B3X+TdQvAAAAAAAAAAAAAAAAAIBnWvYAAAAAgI9aRtbsEUw9ewAAAAAAAAAAAAAAAAAAAAAAAAAAtx3ZTQCy
+  </data>
+ </layer>
+ <layer id="12" name="wall 3" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+</map>
