@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" width="120" height="120" tilewidth="256" tileheight="128" infinite="0" nextlayerid="6" nextobjectid="1">
+ <tileset firstgid="1" source="spritesheet-2.tsx"/>
+ <tileset firstgid="64" source="tiledDungeon.tsx"/>
+ <layer id="3" name="Floor" width="120" height="120">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3RsQ2AQAwEwW+D0tx/IwRk5EhoPcHo0z/vdc65AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+Nj/4A/qiL/puU+5b3uYGz7byvu19N+zbvr++bzt92/Rt07dtXi8turbp26Zvm75do2+atm36to3Gafq26dumb9scjcv0bdO3T9s2fQGg4QaucEE2AOEAAA==
+  </data>
+ </layer>
+ <layer id="4" name="PlayerSpawn" width="120" height="120">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3OMQEAAAgDoJW2vymmDyQgAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC4Nd8BAAAAAAAAAAAAAAAoWOSOvcwA4QAA
+  </data>
+ </layer>
+ <layer id="2" name="Collision" width="120" height="120">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3dS2obQRSFYW0iO0oMGeRBBhomWYAhkKk2HwvZ4BTq7qpb91n6DxxMHLv6lj661TZScj6dTme6dD/Q5dr6fqLLFN+1i+/axXft4pu/T6/Fd60+3Sm+6/Se76gxvjkMrYxHfbeOR2Oa2dc73o+9x+zavhrGUalqezR/Bt8Mqe57bw8Zzl/vfNv4/NZ8P3f+buRrvPZsef5m2J8017k+vvT7wPd87vzc+zwPrC/JyDXawjdrfkQPoJTW1cs3eyrM2BPL59+qttdUmfMo3r5VUmnWvXjeP1dKtXm34nH+VozX3J73z9V8R3+21q7WPJbxuD5bzozvfir5Rnvia+cbbYmvjW+0Ib42vtF2+Nr5Rrvhq+Mb7YMvvvg+lq80+ObvbPDN3dngm7uzeTRf6Zz4yo6Z2bedFd/xY2b3befFd+yYFXzbmfHtP2YV33ZufPuOWcm3nf1RfLfeb9FzTHzz+36dOOaqvtf3mVxe+uf142Xjz5eDda3mtcyj+L7ly+S6FrNaprLv8+nYVvL6U+l1O+q637uXar5Wye77V7gXfG/J7ivdC763aPrgmy8zvr8Fa1nGw9dqD9nur6RrWcbL12IfVs9v+Mr/fRWr2SN9Z2sZb1/N/eA7thcvX6194Tu2F2/f2b3hO7aXCF8PA8u1M9u2e4n07d2zx2OYyWc2GX2jz5FVfY+M8a3vu2eML7745snWzPjW9x21xbeO7968+OquHb33Xlt88cV3bq1oY3zxxVe+Fr74Wtniiy++c2tFG+OLL77ytfDFN6Ov9f8hsRfr17drrlXVNzK/BN+DL7744ju6Fr7jwRffNvjii28OX34+6rOt6sv5a+fb+xhYBl9822T0lQTf+8nmO5PVfavfX2nEyjfD/ZUkWXw1s+r5K8mqvkfG+OKLr3ytStdnqzk9gi+++OI7uha+PsG3jm/V329ovyZR2zfL/XP07yelyX7+VvWNvIZaxsL3zTgy+N7C+XtLFl+uz30ZvU+Zud/VLPdXfbE+fy2rmbc18c1TzeAb74nvePD9f2/45qpGemzxrWn8fh0r3yrv74521DZu17DypTmq7UvlHXHRKr5rF9+1i+/axXft4rt28V27+K7de750rZ4ppeX7DyaymOUA4QAA
+  </data>
+ </layer>
+</map>
