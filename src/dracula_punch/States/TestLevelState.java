@@ -2,7 +2,9 @@ package dracula_punch.States;
 
 import dracula_punch.Actions.*;
 import dracula_punch.Camera.Camera;
+import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.*;
+import dracula_punch.TestEnemy;
 import dracula_punch.TiledMap.DPTiledMap;
 import jig.Vector;
 import org.newdawn.slick.*;
@@ -51,6 +53,8 @@ public class TestLevelState extends LevelState {
       );
     }
     gameObjects.add(chosenPlayer);
+    GameObject testEnemy = new TestEnemy(new Coordinate(90,90), this);
+    gameObjects.add(testEnemy);
   }
 
   @Override

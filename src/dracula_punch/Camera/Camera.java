@@ -7,11 +7,11 @@ public class Camera {
   public Coordinate isometric = new Coordinate();
   public boolean moveUp, moveDown, moveLeft, moveRight, zoomIn, zoomOut;
   private float previousZoom = 1.0f;
-  private float currentZoom = 1.0f;
-  private final float MINIMUM_ZOOM = 0.8f;
+  private float currentZoom = 0.5f;     // changed from 1.0 to 0.5f for our new tiledmap!
+  private final float MINIMUM_ZOOM = 0.2f;  // changed from 0.5 to 0.2f for our new tiledmap!
   private final float MAXIMUM_ZOOM = 3f;
   private final float ZOOM_INCREMENT_SIZE = 0.2f;
-  private Coordinate currentTile = new Coordinate();
+  public Coordinate currentTile = new Coordinate();
   private Coordinate previousTile = new Coordinate();
   private final float TOTAL_MOVE_TIME = 100;
   private float movingTime = 99; // one less than total to trigger calculation once on startup

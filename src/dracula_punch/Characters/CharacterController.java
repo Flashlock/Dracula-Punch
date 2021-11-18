@@ -51,6 +51,31 @@ public abstract class CharacterController extends GameObject {
         idleImage = getIdleSprite();
         addImage(idleImage);
     }
+    public CharacterController(final float x, final float y, LevelState curLevelState, boolean lameWorkaround){
+      super(x, y);
+      this.curLevelState = curLevelState;
+
+      // Generate a random idle sprite
+      int dirX, dirY;
+      double randX = Math.random() * 1.5f;
+      // X direction
+      if(randX < .5f){
+        dirX = -1;
+      }
+      else if(randX < 1){
+        dirX = 0;
+      }
+      else{
+        dirX = 1;
+      }
+      // Y direction
+      if(dirX != 0){
+        dirY = 0;
+      }
+      else{
+        dirY = Math.random() < .5f ? -1 : 1;
+      }
+    }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
