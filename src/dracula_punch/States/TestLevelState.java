@@ -33,8 +33,8 @@ public class TestLevelState extends LevelState {
     gameObjects.add(camera);
 
     temporaryPlayerSelectionMethod();
-    //GameObject testEnemy = new TestEnemy(new Coordinate(90,90), this);
-    //gameObjects.add(testEnemy);
+    GameObject testEnemy = new TestEnemy(new Coordinate(90,90), this);
+    gameObjects.add(testEnemy);
   }
 
   private void temporaryPlayerSelectionMethod() {

@@ -1,5 +1,6 @@
 package dracula_punch;
 
+import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.CharacterController;
 import dracula_punch.States.LevelState;
@@ -11,8 +12,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class TestEnemy extends CharacterController {
-  public Coordinate currentTile;
-  private Coordinate startingTile, previousTile, targetTile;
+  private Coordinate startingTile, targetTile;
 
   //region Variables for implementing Dijkstra's pathfinding
   private DijkstraNode[][] nodeGrid;
@@ -21,16 +21,10 @@ public class TestEnemy extends CharacterController {
   private Coordinate previousTargetTile = new Coordinate(0,0);
   //endregion
 
-  //region Chasing State variables
-  private final int TOTAL_MOVEMENT_TIME = 200;
-  private float movingTime;
-  //endregion
-
   public TestEnemy(Coordinate startingTile, LevelState curLevelState){
-    super(0,0,curLevelState);
+    super(0,0,curLevelState, true);
     this.startingTile = new Coordinate(startingTile);
-    previousTile = new Coordinate(startingTile);
-    currentTile = new Coordinate(startingTile);
+    TOTAL_MOVE_TIME = 200;
   }
 
   @Override
@@ -38,6 +32,19 @@ public class TestEnemy extends CharacterController {
     return null;
   }
 
+  @Override
+  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
+    Camera cam = curLevelState.camera;
+    setPosition(cam.getScreenPositionFromTile(currentTilePlusPartial));
+    if(cam.isInScreenRange(currentTile)) {
+      graphics.fillOval(
+          getX() - 5,
+          getY() - 5,
+          10,
+          10
+      );
+    }
+  }
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
     determineTarget();
@@ -122,7 +129,7 @@ public class TestEnemy extends CharacterController {
   }
 
   private void move(int delta) {
-    if (movingTime < TOTAL_MOVEMENT_TIME){ movingTime += delta; }
+    if (movingTime < TOTAL_MOVE_TIME){ movingTime += delta; }
     else if (!currentTile.isEqual(previousTargetTile) && !enemyPath.isEmpty()){
       Coordinate next = enemyPath.remove(0).coord;
       movingTime = 0;
@@ -134,13 +141,13 @@ public class TestEnemy extends CharacterController {
   }
 
   private void updateAnimation() {
-    float percentMoveDone = (TOTAL_MOVEMENT_TIME - movingTime) / TOTAL_MOVEMENT_TIME;
+    float percentMoveDone = (TOTAL_MOVE_TIME - movingTime) / TOTAL_MOVE_TIME;
     float partialX = 0, partialY = 0;
     if (previousTile.y > currentTile.y){ partialY = percentMoveDone;}
     else if (previousTile.y < currentTile.y){ partialY = -percentMoveDone;}
     if (previousTile.x > currentTile.x){ partialX = percentMoveDone;}
     else if (previousTile.x < currentTile.x){ partialX = -percentMoveDone;}
-    Coordinate currentTilePlusPartial = new Coordinate(currentTile);
+    currentTilePlusPartial = new Coordinate(currentTile);
     currentTilePlusPartial.add(partialX, partialY);
   }
 

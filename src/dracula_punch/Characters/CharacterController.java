@@ -24,11 +24,11 @@ public abstract class CharacterController extends GameObject {
   protected Vector facingDir;
 
   private Image idleImage;
-  private Coordinate previousTile = new Coordinate();
-  private Coordinate currentTilePlusPartial = new Coordinate();
-  private final float TOTAL_MOVE_TIME = 100;
-  private float movingTime = 99; // one less than total to trigger calculation once on startup
-  private float percentMoveDone;
+  protected Coordinate previousTile = new Coordinate();
+  protected Coordinate currentTilePlusPartial = new Coordinate();
+  protected float TOTAL_MOVE_TIME = 100;
+  protected float movingTime = 99; // one less than total to trigger calculation once on startup
+  protected float percentMoveDone;
 
   public CharacterController(final float x, final float y, LevelState curLevelState){
     super(x, y);
@@ -59,6 +59,12 @@ public abstract class CharacterController extends GameObject {
     facingDir = new Vector(dirX, dirY);
     idleImage = getIdleSprite();
     addImage(idleImage);
+  }
+  public CharacterController(final float x, final float y, LevelState curLevelState, boolean lameWorkaround){
+    super(x, y);
+    this.curLevelState = curLevelState;
+    currentTile = new Coordinate(curLevelState.map.playerSpawnCoordinate);
+
   }
 
   @Override
