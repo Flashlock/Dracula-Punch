@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class TestLevelState extends LevelState {
   private ArrayList<GameObject> gameObjects;
+  private GameObject playerOne, playerTwo, playerThree;
 
   @Override
   public int getID() {
@@ -29,32 +30,32 @@ public class TestLevelState extends LevelState {
 
     map = new DPTiledMap(DraculaPunchGame.MAP);
     camera = new Camera(map);
+    gameObjects.add(camera);
 
-    GameObject chosenPlayer;
-    if (DraculaPunchGame.characterChoice == DraculaPunchGame.charIdEnum.AMANDA) {
-      chosenPlayer = new AmandaController(
-          DraculaPunchGame.SCREEN_WIDTH / 2f,
-          DraculaPunchGame.SCREEN_HEIGHT / 2f,
-          this
-      );
-    }
-    else if (DraculaPunchGame.characterChoice == DraculaPunchGame.charIdEnum.AUSTIN) {
-      chosenPlayer = new AustinController(
-          DraculaPunchGame.SCREEN_WIDTH / 2f,
-          DraculaPunchGame.SCREEN_HEIGHT / 2f,
-          this
-      );
-    }
-    else{
-      chosenPlayer = new RittaController(
-          DraculaPunchGame.SCREEN_WIDTH / 2f,
-          DraculaPunchGame.SCREEN_HEIGHT / 2f,
-          this
-      );
-    }
-    gameObjects.add(chosenPlayer);
-    GameObject testEnemy = new TestEnemy(new Coordinate(90,90), this);
-    gameObjects.add(testEnemy);
+    temporaryPlayerSelectionMethod();
+    //GameObject testEnemy = new TestEnemy(new Coordinate(90,90), this);
+    //gameObjects.add(testEnemy);
+  }
+
+  private void temporaryPlayerSelectionMethod() {
+    playerOne = new AmandaController(
+        DraculaPunchGame.SCREEN_WIDTH / 3f,
+        DraculaPunchGame.SCREEN_HEIGHT / 3f,
+        this
+    );
+    playerTwo = new AustinController(
+        DraculaPunchGame.SCREEN_WIDTH / 3f,
+        DraculaPunchGame.SCREEN_HEIGHT / 3f,
+        this
+    );
+    playerThree = new RittaController(
+        DraculaPunchGame.SCREEN_WIDTH / 3f,
+        DraculaPunchGame.SCREEN_HEIGHT / 3f,
+        this
+    );
+    gameObjects.add(playerOne);
+    gameObjects.add(playerTwo);
+    gameObjects.add(playerThree);
   }
 
   @Override
@@ -65,35 +66,16 @@ public class TestLevelState extends LevelState {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
     graphics.drawString("Test State", 10, 25);
     graphics.scale(camera.zoomFactor, camera.zoomFactor);
-    int tilesInWindowX = map.getWidth();
-    int tilesInWindowY = map.getHeight();
-
-    Vector camPos = getCameraPosition();
-    int camX = (int) camPos.getX();
-    int camY = (int) camPos.getY();
-
-    // Render layers individually to avoid Slick2d bug
-    map.render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 0, true);
-
+    map.renderLayersBehindObjects(camera.getCamPosition());
     for(GameObject gameObject : gameObjects){
       gameObject.render(gameContainer, stateBasedGame, graphics);
     }
-
-    map.render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 1, true);
-    map.render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 2, true);
-//    map.render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 3, true);
-
-//    Vector screenOffset = getScreenOffset();
-//    graphics.fillOval(screenOffset.getX() - 5, screenOffset.getY() - 5, 10, 10);
-//    Coordinate test = new Coordinate(1,0);
-//    test = test.getIsometricFromTile(map);
-//    graphics.fillOval(camX - test.x - 5, camY - test.y - 5, 10, 10);
+    map.renderLayersAboveObjects(camera.getCamPosition());
   }
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
     controls(gameContainer.getInput());
-    camera.update(delta);
 
     for(GameObject gameObject : gameObjects){
       gameObject.update(gameContainer, stateBasedGame, delta);
@@ -105,30 +87,55 @@ public class TestLevelState extends LevelState {
    * @param input
    */
   private void controls(Input input){
+    boolean left, right, up, down;
     // Observe input changes
-    boolean left = input.isKeyDown(Input.KEY_A) || input.isKeyDown(Input.KEY_LEFT);
-    boolean right = input.isKeyDown(Input.KEY_D) || input.isKeyDown(Input.KEY_RIGHT);
-    boolean up = input.isKeyDown(Input.KEY_W) || input.isKeyDown(Input.KEY_UP);
-    boolean down = input.isKeyDown(Input.KEY_S) || input.isKeyDown(Input.KEY_DOWN);
-    boolean isMoving = camera.moveLeft || camera.moveRight || camera.moveDown || camera.moveUp;
+    left = input.isKeyDown(Input.KEY_A);
+    right = input.isKeyDown(Input.KEY_D);
+    up = input.isKeyDown(Input.KEY_W);
+    down = input.isKeyDown(Input.KEY_S);
+    movePlayer((CharacterController)playerOne, left, right, up, down);
+
+    left = input.isKeyDown(Input.KEY_J);
+    right = input.isKeyDown(Input.KEY_L);
+    up = input.isKeyDown(Input.KEY_I);
+    down = input.isKeyDown(Input.KEY_K);
+    movePlayer((CharacterController)playerTwo, left, right, up, down);
+
+    left = input.isKeyDown(Input.KEY_LEFT);
+    right = input.isKeyDown(Input.KEY_RIGHT);
+    up = input.isKeyDown(Input.KEY_UP);
+    down = input.isKeyDown(Input.KEY_DOWN);
+    movePlayer((CharacterController)playerThree, left, right, up, down);
+
+    // Apply movement to camera
+    camera.moveLeft = left;
+    camera.moveRight = right;
+    camera.moveUp = up;
+    camera.moveDown = down;
+    camera.zoomOut = input.isKeyDown(Input.KEY_O);
+    camera.zoomIn = input.isKeyDown(Input.KEY_P);
+  }
+
+  private void movePlayer(CharacterController player, boolean left, boolean right, boolean up, boolean down) {
+    boolean isMoving = player.moveLeft || player.moveRight || player.moveDown || player.moveUp;
 
     // Trigger event on change
-    if(!camera.moveLeft && left){
+    if(!player.moveLeft && left){
       for(Action action : inputMoveEvent){
         action.Execute(new Vector(-1, 0));
       }
     }
-    else if(!camera.moveRight && right){
+    else if(!player.moveRight && right){
       for(Action action : inputMoveEvent){
         action.Execute(new Vector(1, 0));
       }
     }
-    else if(!camera.moveUp && up){
+    else if(!player.moveUp && up){
       for(Action action : inputMoveEvent){
         action.Execute(new Vector(0, 1));
       }
     }
-    else if(!camera.moveDown && down){
+    else if(!player.moveDown && down){
       // change down
       for(Action action : inputMoveEvent){
         action.Execute(new Vector(0, -1));
@@ -140,12 +147,9 @@ public class TestLevelState extends LevelState {
       }
     }
 
-    // Apply movement to camera
-    camera.moveLeft = left;
-    camera.moveRight = right;
-    camera.moveUp = up;
-    camera.moveDown = down;
-    camera.zoomOut = input.isKeyDown(Input.KEY_O);
-    camera.zoomIn = input.isKeyDown(Input.KEY_I);
+    player.moveLeft = left;
+    player.moveRight = right;
+    player.moveUp = up;
+    player.moveDown = down;
   }
 }

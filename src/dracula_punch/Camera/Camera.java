@@ -1,10 +1,17 @@
 package dracula_punch.Camera;
 
+import dracula_punch.Characters.GameObject;
+import dracula_punch.DraculaPunchGame;
+import dracula_punch.Networking.Client;
 import dracula_punch.TiledMap.DPTiledMap;
+import jig.Vector;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
-public class Camera {
+public class Camera extends GameObject {
   public float zoomFactor = 1.0f;
-  public Coordinate isometric = new Coordinate();
+  public Vector isometric = new Vector(0,0);
   public boolean moveUp, moveDown, moveLeft, moveRight, zoomIn, zoomOut;
   private float previousZoom = 1.0f;
   private float currentZoom = 0.5f;     // changed from 1.0 to 0.5f for our new tiledmap!
@@ -19,11 +26,16 @@ public class Camera {
   private DPTiledMap map;
 
   public Camera(DPTiledMap map) {
+    super(0,0);
     this.map = map;
     currentTile.setEqual(map.playerSpawnCoordinate);
   }
 
-  public void update(int delta) {
+  @Override
+  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) { }
+
+  @Override
+  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
     if (movingTime == TOTAL_MOVE_TIME) { initializeCameraMovement(); }
     else { calculateCameraPosition(delta); }
   }
@@ -69,5 +81,30 @@ public class Camera {
     currentTilePlusPartial.add(partialX, partialY);
     isometric = currentTilePlusPartial.getIsometricFromTile(map);
     zoomFactor = currentZoom + partialZ;
+  }
+
+  public Vector getScreenPositionFromTile(Coordinate tile) {
+    Vector isometric = tile.getIsometricFromTile(map);
+    float x = getCamPosition().getX() - isometric.getX();
+    float y = getCamPosition().getY() - isometric.getY();
+    return new Vector(x,y);
+  }
+
+  public Vector getCamPosition(){
+    Vector screenOffset = getScreenOffset();
+    return new Vector(
+        isometric.getX() + screenOffset.getX(),
+        isometric.getY() + screenOffset.getY()
+    );
+  }
+
+  public Vector getScreenOffset(){
+    return new Vector(
+        DraculaPunchGame.SCREEN_WIDTH / zoomFactor / 2,
+        DraculaPunchGame.SCREEN_HEIGHT / zoomFactor / 2
+    );
+  }
+  public boolean isInScreenRange(Coordinate currentTile){
+    return true;
   }
 }

@@ -12,7 +12,7 @@ import java.util.PriorityQueue;
 
 public class TestEnemy extends CharacterController {
   public Coordinate currentTile;
-  private Coordinate startingTile, previousTile, targetTile, isometric;
+  private Coordinate startingTile, previousTile, targetTile;
 
   //region Variables for implementing Dijkstra's pathfinding
   private DijkstraNode[][] nodeGrid;
@@ -27,21 +27,10 @@ public class TestEnemy extends CharacterController {
   //endregion
 
   public TestEnemy(Coordinate startingTile, LevelState curLevelState){
-    super(0,0,curLevelState, true);
+    super(0,0,curLevelState);
     this.startingTile = new Coordinate(startingTile);
     previousTile = new Coordinate(startingTile);
     currentTile = new Coordinate(startingTile);
-    isometric = currentTile.getIsometricFromTile(curLevelState.map);
-  }
-
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
-    graphics.fillOval(
-        curLevelState.getCameraPosition().getX() - isometric.x - 5,
-        curLevelState.getCameraPosition().getY() - isometric.y - 5,
-        10,
-        10
-    );
   }
 
   @Override
@@ -153,7 +142,6 @@ public class TestEnemy extends CharacterController {
     else if (previousTile.x < currentTile.x){ partialX = -percentMoveDone;}
     Coordinate currentTilePlusPartial = new Coordinate(currentTile);
     currentTilePlusPartial.add(partialX, partialY);
-    isometric = currentTilePlusPartial.getIsometricFromTile(curLevelState.map);
   }
 
 
