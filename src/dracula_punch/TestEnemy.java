@@ -55,7 +55,8 @@ public class TestEnemy extends CharacterController {
 
   private void determineTarget() {
     // TODO Replace camera with a function that picks the nearest player
-    targetTile = curLevelState.camera.currentTile;
+    targetTile =curLevelState.playerObjects.get(0).currentTile;
+    //targetTile = curLevelState.camera.currentTile;
   }
 
   private void updatePath() {
