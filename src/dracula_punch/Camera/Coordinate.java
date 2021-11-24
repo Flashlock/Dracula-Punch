@@ -1,8 +1,11 @@
 package dracula_punch.Camera;
 
+import jig.Vector;
 import org.newdawn.slick.tiled.TiledMap;
 
-public class Coordinate {
+import java.io.Serializable;
+
+public class Coordinate implements Serializable {
   public float x;
   public float y;
 
@@ -42,14 +45,13 @@ public class Coordinate {
     this.y += y;
   }
 
-  public Coordinate getIsometricFromTile(TiledMap map) {
+  public Vector getIsometricFromTile(TiledMap map) {
     Coordinate cartesian = new Coordinate();
     cartesian.x = -x * map.getTileWidth() / 2;
     cartesian.y = -y * map.getTileHeight();
-    Coordinate isometric = new Coordinate();
-    isometric.x = cartesian.x - cartesian.y - map.getTileWidth() / 2f;
-    isometric.y = (cartesian.x + cartesian.y) / 2 - map.getTileHeight() / 2f;
-    return isometric;
+    float isometricX = cartesian.x - cartesian.y - map.getTileWidth() / 2f;
+    float isometricY = (cartesian.x + cartesian.y) / 2 - map.getTileHeight() / 2f;
+    return new Vector(isometricX, isometricY);
   }
 
 }

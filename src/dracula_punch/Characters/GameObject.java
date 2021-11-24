@@ -1,5 +1,6 @@
 package dracula_punch.Characters;
 
+import dracula_punch.Camera.Coordinate;
 import jig.Entity;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -11,21 +12,23 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class GameObject extends Entity {
 
-    public GameObject(final float x, final float y){ super(x, y); }
+  public Coordinate currentTile = new Coordinate();
 
-    /**
-     * Update the controller each frame
-     * @param gameContainer
-     * @param stateBasedGame
-     * @param delta
-     */
-    public abstract void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta);
+  public GameObject(final float x, final float y){ super(x, y); }
 
-    /**
-     * Render the controller each frame
-     * @param gameContainer
-     * @param stateBasedGame
-     * @param graphics
-     */
-    public abstract void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics);
+  /**
+   * Update the controller each frame
+   * @param gameContainer
+   * @param stateBasedGame
+   * @param delta
+   */
+  public abstract void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta);
+
+  /**
+   * Render the controller each frame
+   * @param gameContainer
+   * @param stateBasedGame
+   * @param graphics
+   */
+  public abstract void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics);
 }

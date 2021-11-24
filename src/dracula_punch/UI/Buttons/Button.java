@@ -28,7 +28,6 @@ public abstract class Button extends GameObject {
         int mouseY = input.getMouseY();
         boolean xCheck = mouseX > getCoarseGrainedMinX() && mouseX < getCoarseGrainedMaxX();
         boolean yCheck = mouseY > getCoarseGrainedMinY() && mouseY < getCoarseGrainedMaxY();
-
         if(xCheck && yCheck){
             if(!isMouseOver){
                 // Begin hovering
