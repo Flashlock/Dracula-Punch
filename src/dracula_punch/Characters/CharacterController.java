@@ -25,7 +25,7 @@ public abstract class CharacterController extends GameObject {
 
   private Image idleImage;
   protected Coordinate previousTile = new Coordinate();
-  protected Coordinate currentTilePlusPartial = new Coordinate();
+  public Coordinate currentTilePlusPartial = new Coordinate();
   protected float TOTAL_MOVE_TIME = 100;
   protected float movingTime = 99; // one less than total to trigger calculation once on startup
   protected float percentMoveDone;
