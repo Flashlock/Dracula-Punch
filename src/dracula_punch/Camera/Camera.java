@@ -3,7 +3,6 @@ package dracula_punch.Camera;
 import dracula_punch.Characters.CharacterController;
 import dracula_punch.Characters.GameObject;
 import dracula_punch.DraculaPunchGame;
-import dracula_punch.Networking.Client;
 import dracula_punch.TiledMap.DPTiledMap;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
@@ -14,40 +13,74 @@ import java.util.ArrayList;
 
 public class Camera extends GameObject {
   public float zoomFactor = 1.0f;
-  public Vector isometric = new Vector(0,0);
-  public boolean moveUp, moveDown, moveLeft, moveRight, zoomIn, zoomOut;
+  private Vector isometricPosition = new Vector(0,0);
+  private boolean moveUp, moveDown, moveLeft, moveRight, zoomIn, zoomOut;
   private float previousZoom = 1.0f;
-  private float currentZoom = 0.5f;     // changed from 1.0 to 0.5f for our new tiledmap!
-  private final float MINIMUM_ZOOM = 0.1f;  // changed from 0.5 to 0.2f for our new tiledmap!
+  private float currentZoom = 0.5f;
+  private final float MINIMUM_ZOOM = 0.1f;
   private final float MAXIMUM_ZOOM = 0.5f;
   private final float ZOOM_INCREMENT_SIZE = 0.05f;
-  public Coordinate currentTile = new Coordinate();
+  private Coordinate currentTile = new Coordinate();
   private Coordinate previousTile = new Coordinate();
   private final float TOTAL_MOVE_TIME = 200;
-  private float movingTime = 99; // one less than total to trigger calculation once on startup
+  private float movingTime = 199; // one less than total to trigger calculation once on startup
   private float percentMoveDone;
   private DPTiledMap map;
+  private ArrayList<CharacterController> playerObjects;
 
-  public Camera(DPTiledMap map) {
+  public Camera(DPTiledMap map, ArrayList<CharacterController> playerObjects) {
     super(0,0);
     this.map = map;
+    this.playerObjects = playerObjects;
     currentTile.setEqual(map.playerSpawnCoordinate);
+  }
+
+  public boolean isInScreenRange(Coordinate currentTile){
+    return true;
+  }
+
+  public Vector getScreenPositionFromTile(Coordinate tile) {
+    Vector isometric = tile.getIsometricFromTile(map);
+    float x = getCamPosition().getX() - isometric.getX();
+    float y = getCamPosition().getY() - isometric.getY();
+    return new Vector(x,y);
+  }
+
+  public Vector getCamPosition(){
+    Vector screenOffset = getScreenOffset();
+    return new Vector(
+        isometricPosition.getX() + screenOffset.getX(),
+        isometricPosition.getY() + screenOffset.getY()
+    );
+  }
+
+  private Vector getScreenOffset(){
+    return new Vector(
+        DraculaPunchGame.SCREEN_WIDTH / zoomFactor / 2,
+        DraculaPunchGame.SCREEN_HEIGHT / zoomFactor / 2
+    );
   }
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) { }
 
-  public void centerOn(ArrayList<CharacterController> players) {
-    // 800 x 600 Screen
-    // 256 x 128 Tiles
-    float highTileX, lowTileX, highTileY, lowTileY, highestX, lowestX, highestY, lowestY;
-    highTileX = highTileY = highestX = highestY = Float.MIN_VALUE;
-    lowTileX = lowTileY = lowestX = lowestY = Float.MAX_VALUE;
-    for (CharacterController player : players) {
-      if (player.currentTile.x > highTileX) { highTileX = player.currentTile.x; }
-      if (player.currentTile.x < lowTileX) { lowTileX = player.currentTile.x; }
-      if (player.currentTile.y > highTileY) { highTileY = player.currentTile.y; }
-      if (player.currentTile.y < lowTileY) { lowTileY = player.currentTile.y; }
+  @Override
+  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+    determineNextCameraMovement();
+    if (movingTime == TOTAL_MOVE_TIME) { initializeCameraMovement(); }
+    else { updateCameraPosition(delta); }
+  }
+
+  private void determineNextCameraMovement() {
+    determineZoomTarget();
+    determinePositionTarget();
+  }
+
+  private void determineZoomTarget() {
+    float highestX, lowestX, highestY, lowestY;
+    highestX = highestY = Float.MIN_VALUE;
+    lowestX = lowestY = Float.MAX_VALUE;
+    for (CharacterController player : playerObjects) {
       if (player.getX() > highestX) { highestX = player.getX(); }
       if (player.getX() < lowestX) { lowestX = player.getX(); }
       if (player.getY() > highestY) { highestY = player.getY(); }
@@ -55,7 +88,7 @@ public class Camera extends GameObject {
     }
     float displayWidth = DraculaPunchGame.SCREEN_WIDTH / currentZoom;
     float displayHeight = DraculaPunchGame.SCREEN_HEIGHT / currentZoom;
-    float pixelsFromEdgesOfScreenToInitiateZoomOut = 50;
+    float pixelsFromEdgesOfScreenToInitiateZoomOut = 100;
     float pixelsFromEdgesOfScreenToInitiateZoomIn = 200;
     float zoomOutBuffer = pixelsFromEdgesOfScreenToInitiateZoomOut / currentZoom;
     float zoomInBuffer = pixelsFromEdgesOfScreenToInitiateZoomIn / currentZoom;
@@ -69,18 +102,24 @@ public class Camera extends GameObject {
             && highestY < displayHeight - zoomInBuffer
             && lowestX > zoomInBuffer
             && lowestY > zoomInBuffer;
+  }
+
+  private void determinePositionTarget() {
+    float highTileX, lowTileX, highTileY, lowTileY;
+    highTileX = highTileY = Float.MIN_VALUE;
+    lowTileX = lowTileY = Float.MAX_VALUE;
+    for (CharacterController player : playerObjects) {
+      if (player.currentTile.x > highTileX) { highTileX = player.currentTile.x; }
+      if (player.currentTile.x < lowTileX) { lowTileX = player.currentTile.x; }
+      if (player.currentTile.y > highTileY) { highTileY = player.currentTile.y; }
+      if (player.currentTile.y < lowTileY) { lowTileY = player.currentTile.y; }
+    }
     float centerTileX = (highTileX - lowTileX) / 2 + lowTileX;
     float centerTileY = (highTileY - lowTileY) / 2 + lowTileY;
     moveLeft = currentTile.x > (int)centerTileX;
     moveRight = currentTile.x < (int)centerTileX;
     moveUp = currentTile.y > (int)centerTileY;
     moveDown = currentTile.y < (int)centerTileY;
-  }
-
-  @Override
-  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-    if (movingTime == TOTAL_MOVE_TIME) { initializeCameraMovement(); }
-    else { calculateCameraPosition(delta); }
   }
 
   private void initializeCameraMovement() {
@@ -110,7 +149,7 @@ public class Camera extends GameObject {
     //System.out.println(currentTile.x + " " + currentTile.y + " " + currentZoom);
   }
 
-  private void calculateCameraPosition(int delta) {
+  private void updateCameraPosition(int delta) {
     movingTime += delta;
     if(movingTime > TOTAL_MOVE_TIME) { movingTime = TOTAL_MOVE_TIME; }
     percentMoveDone = (TOTAL_MOVE_TIME - movingTime) / TOTAL_MOVE_TIME;
@@ -123,32 +162,7 @@ public class Camera extends GameObject {
     else if (previousZoom < currentZoom) { partialZ = ZOOM_INCREMENT_SIZE * -percentMoveDone; }
     Coordinate currentTilePlusPartial = new Coordinate(currentTile);
     currentTilePlusPartial.add(partialX, partialY);
-    isometric = currentTilePlusPartial.getIsometricFromTile(map);
+    isometricPosition = currentTilePlusPartial.getIsometricFromTile(map);
     zoomFactor = currentZoom + partialZ;
-  }
-
-  public Vector getScreenPositionFromTile(Coordinate tile) {
-    Vector isometric = tile.getIsometricFromTile(map);
-    float x = getCamPosition().getX() - isometric.getX();
-    float y = getCamPosition().getY() - isometric.getY();
-    return new Vector(x,y);
-  }
-
-  public Vector getCamPosition(){
-    Vector screenOffset = getScreenOffset();
-    return new Vector(
-        isometric.getX() + screenOffset.getX(),
-        isometric.getY() + screenOffset.getY()
-    );
-  }
-
-  public Vector getScreenOffset(){
-    return new Vector(
-        DraculaPunchGame.SCREEN_WIDTH / zoomFactor / 2,
-        DraculaPunchGame.SCREEN_HEIGHT / zoomFactor / 2
-    );
-  }
-  public boolean isInScreenRange(Coordinate currentTile){
-    return true;
   }
 }

@@ -30,7 +30,7 @@ public class TestLevelState extends LevelState {
     playerObjects = new ArrayList<>();
 
     map = new DPTiledMap(DraculaPunchGame.MAP);
-    camera = new Camera(map);
+    camera = new Camera(map, playerObjects);
     gameObjects.add(camera);
 
     temporaryPlayerSelectionMethod();
@@ -110,19 +110,6 @@ public class TestLevelState extends LevelState {
     up = input.isKeyDown(Input.KEY_UP);
     down = input.isKeyDown(Input.KEY_DOWN);
     movePlayer((CharacterController)playerThree, left, right, up, down);
-
-    // Apply movement to camera
-    camera.centerOn(playerObjects);
-    //moveCamManually(input, left, right, up, down);
-  }
-
-  private void moveCamManually(Input input, boolean left, boolean right, boolean up, boolean down) {
-    camera.moveLeft = left;
-    camera.moveRight = right;
-    camera.moveUp = up;
-    camera.moveDown = down;
-    camera.zoomOut = input.isKeyDown(Input.KEY_O);
-    camera.zoomIn = input.isKeyDown(Input.KEY_P);
   }
 
   private void movePlayer(CharacterController player, boolean left, boolean right, boolean up, boolean down) {
