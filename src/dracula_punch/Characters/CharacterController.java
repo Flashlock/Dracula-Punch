@@ -16,7 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * All Characters - including enemies - will inherit from this class
  */
 public abstract class CharacterController extends GameObject {
-  public boolean moveUp, moveDown, moveLeft, moveRight, isLocallyControlled;
+  public boolean moveUp, moveDown, moveLeft, moveRight;
   protected Animation curAnim;
   protected float scaleFactor;
   protected int xRenderOffset, yRenderOffset;
@@ -85,7 +85,6 @@ public abstract class CharacterController extends GameObject {
       render(graphics);
     }
   }
-
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {

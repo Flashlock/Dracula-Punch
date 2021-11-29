@@ -22,11 +22,6 @@ public class AmandaController extends CharacterController{
     scaleFactor = 1f;  // changed scaling to new tiledmap!
 
     setScale(scaleFactor);
-
-    // Add a movement action - for animation switching
-    curLevelState.inputMoveEvent.add(new InputMoveAction(this));
-    curLevelState.inputAttackEvent.add(new InputAttackAction(this));
-
   }
 
   @Override
