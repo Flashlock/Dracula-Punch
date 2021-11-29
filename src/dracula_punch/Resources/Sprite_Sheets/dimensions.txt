@@ -1,23 +1,59 @@
-Amanda Run/Idle:
-    x: 670
-    y: 30
-    Width: 580
-    Height: 900
+Amanda{
+    Attack{
+        Width: 340
+        Height: 380
+    }
+    Run{
+        Width: 390
+        Height: 582
+    }
+    Idle{
+        Width: 390
+        Height: 582
+    }
+}
 
-Austin Run:
-    x: 690
-    y: 73
-    Width: 540
-    Height: 772
+Austin{
+    Attack{
+        Width: 550
+        Height: 550
+    }
+    Run{
+        Width: 360
+        Height: 628
+    }
+    Idle{
+        Width: 544
+        Height: 620
+    }
+}
 
-Austin Idle:
-    x: 0
-    y: 61
-    Width: 940
-    Height: 778
+Ritta{
+    Attack{
+        Width: 500
+        Height: 500
+    }
+    Run{
+        Width: 550
+        Height: 650
+    }
+    Idle{
+        Width: 500
+        Height: 500
+    }
+}
 
-Ritta Run/Idle:
-    x: 534
-    y: 88
-    Width: 850
-    Height: 750
+Dracula{
+    Walk{
+        Width: 250
+        Height: 450
+    }
+    Melee{
+        Width: 450
+        Height: 550
+    }
+    Idle{
+        Width: 220
+        Height: 370
+    }
+}

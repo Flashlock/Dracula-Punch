@@ -24,13 +24,22 @@ public class DraculaPunchGame extends StateBasedGame {
 
   //region Amanda
   public static final String AMANDA_RUN_0_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_0_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_0.png";
   public static final String AMANDA_RUN_90_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_90_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_90.png";
   public static final String AMANDA_RUN_180_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_180_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_180.png";
   public static final String AMANDA_RUN_270_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_270_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_270.png";
+
+  public static final String AMANDA_ATTACK_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Attack/Amanda_Attack_0.png";
+  public static final String AMANDA_ATTACK_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Attack/Amanda_Attack_90.png";
+  public static final String AMANDA_ATTACK_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Attack/Amanda_Attack_180.png";
+  public static final String AMANDA_ATTACK_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Attack/Amanda_Attack_270.png";
 
   public static final String AMANDA_IDLE =
           "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Idle/Amanda_Idle.png";
@@ -41,13 +50,22 @@ public class DraculaPunchGame extends StateBasedGame {
 
   //region Austin
   public static final String AUSTIN_RUN_0_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_0_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_0.png";
   public static final String AUSTIN_RUN_90_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_90_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_90.png";
   public static final String AUSTIN_RUN_180_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_180_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_180.png";
   public static final String AUSTIN_RUN_270_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_270_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Run/Austin_Run_270.png";
+
+  public static final String AUSTIN_ATTACK_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Attack/Austin_Attack_0.png";
+  public static final String AUSTIN_ATTACK_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Attack/Austin_Attack_90.png";
+  public static final String AUSTIN_ATTACK_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Attack/Austin_Attack_180.png";
+  public static final String AUSTIN_ATTACK_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Attack/Austin_Attack_270.png";
 
   public static final String AUSTIN_IDLE =
           "dracula_punch/Resources/Sprite_Sheets/Austin/Austin_Idle/Austin_Idle.png";
@@ -58,19 +76,51 @@ public class DraculaPunchGame extends StateBasedGame {
 
   //region Ritta
   public static final String RITTA_RUN_0_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_0_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_0.png";
   public static final String RITTA_RUN_90_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_90_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_90.png";
   public static final String RITTA_RUN_180_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_180_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_180.png";
   public static final String RITTA_RUN_270_DEG =
-          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_270_Deg.png";
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Run/Ritta_Run_270.png";
+
+  public static final String RITTA_ATTACK_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Attack/Ritta_Attack_0.png";
+  public static final String RITTA_ATTACK_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Attack/Ritta_Attack_90.png";
+  public static final String RITTA_ATTACK_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Attack/Ritta_Attack_180.png";
+  public static final String RITTA_ATTACK_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Attack/Ritta_Attack_270.png";
 
   public static final String RITTA_IDLE =
           "dracula_punch/Resources/Sprite_Sheets/Ritta/Ritta_Idle/Ritta_Idle.png";
 
   public static final String RITTA_CHAR_SELECT =
           "dracula_punch/Resources/Character_Select/Ritta.png";
+  //endregion
+
+  //region Dracula
+  public static final String DRACULA_WALK_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Walk/Dracula_Walk_0.png";
+  public static final String DRACULA_WALK_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Walk/Dracula_Walk_90.png";
+  public static final String DRACULA_WALK_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Walk/Dracula_Walk_180.png";
+  public static final String DRACULA_WALK_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Walk/Dracula_Walk_270.png";
+
+  public static final String DRACULA_MELEE_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Melee/Dracula_Melee_0.png";
+  public static final String DRACULA_MELEE_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Melee/Dracula_Melee_90.png";
+  public static final String DRACULA_MELEE_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Melee/Dracula_Melee_180.png";
+  public static final String DRACULA_MELEE_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Melee/Dracula_Melee_270.png";
+
+  public static final String DRACULA_IDLE =
+          "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Idle/Dracula_Idle.png";
   //endregion
 
   public DraculaPunchGame(String name, int width, int height) {
@@ -86,26 +136,56 @@ public class DraculaPunchGame extends StateBasedGame {
     addState(new CharacterSelectState());
     addState(new TestLevelState());
 
+    //region Amanda
+    ResourceManager.loadImage(AMANDA_IDLE);
+    ResourceManager.loadImage(AMANDA_CHAR_SELECT);
     ResourceManager.loadImage(AMANDA_RUN_0_DEG);
     ResourceManager.loadImage(AMANDA_RUN_90_DEG);
     ResourceManager.loadImage(AMANDA_RUN_180_DEG);
     ResourceManager.loadImage(AMANDA_RUN_270_DEG);
-    ResourceManager.loadImage(AMANDA_CHAR_SELECT);
-    ResourceManager.loadImage(AMANDA_IDLE);
+    ResourceManager.loadImage(AMANDA_ATTACK_0_DEG);
+    ResourceManager.loadImage(AMANDA_ATTACK_90_DEG);
+    ResourceManager.loadImage(AMANDA_ATTACK_180_DEG);
+    ResourceManager.loadImage(AMANDA_ATTACK_270_DEG);
+    //endregion
 
+    //region Austin
+    ResourceManager.loadImage(AUSTIN_IDLE);
+    ResourceManager.loadImage(AUSTIN_CHAR_SELECT);
     ResourceManager.loadImage(AUSTIN_RUN_0_DEG);
     ResourceManager.loadImage(AUSTIN_RUN_90_DEG);
     ResourceManager.loadImage(AUSTIN_RUN_180_DEG);
     ResourceManager.loadImage(AUSTIN_RUN_270_DEG);
-    ResourceManager.loadImage(AUSTIN_CHAR_SELECT);
-    ResourceManager.loadImage(AUSTIN_IDLE);
+    ResourceManager.loadImage(AUSTIN_ATTACK_0_DEG);
+    ResourceManager.loadImage(AUSTIN_ATTACK_90_DEG);
+    ResourceManager.loadImage(AUSTIN_ATTACK_180_DEG);
+    ResourceManager.loadImage(AUSTIN_ATTACK_270_DEG);
+    //endregion
 
+    //region Ritta
+    ResourceManager.loadImage(RITTA_IDLE);
+    ResourceManager.loadImage(RITTA_CHAR_SELECT);
     ResourceManager.loadImage(RITTA_RUN_0_DEG);
     ResourceManager.loadImage(RITTA_RUN_90_DEG);
     ResourceManager.loadImage(RITTA_RUN_180_DEG);
     ResourceManager.loadImage(RITTA_RUN_270_DEG);
-    ResourceManager.loadImage(RITTA_CHAR_SELECT);
-    ResourceManager.loadImage(RITTA_IDLE);
+    ResourceManager.loadImage(RITTA_ATTACK_0_DEG);
+    ResourceManager.loadImage(RITTA_ATTACK_90_DEG);
+    ResourceManager.loadImage(RITTA_ATTACK_180_DEG);
+    ResourceManager.loadImage(RITTA_ATTACK_270_DEG);
+    //endregion
+
+    //region Dracula
+    ResourceManager.loadImage(DRACULA_IDLE);
+    ResourceManager.loadImage(DRACULA_WALK_0_DEG);
+    ResourceManager.loadImage(DRACULA_WALK_90_DEG);
+    ResourceManager.loadImage(DRACULA_WALK_180_DEG);
+    ResourceManager.loadImage(DRACULA_WALK_270_DEG);
+    ResourceManager.loadImage(DRACULA_MELEE_0_DEG);
+    ResourceManager.loadImage(DRACULA_MELEE_90_DEG);
+    ResourceManager.loadImage(DRACULA_WALK_180_DEG);
+    ResourceManager.loadImage(DRACULA_MELEE_270_DEG);
+    //endregion
   }
 
   public static void main(String[] args) {
