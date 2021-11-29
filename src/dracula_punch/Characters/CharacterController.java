@@ -30,6 +30,9 @@ public abstract class CharacterController extends GameObject {
   protected float movingTime = 99; // one less than total to trigger calculation once on startup
   protected float percentMoveDone;
 
+  private boolean inputLock;
+  public boolean getInputLock(){ return inputLock; }
+
   public CharacterController(final float x, final float y, LevelState curLevelState){
     super(x, y);
     this.curLevelState = curLevelState;
@@ -90,6 +93,9 @@ public abstract class CharacterController extends GameObject {
       moveByPlayerControl();
     } else {
       smoothlyCatchUpToNewPosition(delta);
+    }
+    if(inputLock){
+      inputLock = !curAnim.isStopped();
     }
   }
 
@@ -182,6 +188,52 @@ public abstract class CharacterController extends GameObject {
     }
   }
 
+  /**
+   * Use only for player characters
+   * */
+  public void animateAttack(){
+    String sheet;
+    int width, height;
+    inputLock = true;
+    if(this instanceof AustinController){
+      sheet = getMeleeSheet();
+      width = getMeleeWidth();
+      height = getMeleeHeight();
+    }
+    else{
+      sheet = getRangedSheet();
+      width = getRangedWidth();
+      height = getRangedHeight();
+    }
+
+    if(sheet != null){
+      if(curAnim == null){
+        // If there's no animation, then we have an idle image to remove
+        removeImage(idleImage);
+      }
+      else{
+        removeAnimation(curAnim);
+      }
+
+      // Set the new animation
+      curAnim = new Animation(
+              ResourceManager.getSpriteSheet(
+                      sheet, width, height
+              ),
+              DraculaPunchGame.ANIMATION_DURATION
+      );
+      curAnim.setLooping(false);
+      addAnimation(curAnim);
+    }
+    else if(curAnim != null){
+      removeAnimation(curAnim);
+      curAnim = null;
+
+      idleImage = getIdleSprite();
+      addImage(idleImage);
+    }
+  }
+
   private Image getIdleSprite(){
     int x = (int) facingDir.getX();
     int y = (int) facingDir.getY();
@@ -247,4 +299,34 @@ public abstract class CharacterController extends GameObject {
    * @return The height of each sprite in the character's idle animation
    */
   public abstract int getIdleHeight();
+
+  /**
+   * @return Sprite sheet for melee attack
+   */
+  public abstract String getMeleeSheet();
+
+  /**
+   * @return Width of each sprite in the melee sprite sheet
+   */
+  public abstract int getMeleeWidth();
+
+  /**
+   * @return Height of each sprite in the melee sprite sheet
+   */
+  public abstract int getMeleeHeight();
+
+  /**
+   * @return Sprite sheet for ranged attack
+   */
+  public abstract String getRangedSheet();
+
+  /**
+   * @return Width of each sprite in the ranged sprite sheet
+   */
+  public abstract int getRangedWidth();
+
+  /**
+   * @return Height of each sprite in the ranged sprite sheet
+   */
+  public abstract int getRangedHeight();
 }

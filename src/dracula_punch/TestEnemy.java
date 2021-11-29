@@ -177,4 +177,34 @@ public class TestEnemy extends CharacterController {
   public int getIdleHeight() {
     return 0;
   }
+
+  @Override
+  public String getMeleeSheet() {
+    return null;
+  }
+
+  @Override
+  public int getMeleeWidth() {
+    return 0;
+  }
+
+  @Override
+  public int getMeleeHeight() {
+    return 0;
+  }
+
+  @Override
+  public String getRangedSheet() {
+    return null;
+  }
+
+  @Override
+  public int getRangedWidth() {
+    return 0;
+  }
+
+  @Override
+  public int getRangedHeight() {
+    return 0;
+  }
 }

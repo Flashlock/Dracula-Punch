@@ -17,5 +17,6 @@ public abstract class LevelState extends BasicGameState {
   public ArrayList<CharacterController> playerObjects;
 
   public ArrayList<Action> inputMoveEvent = new ArrayList<>();
+  public ArrayList<Action> inputAttackEvent = new ArrayList<>();
 
 }

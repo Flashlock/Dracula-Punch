@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class TestLevelState extends LevelState {
   private ArrayList<GameObject> gameObjects;
   private GameObject playerOne, playerTwo, playerThree;
+  private boolean isSpaceDown;
 
   @Override
   public int getID() {
@@ -91,6 +92,15 @@ public class TestLevelState extends LevelState {
    * @param input
    */
   private void controls(Input input){
+    boolean spaceDown = input.isKeyDown(Input.KEY_SPACE);
+    if(spaceDown && !isSpaceDown){
+      // attack event
+      for(Action action : inputAttackEvent){
+        action.Execute();
+      }
+    }
+    isSpaceDown = spaceDown;
+
     boolean left, right, up, down;
     // Observe input changes
     left = input.isKeyDown(Input.KEY_A);
