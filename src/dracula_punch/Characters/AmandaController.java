@@ -16,7 +16,7 @@ public class AmandaController extends CharacterController{
     super(x, y, curLevelState);
     xRenderOffset = 10;
     yRenderOffset = 30;
-    scaleFactor = .5f;  // changed scaling to new tiledmap!
+    scaleFactor = .4f;  // changed scaling to new tiledmap!
 
     setScale(scaleFactor);
 

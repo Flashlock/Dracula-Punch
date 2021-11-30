@@ -16,7 +16,7 @@ public class RittaController extends CharacterController{
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 30;
-    scaleFactor = .5f;  // changed scaling to new tiledmap!
+    scaleFactor = .6f;  // changed scaling to new tiledmap!
 
     setScale(scaleFactor);
 

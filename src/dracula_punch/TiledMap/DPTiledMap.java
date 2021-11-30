@@ -28,8 +28,8 @@ public class DPTiledMap extends TiledMap {
           playerSpawnCoordinate.x = x;
           playerSpawnCoordinate.y = y;
         }
-        if (getTileId(x, y, getLayerIndex("Collision")) == 0) {
-          isPassable[x][y] = true;
+        if (getTileId(x, y, getLayerIndex("NE Walls")) == 0 && getTileId(x, y, getLayerIndex("SW Walls")) == 0) {
+            isPassable[x][y] = true;
         }
       }
     }
@@ -39,13 +39,14 @@ public class DPTiledMap extends TiledMap {
     int camX = (int) cameraPosition.getX();
     int camY = (int) cameraPosition.getY();
     render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 0, true);  // render floor
+    render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 1, true);  // render PlayerSpawn
+    render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 2, true);  // render NE Walls
   }
 
   public void renderLayersAboveObjects(Vector cameraPosition) {
     int camX = (int) cameraPosition.getX();
     int camY = (int) cameraPosition.getY();
-    render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 1, true);
-    render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 2, true);
+    render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 3, true);  // render SW Walls
   }
 
   /**

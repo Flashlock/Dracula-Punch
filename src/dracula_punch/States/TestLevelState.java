@@ -71,6 +71,7 @@ public class TestLevelState extends LevelState {
     graphics.drawString("Test State", 10, 25);
     graphics.scale(camera.zoomFactor, camera.zoomFactor);
     map.renderLayersBehindObjects(camera.getCamPosition());
+    // this is where we render our characters
     for(GameObject gameObject : gameObjects){
       gameObject.render(gameContainer, stateBasedGame, graphics);
     }
