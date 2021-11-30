@@ -1,7 +1,9 @@
 package dracula_punch.Characters;
 
+import dracula_punch.Actions.Action;
 import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
+import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
 import jig.ResourceManager;
@@ -15,7 +17,7 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * All Characters - including enemies - will inherit from this class
  */
-public abstract class CharacterController extends GameObject {
+public abstract class CharacterController extends GameObject implements IDamageable {
   public boolean moveUp, moveDown, moveLeft, moveRight;
   protected Animation curAnim;
   protected float scaleFactor;
@@ -30,8 +32,17 @@ public abstract class CharacterController extends GameObject {
   protected float movingTime = 99; // one less than total to trigger calculation once on startup
   protected float percentMoveDone;
 
+  protected Action finishMeleeAction;
+
   private boolean animLock;
   public boolean getAnimLock(){ return animLock; }
+
+  protected int maxHealth;
+  @Override
+  public int getMaxHealth(){ return maxHealth; }
+  protected int currentHealth;
+  @Override
+  public int getCurrentHealth(){ return currentHealth; }
 
   public CharacterController(final float x, final float y, LevelState curLevelState){
     super(x, y);
@@ -75,10 +86,36 @@ public abstract class CharacterController extends GameObject {
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+    /*
+    Animation unlocks when attacks are completed
+    Melee attacks deal damage at the end of the animation
+     */
     if(animLock){
       animLock = !curAnim.isStopped();
+      if(!animLock && finishMeleeAction != null){
+        finishMeleeAction.Execute();
+      }
     }
   }
+
+  //region Damage System
+  @Override
+  public void takeDamage(int damage) {
+    System.out.println("Taking Damage");
+    currentHealth -= damage;
+    if(currentHealth <= 0){
+      curLevelState.deadObjects.add(this);
+    }
+  }
+
+  @Override
+  public void heal(int health) {
+    currentHealth += health;
+    if(currentHealth > maxHealth){
+      currentHealth = maxHealth;
+    }
+  }
+  //endregion
 
   /**
    * Helper function for determining sprite sheet from facing direction

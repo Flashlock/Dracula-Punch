@@ -18,7 +18,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TestLevelState extends LevelState {
-  private ArrayList<GameObject> gameObjects;
   private GameObject playerOne, playerTwo, playerThree;
   private boolean isSpaceDown, isEDown, isUDown;
 
@@ -32,6 +31,7 @@ public class TestLevelState extends LevelState {
     super.enter(container, game);
     gameObjects = new ArrayList<>();
     playerObjects = new ArrayList<>();
+    deadObjects = new ArrayList<>();
 
     map = new DPTiledMap(DraculaPunchGame.MAP);
     camera = new Camera(map, playerObjects);
@@ -101,6 +101,10 @@ public class TestLevelState extends LevelState {
     for(GameObject gameObject : gameObjects){
       gameObject.update(gameContainer, stateBasedGame, delta);
     }
+
+    // Remove dead objects
+    gameObjects.removeAll(deadObjects);
+    deadObjects.clear();
   }
 
   /**

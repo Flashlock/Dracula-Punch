@@ -1,9 +1,15 @@
 package dracula_punch.Characters;
 
+import dracula_punch.Actions.Damage_System.FinishMeleeAction;
+import dracula_punch.Damage_System.IDamageable;
+import dracula_punch.Damage_System.IMelee;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
 
-public class AustinController extends PlayerController{
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+public class AustinController extends PlayerController implements IMelee {
   public static final int RUN_HEIGHT = 628;
   public static final int RUN_WIDTH = 360;
   public static final int IDLE_HEIGHT = 620;
@@ -11,11 +17,16 @@ public class AustinController extends PlayerController{
   public static final int ATTACK_WIDTH = 550;
   public static final int ATTACK_HEIGHT = 550;
 
+  private int meleeDamage;
+
   public AustinController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 35;
     scaleFactor = 1f;  // changed scaling to new tiledmap!
+
+    meleeDamage = 5;
+    finishMeleeAction = new FinishMeleeAction(this);
 
     setScale(scaleFactor);
   }
@@ -90,5 +101,28 @@ public class AustinController extends PlayerController{
   @Override
   public int getRangedHeight() {
     return 0;
+  }
+
+  @Override
+  public int getMeleeDamage() {
+    return meleeDamage;
+  }
+
+  @Override
+  public ArrayList<IDamageable> getTargetObjects() {
+    // get the tile in front of me
+    int x = (int) (currentTile.x + facingDir.getX());
+    int y = (int) (currentTile.y + facingDir.getY());
+
+    // filter through all the objects for damageable ones
+    ArrayList<GameObject> gameObjects = curLevelState.getObjectsFromTile(x, y);
+    ArrayList<IDamageable> damageables = new ArrayList<>();
+    for(GameObject gameObject : gameObjects){
+      if(gameObject instanceof IDamageable){
+        damageables.add((IDamageable) gameObject);
+      }
+    }
+
+    return damageables;
   }
 }

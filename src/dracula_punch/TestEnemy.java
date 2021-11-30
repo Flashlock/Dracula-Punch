@@ -2,6 +2,7 @@ package dracula_punch;
 
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.CharacterController;
+import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.States.LevelState;
 import jig.ResourceManager;
 import jig.Vector;
@@ -162,7 +163,7 @@ public class TestEnemy extends CharacterController {
     currentTilePlusPartial.add(partialX, partialY);
   }
 
-
+  //region Character Controller
   @Override
   public String getRunSheet(int x, int y) {
     return getSheetHelper(
@@ -234,4 +235,17 @@ public class TestEnemy extends CharacterController {
   public int getRangedHeight() {
     return 0;
   }
+  //endregion
+
+  //region Damage System
+  @Override
+  public void takeDamage(int damage) {
+
+  }
+
+  @Override
+  public void heal(int health) {
+
+  }
+  //endregion
 }
