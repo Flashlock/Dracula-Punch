@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="isometric" renderorder="right-down" width="120" height="120" tilewidth="256" tileheight="128" infinite="0" nextlayerid="9" nextobjectid="1">
+ <tileset firstgid="1" source="tiledDungeon2.tsx"/>
+ <layer id="6" name="Floor" width="120" height="120">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3DQQ0AAAwDodNR/0InYl9IWDVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV9fUA0u2b7wDhAAA=
+  </data>
+ </layer>
+ <layer id="4" name="PlayerSpawn" width="120" height="120">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3OMQEAAAgDoKWyfzRTTB9IQAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcGu+AwAAAAAAAAAAAAAAULAO6RmEAOEAAA==
+  </data>
+ </layer>
+ <layer id="8" name="Collision" width="120" height="120">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3dy04bQRCFYa9YJBKbKGKZyQMgIWXL+z8XseyICPC4q7qq6zL/kY4SxNBT3V9ABNnm6XQ6PVFKS/cnbdWvfB9oi+Lbu/j2Lr69i2/v4tu7+PYuvj61TFXflalqOzt/hG9Eqvtq97DKNzq35vq18z7JNav2mtE3Q85zfL/+/duda++9fy/PEx87kiy+2fIjegCjZPDNmKxzSRPpmznZ5xtNlG/2VJhxJBG+FVJlzntZ7VsllWbdyyrfDLNb12omz/8jVfSNdt3bl+W/FYtU8o22xNdv/mhHfP3mjzbE12f+aDt88bWa2StZfaPd8LXxjfbBF198j+WrDb75OxN883cm+ObvTI7o6zkrvrV8NfPiW8tXMzO+tXw1c+Nby1czO7744lvT95yXv329/vkv/7/9ei2+NX0/5lG5rsesXqnsK9mD9Xq31td8LL638zxwb+njT/HN4+sRfPHF95i+v5VreQXfz7H8/LP0/SPch+T+s74exuc1s31/pV3LKyt9rfdhcf6z61rVK6t9LfeCr/1eMr0+A772e7F+fZVVs3uti6/P/jzXx9fed3SvK86vi61mL1VfP9bzTDIH3/kzyRx8588kc/CdP5Os0ZwTvjV8teeEb37fmXPCV7Z29L7x/Rx88cU3VyXBF198c1USfPHFN1clwRdffHNVEnzxxTdPvR//bLlWdLW+3r9nby+b8Hp8az0/ZRNejy+++OKrWSu6+OKLr36t6OKLL776taKLL77ZfDv8/EqTo/hKk8135V7wXeu7ej/4rvO1DL7vwRdffPHVrIWvf/DFF988vlV/vmGZzr6b8Hp88fX2tX68Gr7vifw88wq+l0R/HfUKvpfgi2+mvY0G30s0vh7l+6vxbIJro129zgzfS6JNvc4N33hLfHXZBq+LtsRXl23wumhLr3OT3A/fWsbSe2l8I5/7exLcP9rR2lhzn4rP36f4UnyPUHx7F9/exbd38e1dfHsX397Ft3dv+dI+/ehLKa3XN1woEGcA4QAA
+  </data>
+ </layer>
+</map>
