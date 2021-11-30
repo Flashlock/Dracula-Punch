@@ -23,7 +23,7 @@ public abstract class CharacterController extends GameObject {
   protected LevelState curLevelState;
   protected Vector facingDir;
 
-  private Image idleImage;
+  protected Image idleImage;
   protected Coordinate previousTile = new Coordinate();
   public Coordinate currentTilePlusPartial = new Coordinate();
   protected float TOTAL_MOVE_TIME = 100;

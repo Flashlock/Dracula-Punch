@@ -3,6 +3,9 @@ package dracula_punch;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.CharacterController;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
+import jig.Vector;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -18,8 +21,10 @@ public class TestEnemy extends CharacterController {
   public static final int IDLE_HEIGHT = 370;
 
   private Coordinate startingTile, targetTile;
+  private boolean isMoving;
+  public boolean getIsMoving(){ return isMoving; }
 
-  //region Variables for implementing Dijkstra's pathfinding
+  //region Dijkstra's Variables
   private DijkstraNode[][] nodeGrid;
   private PriorityQueue<DijkstraNode> nodesToVisit = new PriorityQueue<>();
   private ArrayList<DijkstraNode> enemyPath;
@@ -118,6 +123,7 @@ public class TestEnemy extends CharacterController {
   }
 
   private void move(int delta) {
+    boolean moved = true;
     if (movingTime < TOTAL_MOVE_TIME){ movingTime += delta; }
     else if (!currentTile.isEqual(previousTargetTile) && !enemyPath.isEmpty()){
       Coordinate next = enemyPath.remove(0).coord;
@@ -126,7 +132,23 @@ public class TestEnemy extends CharacterController {
       previousTile.y = currentTile.y;
       currentTile.x = next.x;
       currentTile.y = next.y;
+
+      float x = next.x - previousTile.x;
+      float y = previousTile.y - next.y;
+      Vector dir = new Vector(x, y);
+      dir = dir.scale(1 / dir.length());
+      if(dir.getX() != facingDir.getX() || dir.getY() != facingDir.getY()){
+        // Change directions
+        animateMove(dir);
+      }
     }
+    else moved = false;
+
+    if(!moved && isMoving){
+      // stopped
+      animateMove(new Vector(0,0));
+    }
+    isMoving = moved;
   }
 
   private void updateAnimation() {
@@ -139,6 +161,7 @@ public class TestEnemy extends CharacterController {
     currentTilePlusPartial = new Coordinate(currentTile);
     currentTilePlusPartial.add(partialX, partialY);
   }
+
 
   @Override
   public String getRunSheet(int x, int y) {
