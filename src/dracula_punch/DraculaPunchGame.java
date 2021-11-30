@@ -183,7 +183,7 @@ public class DraculaPunchGame extends StateBasedGame {
     ResourceManager.loadImage(DRACULA_WALK_270_DEG);
     ResourceManager.loadImage(DRACULA_MELEE_0_DEG);
     ResourceManager.loadImage(DRACULA_MELEE_90_DEG);
-    ResourceManager.loadImage(DRACULA_WALK_180_DEG);
+    ResourceManager.loadImage(DRACULA_MELEE_180_DEG);
     ResourceManager.loadImage(DRACULA_MELEE_270_DEG);
     //endregion
   }
