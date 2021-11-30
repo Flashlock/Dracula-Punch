@@ -30,8 +30,8 @@ public abstract class CharacterController extends GameObject {
   protected float movingTime = 99; // one less than total to trigger calculation once on startup
   protected float percentMoveDone;
 
-  private boolean inputLock;
-  public boolean getInputLock(){ return inputLock; }
+  private boolean animLock;
+  public boolean getAnimLock(){ return animLock; }
 
   public CharacterController(final float x, final float y, LevelState curLevelState){
     super(x, y);
@@ -63,22 +63,9 @@ public abstract class CharacterController extends GameObject {
     idleImage = getIdleSprite();
     addImage(idleImage);
   }
-  public CharacterController(final float x, final float y, LevelState curLevelState, boolean lameWorkaround){
-    super(x, y);
-    this.curLevelState = curLevelState;
-    currentTile = new Coordinate(curLevelState.map.playerSpawnCoordinate);
-
-  }
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
-//        Vector screenOffset = curLevelState.getScreenOffset();
-//        float x = screenOffset.getX() - 5 + xRenderOffset;
-//        // If idle pose, no current animation
-//        float y = curAnim == null ?
-//                screenOffset.getY() - 5 - getIdleHeight() / 2f * scaleFactor + yRenderOffset
-//                : screenOffset.getY() - 5 - curAnim.getHeight() / 2f * scaleFactor + yRenderOffset;
-
     Camera cam = curLevelState.camera;
     setPosition(cam.getScreenPositionFromTile(currentTilePlusPartial));
     if(cam.isInScreenRange(currentTile)) {
@@ -88,74 +75,89 @@ public abstract class CharacterController extends GameObject {
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-    if (movingTime == TOTAL_MOVE_TIME) {
-      moveByPlayerControl();
-    } else {
-      smoothlyCatchUpToNewPosition(delta);
-    }
-    if(inputLock){
-      inputLock = !curAnim.isStopped();
+    if(animLock){
+      animLock = !curAnim.isStopped();
     }
   }
 
-  private void moveByPlayerControl() {
-    int dx = 0;
-    int dy = 0;
-    if (moveLeft && currentTile.x > 0) {
-      dx = -1;
+  /**
+   * Helper function for determining sprite sheet from facing direction
+   * @param up Upwards sprite sheet
+   * @param down Downwards sprite sheet
+   * @param left Leftwards sprite sheet
+   * @param right Rightwards sprite sheet
+   * @return The given sheet correlating to the facing direction
+   */
+  protected String getSheetHelper(String up, String down, String left, String right){
+    int x = (int) facingDir.getX();
+    int y = (int) facingDir.getY();
+
+    String sheet = null;
+    if(x == 1 && y == 0){
+      // right
+      sheet = right;
     }
-    if (moveRight && currentTile.x < curLevelState.map.getWidth() - 1) {
-      dx = 1;
+    else if(x == -1 && y == 0){
+      // left
+      sheet = left;
     }
-    if (moveUp && currentTile.y > 0) {
-      dy = -1;
+    else if(x == 0 && y == 1){
+      // up
+      sheet = up;
     }
-    if (moveDown && currentTile.y <  curLevelState.map.getHeight() - 1) {
-      dy = 1;
+    else if(x == 0 && y == -1){
+      // down
+      sheet = down;
     }
-    boolean nextTileIsChosen = dx!=0 || dy!=0;
-    boolean nextTileIsPassable = curLevelState.map.isPassable[(int)currentTile.x + dx][(int)currentTile.y + dy];
-    if (nextTileIsChosen && nextTileIsPassable) {
-      movingTime = 0;
-      previousTile.setEqual(currentTile);
-      currentTile.add(dx, dy);
-      //System.out.println("Player Moved " + currentTile.x + " " + currentTile.y);
+    else if(x == 0 && y == 0){
+      // stop - do nothing for now. No idle pose/anim
     }
+    else{
+      System.out.println("Invalid Direction: Unable to Animate");
+    }
+    return sheet;
   }
 
-  private void smoothlyCatchUpToNewPosition(int delta) {
-    movingTime += delta;
-    if(movingTime > TOTAL_MOVE_TIME) {
-      movingTime = TOTAL_MOVE_TIME;
+  /**
+   * Determine sprite sheet for new facing direction
+   * @param x The x direction to face
+   * @param y The y direction to face
+   * @return The given sheet correlating to the facing direction
+   */
+  protected String getSheetHelper(String up, String down, String left, String right, int x, int y){
+    String sheet = null;
+    if(x == 1 && y == 0){
+      // right
+      sheet = right;
     }
-
-    percentMoveDone = (TOTAL_MOVE_TIME - movingTime) / TOTAL_MOVE_TIME;
-    float partialX = 0, partialY = 0;
-    if (previousTile.x > currentTile.x) {
-      partialX = percentMoveDone;
+    else if(x == -1 && y == 0){
+      // left
+      sheet = left;
     }
-    else if (previousTile.x < currentTile.x) {
-      partialX = -percentMoveDone;
+    else if(x == 0 && y == 1){
+      // up
+      sheet = up;
     }
-    if (previousTile.y > currentTile.y) {
-      partialY = percentMoveDone;
+    else if(x == 0 && y == -1){
+      // down
+      sheet = down;
     }
-    else if (previousTile.y < currentTile.y) {
-      partialY = -percentMoveDone;
+    else if(x == 0 && y == 0){
+      // stop - do nothing for now. No idle pose/anim
     }
-    currentTilePlusPartial.setEqual(currentTile);
-    currentTilePlusPartial.add(partialX, partialY);
+    else{
+      System.out.println("Invalid Direction: Unable to Animate");
+    }
+    return sheet;
   }
+
 
   /**
    * Animate the controller's movement
    * @param direction The direction to move
    */
   public void animateMove(Vector direction){
-    int x = (int) direction.getX();
-    int y = (int) direction.getY();
-
-    String sheet = getRunSheet(x, y);
+    String sheet = getRunSheet((int) direction.getX(), (int) direction.getY());
 
     if(sheet != null){
       if(curAnim == null){
@@ -175,7 +177,6 @@ public abstract class CharacterController extends GameObject {
       );
       curAnim.setLooping(true);
       addAnimation(curAnim);
-
       facingDir = direction;
     }
     else if(curAnim != null){
@@ -188,22 +189,14 @@ public abstract class CharacterController extends GameObject {
   }
 
   /**
-   * Use only for player characters
-   * */
-  public void animateAttack(){
-    String sheet;
-    int width, height;
-    inputLock = true;
-    if(this instanceof AustinController){
-      sheet = getMeleeSheet();
-      width = getMeleeWidth();
-      height = getMeleeHeight();
-    }
-    else{
-      sheet = getRangedSheet();
-      width = getRangedWidth();
-      height = getRangedHeight();
-    }
+   * Animate the controller's attack
+   * @param sheet Sprite sheet for animation
+   * @param width Width of each sprite
+   * @param height Height of each sprite
+   */
+  public void animateAttack(String sheet, int width, int height){
+    // Put a lock on animation to wait until attack completes
+    animLock = true;
 
     if(sheet != null){
       if(curAnim == null){
@@ -233,6 +226,9 @@ public abstract class CharacterController extends GameObject {
     }
   }
 
+  /**
+   * @return Idle image in the facing direction
+   */
   private Image getIdleSprite(){
     int x = (int) facingDir.getX();
     int y = (int) facingDir.getY();
@@ -269,11 +265,10 @@ public abstract class CharacterController extends GameObject {
 
   /**
    * @return The character's Run Sprite Sheet for the given direction
-   * @param x facing direction x
-   * @param y facing direction y
+   * @param x The x direction we wish to face
+   * @param y The y direction we wish to face
    */
   public abstract String getRunSheet(int x, int y);
-
   /**
    * @return The width of each sprite in the character's run animation
    */

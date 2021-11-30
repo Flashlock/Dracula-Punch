@@ -1,17 +1,22 @@
 package dracula_punch;
 
-import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.CharacterController;
 import dracula_punch.States.LevelState;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class TestEnemy extends CharacterController {
+  public static final int WALK_WIDTH = 250;
+  public static final int WALK_HEIGHT = 450;
+  public static final int MELEE_WIDTH = 450;
+  public static final int MELEE_HEIGHT = 550;
+  public static final int IDLE_WIDTH = 220;
+  public static final int IDLE_HEIGHT = 370;
+
   private Coordinate startingTile, targetTile;
 
   //region Variables for implementing Dijkstra's pathfinding
@@ -22,31 +27,14 @@ public class TestEnemy extends CharacterController {
   //endregion
 
   public TestEnemy(Coordinate startingTile, LevelState curLevelState){
-    super(0,0,curLevelState, true);
+    super(0,0,curLevelState);
     this.startingTile = new Coordinate(startingTile);
     TOTAL_MOVE_TIME = 200;
   }
 
   @Override
-  public String getRunSheet(int x, int y) {
-    return null;
-  }
-
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
-    Camera cam = curLevelState.camera;
-    setPosition(cam.getScreenPositionFromTile(currentTilePlusPartial));
-    if(cam.isInScreenRange(currentTile)) {
-      graphics.fillOval(
-          getX() - 5,
-          getY() - 5,
-          10,
-          10
-      );
-    }
-  }
-  @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+    super.update(gameContainer, stateBasedGame, delta);
     determineTarget();
     updatePath();
     move(delta);
@@ -55,7 +43,7 @@ public class TestEnemy extends CharacterController {
 
   private void determineTarget() {
     // TODO Replace camera with a function that picks the nearest player
-    targetTile =curLevelState.playerObjects.get(0).currentTile;
+    targetTile = curLevelState.playerObjects.get(0).currentTile;
     //targetTile = curLevelState.camera.currentTile;
   }
 
@@ -152,45 +140,61 @@ public class TestEnemy extends CharacterController {
     currentTilePlusPartial.add(partialX, partialY);
   }
 
+  @Override
+  public String getRunSheet(int x, int y) {
+    return getSheetHelper(
+            DraculaPunchGame.DRACULA_WALK_0_DEG,
+            DraculaPunchGame.DRACULA_WALK_180_DEG,
+            DraculaPunchGame.DRACULA_WALK_90_DEG,
+            DraculaPunchGame.DRACULA_WALK_270_DEG,
+            x,
+            y
+    );
+  }
 
   @Override
   public int getRunWidth() {
-    return 0;
+    return WALK_WIDTH;
   }
 
   @Override
   public int getRunHeight() {
-    return 0;
+    return WALK_HEIGHT;
   }
 
   @Override
   public String getIdleSheet() {
-    return null;
+    return DraculaPunchGame.DRACULA_IDLE;
   }
 
   @Override
   public int getIdleWidth() {
-    return 0;
+    return IDLE_WIDTH;
   }
 
   @Override
   public int getIdleHeight() {
-    return 0;
+    return IDLE_HEIGHT;
   }
 
   @Override
   public String getMeleeSheet() {
-    return null;
+    return getSheetHelper(
+            DraculaPunchGame.DRACULA_MELEE_0_DEG,
+            DraculaPunchGame.DRACULA_MELEE_180_DEG,
+            DraculaPunchGame.DRACULA_MELEE_90_DEG,
+            DraculaPunchGame.DRACULA_MELEE_270_DEG
+    );
   }
 
   @Override
   public int getMeleeWidth() {
-    return 0;
+    return MELEE_WIDTH;
   }
 
   @Override
   public int getMeleeHeight() {
-    return 0;
+    return MELEE_HEIGHT;
   }
 
   @Override

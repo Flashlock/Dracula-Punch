@@ -1,13 +1,9 @@
 package dracula_punch.Characters;
 
-import dracula_punch.Actions.Input.InputAttackAction;
-import dracula_punch.Actions.Input.InputMoveAction;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.state.StateBasedGame;
 
-public class AustinController extends CharacterController{
+public class AustinController extends PlayerController{
   public static final int RUN_HEIGHT = 628;
   public static final int RUN_WIDTH = 360;
   public static final int IDLE_HEIGHT = 620;
@@ -26,30 +22,14 @@ public class AustinController extends CharacterController{
 
   @Override
   public String getRunSheet(int x, int y) {
-    String sheet = null;
-    if(x == 1 && y == 0){
-      // right
-      sheet = DraculaPunchGame.AUSTIN_RUN_270_DEG;
-    }
-    else if(x == -1 && y == 0){
-      // left
-      sheet = DraculaPunchGame.AUSTIN_RUN_90_DEG;
-    }
-    else if(x == 0 && y == 1){
-      // up
-      sheet = DraculaPunchGame.AUSTIN_RUN_0_DEG;
-    }
-    else if(x == 0 && y == -1){
-      // down
-      sheet = DraculaPunchGame.AUSTIN_RUN_180_DEG;
-    }
-    else if(x == 0 && y == 0){
-      // stop - do nothing for now. No idle pose/anim
-    }
-    else{
-      System.out.println("Invalid Direction: Unable to Animate");
-    }
-    return sheet;
+    return getSheetHelper(
+            DraculaPunchGame.AUSTIN_RUN_0_DEG,
+            DraculaPunchGame.AUSTIN_RUN_180_DEG,
+            DraculaPunchGame.AUSTIN_RUN_90_DEG,
+            DraculaPunchGame.AUSTIN_RUN_270_DEG,
+            x,
+            y
+    );
   }
 
   @Override
@@ -79,32 +59,12 @@ public class AustinController extends CharacterController{
 
   @Override
   public String getMeleeSheet() {
-    int x = (int) facingDir.getX();
-    int y = (int) facingDir.getY();
-    String sheet = null;
-    if(x == 1 && y == 0){
-      // right
-      sheet = DraculaPunchGame.AUSTIN_ATTACK_270_DEG;
-    }
-    else if(x == -1 && y == 0){
-      // left
-      sheet = DraculaPunchGame.AUSTIN_ATTACK_90_DEG;
-    }
-    else if(x == 0 && y == 1){
-      // up
-      sheet = DraculaPunchGame.AUSTIN_ATTACK_0_DEG;
-    }
-    else if(x == 0 && y == -1){
-      // down
-      sheet = DraculaPunchGame.AUSTIN_ATTACK_180_DEG;
-    }
-    else if(x == 0 && y == 0){
-      // stop - do nothing for now. No idle pose/anim
-    }
-    else{
-      System.out.println("Invalid Direction: Unable to Animate");
-    }
-    return sheet;
+    return getSheetHelper(
+            DraculaPunchGame.AUSTIN_ATTACK_0_DEG,
+            DraculaPunchGame.AUSTIN_ATTACK_180_DEG,
+            DraculaPunchGame.AUSTIN_ATTACK_90_DEG,
+            DraculaPunchGame.AUSTIN_ATTACK_270_DEG
+    );
   }
 
   @Override
