@@ -189,16 +189,4 @@ public class TestEnemy extends CharacterController {
     return null;
   }
   //endregion
-
-  //region Damage System
-  @Override
-  public void takeDamage(int damage) {
-
-  }
-
-  @Override
-  public void heal(int health) {
-
-  }
-  //endregion
 }

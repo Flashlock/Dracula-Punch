@@ -96,8 +96,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
     if(animLock){
       animLock = curAnim.getFrame() != curAnim.getFrameCount() - 1;
 
-      if(!animLock)
-        System.out.println("Lock is off");
       if(!animLock && finishMeleeAction != null){
         finishMeleeAction.Execute();
       }
@@ -107,7 +105,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
   //region Damage System
   @Override
   public void takeDamage(int damage) {
-    System.out.println("Taking Damage");
     currentHealth -= damage;
     if(currentHealth <= 0){
       curLevelState.deadObjects.add(this);
@@ -255,7 +252,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
               ),
               DraculaPunchGame.ANIMATION_DURATION
       );
-      System.out.println("anim lock " + animLock);
       curAnim.setLooping(false);
       addAnimation(curAnim);
     }
