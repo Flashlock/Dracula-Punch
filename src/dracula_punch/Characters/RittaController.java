@@ -9,7 +9,7 @@ public class RittaController extends PlayerController{
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 30;
-    scaleFactor = 1f;  // changed scaling to new tiledmap!
+    scaleFactor = .8f;  // changed scaling to new tiledmap!
 
     setScale(scaleFactor);
   }

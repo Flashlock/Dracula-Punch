@@ -1,6 +1,7 @@
 package dracula_punch.Characters;
 
 import dracula_punch.Actions.Action;
+import dracula_punch.Actions.Damage_System.AttackAction;
 import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Damage_System.IDamageable;
@@ -8,14 +9,11 @@ import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
 import jig.ResourceManager;
 import jig.Vector;
-import org.lwjgl.Sys;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
-
-import java.util.Objects;
 
 /**
  * All Characters - including enemies - will inherit from this class
@@ -35,7 +33,7 @@ public abstract class CharacterController extends GameObject implements IDamagea
   protected float movingTime = 99; // one less than total to trigger calculation once on startup
   protected float percentMoveDone;
 
-  protected Action finishMeleeAction;
+  protected AttackAction attackAction;
 
   private boolean animLock;
   public boolean getAnimLock(){ return animLock; }
@@ -89,15 +87,17 @@ public abstract class CharacterController extends GameObject implements IDamagea
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-    /*
-    Animation unlocks when attacks are completed
-    Melee attacks deal damage at the end of the animation
-     */
     if(animLock){
-      animLock = curAnim.getFrame() != curAnim.getFrameCount() - 1;
+      // if this is the animation frame where the action is triggered
+      int frame = curAnim.getFrame();
+      if(attackAction != null && frame == attackAction.getFrameActionIndex() && !attackAction.actionTriggered){
+        attackAction.Execute();
+      }
 
-      if(!animLock && finishMeleeAction != null){
-        finishMeleeAction.Execute();
+      // if the animation is over, remove lock and reset action trigger
+      animLock = frame != curAnim.getFrameCount() - 1;
+      if(!animLock && attackAction != null){
+        attackAction.actionTriggered = false;
       }
     }
   }

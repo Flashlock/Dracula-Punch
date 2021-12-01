@@ -1,28 +1,31 @@
 package dracula_punch.Characters;
 
-import dracula_punch.Actions.Damage_System.FinishMeleeAction;
+import dracula_punch.Actions.Damage_System.MeleeAction;
 import dracula_punch.Damage_System.IDamageable;
-import dracula_punch.Damage_System.IMelee;
+import dracula_punch.Damage_System.IAttacker;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
 
 import java.util.ArrayList;
 
-public class AustinController extends PlayerController implements IMelee {
+public class AustinController extends PlayerController implements IAttacker {
   private int meleeDamage;
+  private final int meleeActionFrame;
 
   public AustinController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 35;
     scaleFactor = 1f;  // changed scaling to new tiledmap!
+    meleeActionFrame = 10;
 
     meleeDamage = 5;
-    finishMeleeAction = new FinishMeleeAction(this);
+    attackAction = new MeleeAction(this, meleeActionFrame);
 
     setScale(scaleFactor);
   }
 
+  //region Character Controller
   @Override
   public String getRunSheet(int x, int y) {
     return getSheetHelper(
@@ -54,17 +57,34 @@ public class AustinController extends PlayerController implements IMelee {
   public String getRangedSheet() {
     return null;
   }
+  //endregion
 
+  //region IAttacker
   @Override
   public int getMeleeDamage() {
     return meleeDamage;
   }
 
   @Override
+  public int getMeleeDamageFrame() {
+    return meleeActionFrame;
+  }
+
+  @Override
+  public int getRangedDamage() {
+    return 0;
+  }
+
+  @Override
+  public int getRangedFireFrame() {
+    return 0;
+  }
+
+  @Override
   public ArrayList<IDamageable> getTargetObjects() {
     // get the tile in front of me
     int x = (int) (currentTile.x + facingDir.getX());
-    int y = (int) (currentTile.y + facingDir.getY());
+    int y = (int) (currentTile.y - facingDir.getY());
 
     // filter through all the objects for damageable ones
     ArrayList<GameObject> gameObjects = curLevelState.getObjectsFromTile(x, y);
@@ -77,4 +97,5 @@ public class AustinController extends PlayerController implements IMelee {
 
     return damageables;
   }
+  //endregion
 }
