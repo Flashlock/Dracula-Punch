@@ -13,6 +13,7 @@ public abstract class PlayerController extends CharacterController{
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
         super.update(gameContainer, stateBasedGame, delta);
+        if(getAnimLock()) return;
         if (movingTime == TOTAL_MOVE_TIME) {
             moveByPlayerControl();
         } else {

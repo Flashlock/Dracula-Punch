@@ -27,27 +27,21 @@ public class InputAttackAction extends Action {
 
     @Override
     public void Execute() {
-        if(controller.getAnimLock()) return;
-
-        int width, height;
+        if(controller.getAnimLock()){ return; }
         String sheet;
         switch (charID){
             case AUSTIN:
                 sheet = controller.getMeleeSheet();
-                width = controller.getMeleeWidth();
-                height = controller.getMeleeHeight();
                 break;
             case AMANDA:
             case RITTA:
                 sheet = controller.getRangedSheet();
-                width = controller.getRangedWidth();
-                height = controller.getRangedHeight();
                 break;
             default:
                 System.out.println("Unknown Character Controller");
                 return;
         }
 
-        controller.animateAttack(sheet, width, height);
+        controller.animateAttack(sheet);
     }
 }

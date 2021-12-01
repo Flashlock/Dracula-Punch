@@ -14,13 +14,6 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class TestEnemy extends CharacterController {
-  public static final int WALK_WIDTH = 250;
-  public static final int WALK_HEIGHT = 450;
-  public static final int MELEE_WIDTH = 450;
-  public static final int MELEE_HEIGHT = 550;
-  public static final int IDLE_WIDTH = 220;
-  public static final int IDLE_HEIGHT = 370;
-
   private Coordinate startingTile, targetTile;
   private boolean isMoving;
   public boolean getIsMoving(){ return isMoving; }
@@ -177,28 +170,8 @@ public class TestEnemy extends CharacterController {
   }
 
   @Override
-  public int getRunWidth() {
-    return WALK_WIDTH;
-  }
-
-  @Override
-  public int getRunHeight() {
-    return WALK_HEIGHT;
-  }
-
-  @Override
   public String getIdleSheet() {
     return DraculaPunchGame.DRACULA_IDLE;
-  }
-
-  @Override
-  public int getIdleWidth() {
-    return IDLE_WIDTH;
-  }
-
-  @Override
-  public int getIdleHeight() {
-    return IDLE_HEIGHT;
   }
 
   @Override
@@ -212,28 +185,8 @@ public class TestEnemy extends CharacterController {
   }
 
   @Override
-  public int getMeleeWidth() {
-    return MELEE_WIDTH;
-  }
-
-  @Override
-  public int getMeleeHeight() {
-    return MELEE_HEIGHT;
-  }
-
-  @Override
   public String getRangedSheet() {
     return null;
-  }
-
-  @Override
-  public int getRangedWidth() {
-    return 0;
-  }
-
-  @Override
-  public int getRangedHeight() {
-    return 0;
   }
   //endregion
 

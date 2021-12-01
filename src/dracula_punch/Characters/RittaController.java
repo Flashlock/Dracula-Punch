@@ -4,12 +4,6 @@ import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
 
 public class RittaController extends PlayerController{
-  public static final int RUN_HEIGHT = 650;
-  public static final int RUN_WIDTH = 550;
-  public static final int IDLE_HEIGHT = 500;
-  public static final int IDLE_WIDTH = 500;
-  public static final int ATTACK_WIDTH = 500;
-  public static final int ATTACK_HEIGHT = 500;
 
   public RittaController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
@@ -33,43 +27,13 @@ public class RittaController extends PlayerController{
   }
 
   @Override
-  public int getRunWidth() {
-    return RUN_WIDTH;
-  }
-
-  @Override
-  public int getRunHeight() {
-    return RUN_HEIGHT;
-  }
-
-  @Override
   public String getIdleSheet() {
     return DraculaPunchGame.RITTA_IDLE;
   }
 
   @Override
-  public int getIdleWidth() {
-    return IDLE_WIDTH;
-  }
-
-  @Override
-  public int getIdleHeight() {
-    return IDLE_HEIGHT;
-  }
-
-  @Override
   public String getMeleeSheet() {
     return null;
-  }
-
-  @Override
-  public int getMeleeWidth() {
-    return 0;
-  }
-
-  @Override
-  public int getMeleeHeight() {
-    return 0;
   }
 
   @Override
@@ -80,15 +44,5 @@ public class RittaController extends PlayerController{
             DraculaPunchGame.RITTA_ATTACK_90_DEG,
             DraculaPunchGame.RITTA_ATTACK_270_DEG
     );
-  }
-
-  @Override
-  public int getRangedWidth() {
-    return ATTACK_WIDTH;
-  }
-
-  @Override
-  public int getRangedHeight() {
-    return ATTACK_HEIGHT;
   }
 }
