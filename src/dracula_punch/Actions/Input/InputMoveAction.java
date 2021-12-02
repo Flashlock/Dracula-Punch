@@ -17,6 +17,8 @@ public class InputMoveAction extends Action {
 
     @Override
     public void Execute(Object data) {
+        if(characterController.getAnimLock()) return;
+        
         Vector dir = (Vector) data;
         characterController.animateMove(dir);
     }

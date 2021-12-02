@@ -1,65 +1,41 @@
 package dracula_punch.Characters;
 
-import dracula_punch.Actions.Input.InputMoveAction;
+import dracula_punch.Actions.Damage_System.AttackAction;
+import dracula_punch.Damage_System.AttackType;
+import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.state.StateBasedGame;
 
-public class AustinController extends CharacterController{
-  public static final int RUN_HEIGHT = 772;
-  public static final int RUN_WIDTH = 540;
-  public static final int IDLE_HEIGHT = 778;
-  public static final int IDLE_WIDTH = 940;
+import java.util.ArrayList;
+
+public class AustinController extends PlayerController {
+  private int meleeDamage;
+  private final int meleeActionFrame;
 
   public AustinController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 35;
-    scaleFactor = .5f;  // changed scaling to new tiledmap!
+    scaleFactor = 1f;
+    meleeActionFrame = 10;
+
+    meleeDamage = 5;
+    attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
 
     setScale(scaleFactor);
-
-    // Add a movement action - for animation switching
-    curLevelState.inputMoveEvent.add(new InputMoveAction(this));
   }
 
+  //region Character Controller
   @Override
   public String getRunSheet(int x, int y) {
-    String sheet = null;
-    if(x == 1 && y == 0){
-      // right
-      sheet = DraculaPunchGame.AUSTIN_RUN_270_DEG;
-    }
-    else if(x == -1 && y == 0){
-      // left
-      sheet = DraculaPunchGame.AUSTIN_RUN_90_DEG;
-    }
-    else if(x == 0 && y == 1){
-      // up
-      sheet = DraculaPunchGame.AUSTIN_RUN_0_DEG;
-    }
-    else if(x == 0 && y == -1){
-      // down
-      sheet = DraculaPunchGame.AUSTIN_RUN_180_DEG;
-    }
-    else if(x == 0 && y == 0){
-      // stop - do nothing for now. No idle pose/anim
-    }
-    else{
-      System.out.println("Invalid Direction: Unable to Animate");
-    }
-    return sheet;
-  }
-
-  @Override
-  public int getRunWidth() {
-    return RUN_WIDTH;
-  }
-
-  @Override
-  public int getRunHeight() {
-    return RUN_HEIGHT;
+    return DraculaPunchGame.getSheetHelper(
+            DraculaPunchGame.AUSTIN_RUN_0_DEG,
+            DraculaPunchGame.AUSTIN_RUN_180_DEG,
+            DraculaPunchGame.AUSTIN_RUN_90_DEG,
+            DraculaPunchGame.AUSTIN_RUN_270_DEG,
+            x,
+            y
+    );
   }
 
   @Override
@@ -68,12 +44,44 @@ public class AustinController extends CharacterController{
   }
 
   @Override
-  public int getIdleWidth() {
-    return IDLE_WIDTH;
+  public String getMeleeSheet() {
+    return getSheetHelper(
+            DraculaPunchGame.AUSTIN_ATTACK_0_DEG,
+            DraculaPunchGame.AUSTIN_ATTACK_180_DEG,
+            DraculaPunchGame.AUSTIN_ATTACK_90_DEG,
+            DraculaPunchGame.AUSTIN_ATTACK_270_DEG
+    );
   }
 
   @Override
-  public int getIdleHeight() {
-    return IDLE_HEIGHT;
+  public String getRangedSheet() {
+    return null;
   }
+  //endregion
+
+  //region IAttacker
+  @Override
+  public void attack(AttackType attackType){
+    switch (attackType){
+      case MELEE:
+        // get the tile in front of me
+        int x = (int) (currentTile.x + facingDir.getX());
+        int y = (int) (currentTile.y - facingDir.getY());
+
+        // damage all the things
+        ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(x, y);
+        for(GameObject target : targets){
+          if(target instanceof IDamageable){
+            ((IDamageable) target).takeDamage(meleeDamage);
+          }
+        }
+        break;
+      case RANGED:
+        System.out.println("No Ranged Attack");
+        break;
+      default:
+        System.out.println("Unknown Attack Type: " + attackType);
+    }
+  }
+  //endregion
 }

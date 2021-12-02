@@ -1,79 +1,69 @@
 package dracula_punch.Characters;
 
-import dracula_punch.Actions.Input.InputMoveAction;
+import dracula_punch.Actions.Damage_System.AttackAction;
+import dracula_punch.Damage_System.AttackType;
+import dracula_punch.Damage_System.Projectiles.MagicBall;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.state.StateBasedGame;
+import jig.Vector;
 
-public class AmandaController extends CharacterController{
-  public static final int RUN_HEIGHT = 900;
-  public static final int RUN_WIDTH = 580;
-  public static final int IDLE_HEIGHT = RUN_HEIGHT;
-  public static final int IDLE_WIDTH = RUN_WIDTH;
+public class AmandaController extends PlayerController {
+  private final int rangedActionFrame;
 
   public AmandaController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
     xRenderOffset = 10;
     yRenderOffset = 30;
-    scaleFactor = .5f;  // changed scaling to new tiledmap!
+    scaleFactor = 1f;
+    rangedActionFrame = 15;
+
+    attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);
 
     setScale(scaleFactor);
-
-    // Add a movement action - for animation switching
-    curLevelState.inputMoveEvent.add(new InputMoveAction(this));
   }
 
   @Override
   public String getRunSheet(int x, int y) {
-    String sheet = null;
-    if(x == 1 && y == 0){
-      // right
-      sheet = DraculaPunchGame.AMANDA_RUN_270_DEG;
-    }
-    else if(x == -1 && y == 0){
-      // left
-      sheet = DraculaPunchGame.AMANDA_RUN_90_DEG;
-    }
-    else if(x == 0 && y == 1){
-      // up
-      sheet = DraculaPunchGame.AMANDA_RUN_0_DEG;
-    }
-    else if(x == 0 && y == -1){
-      // down
-      sheet = DraculaPunchGame.AMANDA_RUN_180_DEG;
-    }
-    else if(x == 0 && y == 0){
-      // stop - do nothing for now. No idle pose/anim
-    }
-    else{
-      System.out.println("Invalid Direction: Unable to Animate");
-    }
-    return sheet;
+    return DraculaPunchGame.getSheetHelper(
+            DraculaPunchGame.AMANDA_RUN_0_DEG,
+            DraculaPunchGame.AMANDA_RUN_180_DEG,
+            DraculaPunchGame.AMANDA_RUN_90_DEG,
+            DraculaPunchGame.AMANDA_RUN_270_DEG,
+            x,
+            y
+    );
   }
 
-  @Override
-  public int getRunWidth() {
-    return RUN_WIDTH;
-  }
-
-  @Override
-  public int getRunHeight() {
-    return RUN_HEIGHT;
-  }
-
+  //region Character Controller
   @Override
   public String getIdleSheet() {
     return DraculaPunchGame.AMANDA_IDLE;
   }
 
   @Override
-  public int getIdleWidth() {
-    return IDLE_WIDTH;
+  public String getMeleeSheet() {
+    return null;
   }
 
   @Override
-  public int getIdleHeight() {
-    return IDLE_HEIGHT;
+  public String getRangedSheet() {
+    return getSheetHelper(
+            DraculaPunchGame.AMANDA_ATTACK_0_DEG,
+            DraculaPunchGame.AMANDA_ATTACK_180_DEG,
+            DraculaPunchGame.AMANDA_ATTACK_90_DEG,
+            DraculaPunchGame.AMANDA_ATTACK_270_DEG
+    );
   }
+  //endregion
+
+  //region IAttacker
+  @Override
+  public void attack(AttackType attackType) {
+    // spawn the ball and set it free
+    Vector screen = curLevelState.camera.getScreenPositionFromTile(currentTile);
+    curLevelState.newObjects.add(
+            new MagicBall(screen.getX(), screen.getY(), currentTile, curLevelState, facingDir)
+    );
+  }
+  //endregion
 }

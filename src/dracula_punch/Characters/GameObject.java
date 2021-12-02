@@ -1,6 +1,7 @@
 package dracula_punch.Characters;
 
 import dracula_punch.Camera.Coordinate;
+import dracula_punch.States.LevelState;
 import jig.Entity;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -11,10 +12,11 @@ import org.newdawn.slick.state.StateBasedGame;
  * This way we can allow our entities to update and render themselves.
  */
 public abstract class GameObject extends Entity {
-
   public Coordinate currentTile = new Coordinate();
 
-  public GameObject(final float x, final float y){ super(x, y); }
+  public GameObject(final float x, final float y){
+    super(x, y);
+  }
 
   /**
    * Update the controller each frame

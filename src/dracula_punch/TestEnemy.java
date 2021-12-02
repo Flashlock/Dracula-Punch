@@ -1,11 +1,13 @@
 package dracula_punch;
 
-import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.CharacterController;
+import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
+import jig.Vector;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
@@ -13,8 +15,10 @@ import java.util.PriorityQueue;
 
 public class TestEnemy extends CharacterController {
   private Coordinate startingTile, targetTile;
+  private boolean isMoving;
+  public boolean getIsMoving(){ return isMoving; }
 
-  //region Variables for implementing Dijkstra's pathfinding
+  //region Dijkstra's Variables
   private DijkstraNode[][] nodeGrid;
   private PriorityQueue<DijkstraNode> nodesToVisit = new PriorityQueue<>();
   private ArrayList<DijkstraNode> enemyPath;
@@ -22,31 +26,14 @@ public class TestEnemy extends CharacterController {
   //endregion
 
   public TestEnemy(Coordinate startingTile, LevelState curLevelState){
-    super(0,0,curLevelState, true);
+    super(0,0, curLevelState);
     this.startingTile = new Coordinate(startingTile);
     TOTAL_MOVE_TIME = 200;
   }
 
   @Override
-  public String getRunSheet(int x, int y) {
-    return null;
-  }
-
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
-    Camera cam = curLevelState.camera;
-    setPosition(cam.getScreenPositionFromTile(currentTilePlusPartial));
-    if(cam.isInScreenRange(currentTile)) {
-      graphics.fillOval(
-          getX() - 5,
-          getY() - 5,
-          10,
-          10
-      );
-    }
-  }
-  @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+    super.update(gameContainer, stateBasedGame, delta);
     determineTarget();
     updatePath();
     move(delta);
@@ -55,7 +42,7 @@ public class TestEnemy extends CharacterController {
 
   private void determineTarget() {
     // TODO Replace camera with a function that picks the nearest player
-    targetTile =curLevelState.playerObjects.get(0).currentTile;
+    targetTile = curLevelState.playerObjects.get(0).currentTile;
     //targetTile = curLevelState.camera.currentTile;
   }
 
@@ -130,6 +117,7 @@ public class TestEnemy extends CharacterController {
   }
 
   private void move(int delta) {
+    boolean moved = true;
     if (movingTime < TOTAL_MOVE_TIME){ movingTime += delta; }
     else if (!currentTile.isEqual(previousTargetTile) && !enemyPath.isEmpty()){
       Coordinate next = enemyPath.remove(0).coord;
@@ -138,7 +126,23 @@ public class TestEnemy extends CharacterController {
       previousTile.y = currentTile.y;
       currentTile.x = next.x;
       currentTile.y = next.y;
+
+      float x = next.x - previousTile.x;
+      float y = previousTile.y - next.y;
+      Vector dir = new Vector(x, y);
+      dir = dir.scale(1 / dir.length());
+      if(dir.getX() != facingDir.getX() || dir.getY() != facingDir.getY()){
+        // Change directions
+        animateMove(dir);
+      }
     }
+    else moved = false;
+
+    if(!moved && isMoving){
+      // stopped
+      animateMove(new Vector(0,0));
+    }
+    isMoving = moved;
   }
 
   private void updateAnimation() {
@@ -152,29 +156,37 @@ public class TestEnemy extends CharacterController {
     currentTilePlusPartial.add(partialX, partialY);
   }
 
-
+  //region Character Controller
   @Override
-  public int getRunWidth() {
-    return 0;
-  }
-
-  @Override
-  public int getRunHeight() {
-    return 0;
+  public String getRunSheet(int x, int y) {
+    return DraculaPunchGame.getSheetHelper(
+            DraculaPunchGame.DRACULA_WALK_0_DEG,
+            DraculaPunchGame.DRACULA_WALK_180_DEG,
+            DraculaPunchGame.DRACULA_WALK_90_DEG,
+            DraculaPunchGame.DRACULA_WALK_270_DEG,
+            x,
+            y
+    );
   }
 
   @Override
   public String getIdleSheet() {
+    return DraculaPunchGame.DRACULA_IDLE;
+  }
+
+  @Override
+  public String getMeleeSheet() {
+    return getSheetHelper(
+            DraculaPunchGame.DRACULA_MELEE_0_DEG,
+            DraculaPunchGame.DRACULA_MELEE_180_DEG,
+            DraculaPunchGame.DRACULA_MELEE_90_DEG,
+            DraculaPunchGame.DRACULA_MELEE_270_DEG
+    );
+  }
+
+  @Override
+  public String getRangedSheet() {
     return null;
   }
-
-  @Override
-  public int getIdleWidth() {
-    return 0;
-  }
-
-  @Override
-  public int getIdleHeight() {
-    return 0;
-  }
+  //endregion
 }
