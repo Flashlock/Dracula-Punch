@@ -1,14 +1,14 @@
 package dracula_punch.Characters;
 
-import dracula_punch.Actions.Damage_System.MeleeAction;
+import dracula_punch.Actions.Damage_System.AttackAction;
+import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.IDamageable;
-import dracula_punch.Damage_System.IAttacker;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
 
 import java.util.ArrayList;
 
-public class AustinController extends PlayerController implements IAttacker {
+public class AustinController extends PlayerController {
   private int meleeDamage;
   private final int meleeActionFrame;
 
@@ -16,11 +16,11 @@ public class AustinController extends PlayerController implements IAttacker {
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 35;
-    scaleFactor = 1f;  // changed scaling to new tiledmap!
+    scaleFactor = 1f;
     meleeActionFrame = 10;
 
     meleeDamage = 5;
-    attackAction = new MeleeAction(this, meleeActionFrame);
+    attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
 
     setScale(scaleFactor);
   }
@@ -28,7 +28,7 @@ public class AustinController extends PlayerController implements IAttacker {
   //region Character Controller
   @Override
   public String getRunSheet(int x, int y) {
-    return getSheetHelper(
+    return DraculaPunchGame.getSheetHelper(
             DraculaPunchGame.AUSTIN_RUN_0_DEG,
             DraculaPunchGame.AUSTIN_RUN_180_DEG,
             DraculaPunchGame.AUSTIN_RUN_90_DEG,
@@ -61,41 +61,27 @@ public class AustinController extends PlayerController implements IAttacker {
 
   //region IAttacker
   @Override
-  public int getMeleeDamage() {
-    return meleeDamage;
-  }
+  public void attack(AttackType attackType){
+    switch (attackType){
+      case MELEE:
+        // get the tile in front of me
+        int x = (int) (currentTile.x + facingDir.getX());
+        int y = (int) (currentTile.y - facingDir.getY());
 
-  @Override
-  public int getMeleeDamageFrame() {
-    return meleeActionFrame;
-  }
-
-  @Override
-  public int getRangedDamage() {
-    return 0;
-  }
-
-  @Override
-  public int getRangedFireFrame() {
-    return 0;
-  }
-
-  @Override
-  public ArrayList<IDamageable> getTargetObjects() {
-    // get the tile in front of me
-    int x = (int) (currentTile.x + facingDir.getX());
-    int y = (int) (currentTile.y - facingDir.getY());
-
-    // filter through all the objects for damageable ones
-    ArrayList<GameObject> gameObjects = curLevelState.getObjectsFromTile(x, y);
-    ArrayList<IDamageable> damageables = new ArrayList<>();
-    for(GameObject gameObject : gameObjects){
-      if(gameObject instanceof IDamageable){
-        damageables.add((IDamageable) gameObject);
-      }
+        // damage all the things
+        ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(x, y);
+        for(GameObject target : targets){
+          if(target instanceof IDamageable){
+            ((IDamageable) target).takeDamage(meleeDamage);
+          }
+        }
+        break;
+      case RANGED:
+        System.out.println("No Ranged Attack");
+        break;
+      default:
+        System.out.println("Unknown Attack Type: " + attackType);
     }
-
-    return damageables;
   }
   //endregion
 }

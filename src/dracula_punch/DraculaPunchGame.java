@@ -124,6 +124,26 @@ public class DraculaPunchGame extends StateBasedGame {
           "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Idle/Dracula_Idle.png";
   //endregion
 
+  //region Projectiles
+  public static final String MAGIC_BALL_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Magic_Ball/Ball_0.png";
+  public static final String MAGIC_BALL_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Magic_Ball/Ball_90.png";
+  public static final String MAGIC_BALL_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Magic_Ball/Ball_180.png";
+  public static final String MAGIC_BALL_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Magic_Ball/Ball_270.png";
+
+  public static final String ARROW_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Arrow/Arrow_0.png";
+  public static final String ARROW_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Arrow/Arrow_90.png";
+  public static final String ARROW_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Arrow/Arrow_180.png";
+  public static final String ARROW_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Arrow/Arrow_270.png";
+  //endregion
+
   public DraculaPunchGame(String name, int width, int height) {
     super(name);
     SCREEN_WIDTH = width;
@@ -187,7 +207,53 @@ public class DraculaPunchGame extends StateBasedGame {
     ResourceManager.loadImage(DRACULA_MELEE_180_DEG);
     ResourceManager.loadImage(DRACULA_MELEE_270_DEG);
     //endregion
+
+    //region Projectiles
+    ResourceManager.loadImage(MAGIC_BALL_0_DEG);
+    ResourceManager.loadImage(MAGIC_BALL_90_DEG);
+    ResourceManager.loadImage(MAGIC_BALL_180_DEG);
+    ResourceManager.loadImage(MAGIC_BALL_270_DEG);
+
+    ResourceManager.loadImage(ARROW_0_DEG);
+    ResourceManager.loadImage(ARROW_90_DEG);
+    ResourceManager.loadImage(ARROW_180_DEG);
+    ResourceManager.loadImage(ARROW_270_DEG);
+    //endregion
   }
+
+  /**
+   * Determine sprite sheet for new facing direction
+   * @param x The x direction to face
+   * @param y The y direction to face
+   * @return The given sheet correlating to the facing direction
+   */
+  public static String getSheetHelper(String up, String down, String left, String right, int x, int y){
+    String sheet = null;
+    if(x == 1 && y == 0){
+      // right
+      sheet = right;
+    }
+    else if(x == -1 && y == 0){
+      // left
+      sheet = left;
+    }
+    else if(x == 0 && y == 1){
+      // up
+      sheet = up;
+    }
+    else if(x == 0 && y == -1){
+      // down
+      sheet = down;
+    }
+    else if(x == 0 && y == 0){
+      // stop - do nothing for now. No idle pose/anim
+    }
+    else{
+      System.out.println("Invalid Direction: Unable to Animate");
+    }
+    return sheet;
+  }
+
 
   public static void main(String[] args) {
     AppGameContainer app;

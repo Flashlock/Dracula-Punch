@@ -5,21 +5,18 @@ import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.CharacterController;
 import dracula_punch.Characters.GameObject;
-import dracula_punch.DraculaPunchGame;
 import dracula_punch.TiledMap.DPTiledMap;
-import jig.Vector;
 import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.tiled.TiledMap;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public abstract class LevelState extends BasicGameState {
   public DPTiledMap map;
   public Camera camera;
-  public ArrayList<CharacterController> playerObjects;
-  protected ArrayList<GameObject> gameObjects;
-  public ArrayList<GameObject> deadObjects;
+  public ArrayList<CharacterController> playerObjects = new ArrayList<>();
+  protected ArrayList<GameObject> gameObjects = new ArrayList<>();
+  public ArrayList<GameObject> deadObjects = new ArrayList<>();
+  public ArrayList<GameObject> newObjects = new ArrayList<>();
 
   public ArrayList<Action> move1Event = new ArrayList<>();
   public ArrayList<Action> move2Event = new ArrayList<>();
@@ -48,5 +45,4 @@ public abstract class LevelState extends BasicGameState {
     }
     return gameObjects;
   }
-
 }

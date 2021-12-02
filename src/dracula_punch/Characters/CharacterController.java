@@ -1,6 +1,5 @@
 package dracula_punch.Characters;
 
-import dracula_punch.Actions.Action;
 import dracula_punch.Actions.Damage_System.AttackAction;
 import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
@@ -23,10 +22,10 @@ public abstract class CharacterController extends GameObject implements IDamagea
   protected Animation curAnim;
   protected float scaleFactor;
   protected int xRenderOffset, yRenderOffset;
-  protected LevelState curLevelState;
   protected Vector facingDir;
-
   protected Image idleImage;
+  protected LevelState curLevelState;
+
   protected Coordinate previousTile = new Coordinate();
   public Coordinate currentTilePlusPartial = new Coordinate();
   protected float TOTAL_MOVE_TIME = 100;
@@ -34,7 +33,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
   protected float percentMoveDone;
 
   protected AttackAction attackAction;
-
   private boolean animLock;
   public boolean getAnimLock(){ return animLock; }
 
@@ -47,8 +45,8 @@ public abstract class CharacterController extends GameObject implements IDamagea
 
   public CharacterController(final float x, final float y, LevelState curLevelState){
     super(x, y);
-    this.curLevelState = curLevelState;
     currentTile = new Coordinate(curLevelState.map.playerSpawnCoordinate);
+    this.curLevelState = curLevelState;
 
     // Generate a random idle sprite
     int dirX, dirY;
@@ -88,7 +86,7 @@ public abstract class CharacterController extends GameObject implements IDamagea
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
     if(animLock){
-      // if this is the animation frame where the action is triggered
+      // is this the animation frame where the action is triggered?
       int frame = curAnim.getFrame();
       if(attackAction != null && frame == attackAction.getFrameActionIndex() && !attackAction.actionTriggered){
         attackAction.Execute();
@@ -157,40 +155,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
     }
     return sheet;
   }
-
-  /**
-   * Determine sprite sheet for new facing direction
-   * @param x The x direction to face
-   * @param y The y direction to face
-   * @return The given sheet correlating to the facing direction
-   */
-  protected String getSheetHelper(String up, String down, String left, String right, int x, int y){
-    String sheet = null;
-    if(x == 1 && y == 0){
-      // right
-      sheet = right;
-    }
-    else if(x == -1 && y == 0){
-      // left
-      sheet = left;
-    }
-    else if(x == 0 && y == 1){
-      // up
-      sheet = up;
-    }
-    else if(x == 0 && y == -1){
-      // down
-      sheet = down;
-    }
-    else if(x == 0 && y == 0){
-      // stop - do nothing for now. No idle pose/anim
-    }
-    else{
-      System.out.println("Invalid Direction: Unable to Animate");
-    }
-    return sheet;
-  }
-
 
   /**
    * Animate the controller's movement

@@ -29,9 +29,6 @@ public class TestLevelState extends LevelState {
   @Override
   public void enter(GameContainer container, StateBasedGame game) throws SlickException {
     super.enter(container, game);
-    gameObjects = new ArrayList<>();
-    playerObjects = new ArrayList<>();
-    deadObjects = new ArrayList<>();
 
     map = new DPTiledMap(DraculaPunchGame.MAP);
     camera = new Camera(map, playerObjects);
@@ -105,6 +102,10 @@ public class TestLevelState extends LevelState {
     // Remove dead objects
     gameObjects.removeAll(deadObjects);
     deadObjects.clear();
+
+    // add new objects
+    gameObjects.addAll(newObjects);
+    newObjects.clear();
   }
 
   /**

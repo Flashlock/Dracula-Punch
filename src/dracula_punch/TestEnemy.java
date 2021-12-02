@@ -26,7 +26,7 @@ public class TestEnemy extends CharacterController {
   //endregion
 
   public TestEnemy(Coordinate startingTile, LevelState curLevelState){
-    super(0,0,curLevelState);
+    super(0,0, curLevelState);
     this.startingTile = new Coordinate(startingTile);
     TOTAL_MOVE_TIME = 200;
   }
@@ -159,7 +159,7 @@ public class TestEnemy extends CharacterController {
   //region Character Controller
   @Override
   public String getRunSheet(int x, int y) {
-    return getSheetHelper(
+    return DraculaPunchGame.getSheetHelper(
             DraculaPunchGame.DRACULA_WALK_0_DEG,
             DraculaPunchGame.DRACULA_WALK_180_DEG,
             DraculaPunchGame.DRACULA_WALK_90_DEG,
