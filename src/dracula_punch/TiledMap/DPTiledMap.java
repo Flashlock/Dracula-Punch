@@ -38,12 +38,13 @@ public class DPTiledMap extends TiledMap {
   public void renderLayersBehindObjects(Vector cameraPosition) {
     int camX = (int) cameraPosition.getX();
     int camY = (int) cameraPosition.getY();
-    //map.render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 0, true);
+    render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 0, true);
   }
 
   public void renderLayersAboveObjects(Vector cameraPosition) {
     int camX = (int) cameraPosition.getX();
     int camY = (int) cameraPosition.getY();
+
     render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 1, true);
     render(camX, camY, 0, 0, tilesInWindowX, tilesInWindowY, 2, true);
   }

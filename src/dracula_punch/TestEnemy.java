@@ -2,11 +2,8 @@ package dracula_punch;
 
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.CharacterController;
-import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.States.LevelState;
-import jig.ResourceManager;
 import jig.Vector;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -36,8 +33,8 @@ public class TestEnemy extends CharacterController {
     super.update(gameContainer, stateBasedGame, delta);
     determineTarget();
     updatePath();
-    move(delta);
-    updateAnimation();
+    move();
+    smoothlyCatchUpToCurrentTile(delta);
   }
 
   private void determineTarget() {
@@ -116,16 +113,12 @@ public class TestEnemy extends CharacterController {
     } else return null;
   }
 
-  private void move(int delta) {
+  private void move() {
     boolean moved = true;
-    if (movingTime < TOTAL_MOVE_TIME){ movingTime += delta; }
+    if (movingTime < TOTAL_MOVE_TIME){ }
     else if (!currentTile.isEqual(previousTargetTile) && !enemyPath.isEmpty()){
       Coordinate next = enemyPath.remove(0).coord;
-      movingTime = 0;
-      previousTile.x = currentTile.x;
-      previousTile.y = currentTile.y;
-      currentTile.x = next.x;
-      currentTile.y = next.y;
+      changeCurrentTile((int)(next.x - currentTile.x), (int)(next.y - currentTile.y));
 
       float x = next.x - previousTile.x;
       float y = previousTile.y - next.y;
@@ -145,27 +138,16 @@ public class TestEnemy extends CharacterController {
     isMoving = moved;
   }
 
-  private void updateAnimation() {
-    float percentMoveDone = (TOTAL_MOVE_TIME - movingTime) / TOTAL_MOVE_TIME;
-    float partialX = 0, partialY = 0;
-    if (previousTile.y > currentTile.y){ partialY = percentMoveDone;}
-    else if (previousTile.y < currentTile.y){ partialY = -percentMoveDone;}
-    if (previousTile.x > currentTile.x){ partialX = percentMoveDone;}
-    else if (previousTile.x < currentTile.x){ partialX = -percentMoveDone;}
-    currentTilePlusPartial = new Coordinate(currentTile);
-    currentTilePlusPartial.add(partialX, partialY);
-  }
-
   //region Character Controller
   @Override
   public String getRunSheet(int x, int y) {
     return DraculaPunchGame.getSheetHelper(
-            DraculaPunchGame.DRACULA_WALK_0_DEG,
-            DraculaPunchGame.DRACULA_WALK_180_DEG,
-            DraculaPunchGame.DRACULA_WALK_90_DEG,
-            DraculaPunchGame.DRACULA_WALK_270_DEG,
-            x,
-            y
+        DraculaPunchGame.DRACULA_WALK_0_DEG,
+        DraculaPunchGame.DRACULA_WALK_180_DEG,
+        DraculaPunchGame.DRACULA_WALK_90_DEG,
+        DraculaPunchGame.DRACULA_WALK_270_DEG,
+        x,
+        y
     );
   }
 
@@ -177,10 +159,10 @@ public class TestEnemy extends CharacterController {
   @Override
   public String getMeleeSheet() {
     return getSheetHelper(
-            DraculaPunchGame.DRACULA_MELEE_0_DEG,
-            DraculaPunchGame.DRACULA_MELEE_180_DEG,
-            DraculaPunchGame.DRACULA_MELEE_90_DEG,
-            DraculaPunchGame.DRACULA_MELEE_270_DEG
+        DraculaPunchGame.DRACULA_MELEE_0_DEG,
+        DraculaPunchGame.DRACULA_MELEE_180_DEG,
+        DraculaPunchGame.DRACULA_MELEE_90_DEG,
+        DraculaPunchGame.DRACULA_MELEE_270_DEG
     );
   }
 
