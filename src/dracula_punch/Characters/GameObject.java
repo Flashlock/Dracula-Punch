@@ -13,6 +13,10 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public abstract class GameObject extends Entity {
   public Coordinate currentTile = new Coordinate();
+  protected Coordinate previousTile = new Coordinate();
+  public Coordinate currentTilePlusPartial = new Coordinate();
+  protected float TOTAL_MOVE_TIME;
+  protected float movingTime;
 
   public GameObject(final float x, final float y){
     super(x, y);
@@ -33,4 +37,25 @@ public abstract class GameObject extends Entity {
    * @param graphics
    */
   public abstract void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics);
+
+  protected void changeCurrentTile(int dx, int dy) {
+    movingTime = 0;
+    previousTile.setEqual(currentTile);
+    currentTile.add(dx, dy);
+  }
+
+  protected void smoothlyCatchUpToCurrentTile(int delta) {
+    movingTime += delta;
+    if(movingTime > TOTAL_MOVE_TIME) {
+      movingTime = TOTAL_MOVE_TIME;
+    }
+    float percentMoveDone = (TOTAL_MOVE_TIME - movingTime) / TOTAL_MOVE_TIME;
+    float partialX = 0, partialY = 0;
+    if (previousTile.y > currentTile.y){ partialY = percentMoveDone;}
+    else if (previousTile.y < currentTile.y){ partialY = -percentMoveDone;}
+    if (previousTile.x > currentTile.x){ partialX = percentMoveDone;}
+    else if (previousTile.x < currentTile.x){ partialX = -percentMoveDone;}
+    currentTilePlusPartial = new Coordinate(currentTile);
+    currentTilePlusPartial.add(partialX, partialY);
+  }
 }
