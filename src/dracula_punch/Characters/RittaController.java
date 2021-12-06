@@ -48,11 +48,13 @@ public class RittaController extends PlayerController{
 
   @Override
   public String getRangedSheet() {
-    return getSheetHelper(
+    return DraculaPunchGame.getSheetHelper(
             DraculaPunchGame.RITTA_ATTACK_0_DEG,
             DraculaPunchGame.RITTA_ATTACK_180_DEG,
             DraculaPunchGame.RITTA_ATTACK_90_DEG,
-            DraculaPunchGame.RITTA_ATTACK_270_DEG
+            DraculaPunchGame.RITTA_ATTACK_270_DEG,
+            (int) facingDir.getX(),
+            (int) facingDir.getY()
     );
   }
   //endregion

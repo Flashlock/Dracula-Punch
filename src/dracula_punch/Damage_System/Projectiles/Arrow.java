@@ -1,11 +1,16 @@
 package dracula_punch.Damage_System.Projectiles;
 
 import dracula_punch.Camera.Coordinate;
+import dracula_punch.Characters.GameObject;
+import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
 import jig.Vector;
 
+import java.util.ArrayList;
+
 public class Arrow extends Projectile{
+  private final int damage = 5;
 
   public Arrow(float x, float y, Coordinate curTile, LevelState curLevelState, Vector direction) {
     super(x, y, curTile, curLevelState, direction);
@@ -22,5 +27,16 @@ public class Arrow extends Projectile{
     );
     if(sheet == null) return;
     animate(sheet);
+  }
+
+  @Override
+  protected void collide(ArrayList<GameObject> collisions) {
+    for(GameObject gameObject : collisions){
+      if(gameObject instanceof IDamageable){
+        ((IDamageable) gameObject).takeDamage(damage);
+        curLevelState.deadObjects.add(this);
+        return;
+      }
+    }
   }
 }
