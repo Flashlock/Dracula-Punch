@@ -44,13 +44,11 @@ public class AustinController extends PlayerController {
 
   @Override
   public String getMeleeSheet() {
-    return DraculaPunchGame.getSheetHelper(
+    return getSheetHelper(
             DraculaPunchGame.AUSTIN_ATTACK_0_DEG,
             DraculaPunchGame.AUSTIN_ATTACK_180_DEG,
             DraculaPunchGame.AUSTIN_ATTACK_90_DEG,
-            DraculaPunchGame.AUSTIN_ATTACK_270_DEG,
-            (int) facingDir.getX(),
-            (int) facingDir.getY()
+            DraculaPunchGame.AUSTIN_ATTACK_270_DEG
     );
   }
 
