@@ -44,6 +44,11 @@ public class AustinController extends PlayerController {
   }
 
   @Override
+  public String getName() {
+    return "Austin";
+  }
+
+  @Override
   public String getMeleeSheet() {
     return DraculaPunchGame.getSheetHelper(
             DraculaPunchGame.AUSTIN_ATTACK_0_DEG,
@@ -62,11 +67,6 @@ public class AustinController extends PlayerController {
   //endregion
 
   //region IAttacker
-  @Override
-  public String getName() {
-    return "Austin";
-  }
-
   public void attack(AttackType attackType){
     switch (attackType){
       case MELEE:

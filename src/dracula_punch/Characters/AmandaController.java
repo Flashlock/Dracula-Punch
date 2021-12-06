@@ -41,11 +41,6 @@ public class AmandaController extends PlayerController {
   }
 
   @Override
-  public String getName() {
-    return "Amanda";
-  }
-
-  @Override
   public String getRangedSheet() {
     return DraculaPunchGame.getSheetHelper(
             DraculaPunchGame.AMANDA_ATTACK_0_DEG,
@@ -62,6 +57,11 @@ public class AmandaController extends PlayerController {
   @Override
   public String getName() {
     return "Amanda";
+  }
+
+  @Override
+  public String getMeleeSheet() {
+    return null;
   }
 
 
