@@ -1,6 +1,8 @@
 package dracula_punch.States;
 
 import dracula_punch.Actions.*;
+import dracula_punch.Actions.Input.InputAttackAction;
+import dracula_punch.Actions.Input.InputMoveAction;
 import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.*;
@@ -12,11 +14,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import dracula_punch.DraculaPunchGame;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TestLevelState extends LevelState {
-  private ArrayList<GameObject> gameObjects;
   private GameObject playerOne, playerTwo, playerThree;
+  private boolean isSpaceDown, isEDown, isUDown;
 
   private Boolean hasGKey;
   private Boolean hasSKey;
@@ -66,9 +69,22 @@ public class TestLevelState extends LevelState {
     gameObjects.add(playerOne);
     gameObjects.add(playerTwo);
     gameObjects.add(playerThree);
-    playerObjects.add((CharacterController)playerOne);
-    playerObjects.add((CharacterController)playerTwo);
-    playerObjects.add((CharacterController)playerThree);
+
+    CharacterController c1 = (CharacterController) playerOne;
+    CharacterController c2 = (CharacterController) playerTwo;
+    CharacterController c3 = (CharacterController) playerThree;
+
+    playerObjects.add(c1);
+    playerObjects.add(c2);
+    playerObjects.add(c3);
+
+    move1Event.add(new InputMoveAction(c1));
+    move2Event.add(new InputMoveAction(c2));
+    move3Event.add(new InputMoveAction(c3));
+
+    attack1Event.add(new InputAttackAction(c1));
+    attack2Event.add(new InputAttackAction(c2));
+    attack3Event.add(new InputAttackAction(c3));
   }
 
   @Override
@@ -99,6 +115,14 @@ public class TestLevelState extends LevelState {
       openDoors();
       hasGKey = false;
     }
+
+    // Remove dead objects
+    gameObjects.removeAll(deadObjects);
+    deadObjects.clear();
+
+    // add new objects
+    gameObjects.addAll(newObjects);
+    newObjects.clear();
   }
 
   private void checkHasKey(){
@@ -128,54 +152,81 @@ public class TestLevelState extends LevelState {
    * @param input
    */
   private void controls(Input input){
+    // Check for Player 1 attack
+    boolean eDown = input.isKeyDown(Input.KEY_E);
+    if(eDown && !isEDown){
+      for(Action action : attack1Event){
+        action.Execute();
+      }
+    }
+    isEDown = eDown;
+
+    // Check for Player 2 attack
+    boolean uDown = input.isKeyDown(Input.KEY_U);
+    if(uDown && !isUDown){
+      for(Action action : attack2Event){
+        action.Execute();
+      }
+    }
+    isUDown = uDown;
+
+    // Check for Player 3 attack
+    boolean spaceDown = input.isKeyDown(Input.KEY_SPACE);
+    if(spaceDown && !isSpaceDown){
+      for(Action action : attack3Event){
+        action.Execute();
+      }
+    }
+    isSpaceDown = spaceDown;
+
+    // Observe movement input changes
     boolean left, right, up, down;
-    // Observe input changes
     left = input.isKeyDown(Input.KEY_A);
     right = input.isKeyDown(Input.KEY_D);
     up = input.isKeyDown(Input.KEY_W);
     down = input.isKeyDown(Input.KEY_S);
-    movePlayer((CharacterController)playerOne, left, right, up, down);
+    movePlayer((CharacterController)playerOne, move1Event, left, right, up, down);
 
     left = input.isKeyDown(Input.KEY_J);
     right = input.isKeyDown(Input.KEY_L);
     up = input.isKeyDown(Input.KEY_I);
     down = input.isKeyDown(Input.KEY_K);
-    movePlayer((CharacterController)playerTwo, left, right, up, down);
+    movePlayer((CharacterController)playerTwo, move2Event, left, right, up, down);
 
     left = input.isKeyDown(Input.KEY_LEFT);
     right = input.isKeyDown(Input.KEY_RIGHT);
     up = input.isKeyDown(Input.KEY_UP);
     down = input.isKeyDown(Input.KEY_DOWN);
-    movePlayer((CharacterController)playerThree, left, right, up, down);
+    movePlayer((CharacterController)playerThree, move3Event, left, right, up, down);
   }
 
-  private void movePlayer(CharacterController player, boolean left, boolean right, boolean up, boolean down) {
+  private void movePlayer(CharacterController player, ArrayList<Action> moveEvent, boolean left, boolean right, boolean up, boolean down) {
     boolean isMoving = player.moveLeft || player.moveRight || player.moveDown || player.moveUp;
 
     // Trigger event on change
     if(!player.moveLeft && left){
-      for(Action action : inputMoveEvent){
+      for(Action action : moveEvent){
         action.Execute(new Vector(-1, 0));
       }
     }
     else if(!player.moveRight && right){
-      for(Action action : inputMoveEvent){
+      for(Action action : moveEvent){
         action.Execute(new Vector(1, 0));
       }
     }
     else if(!player.moveUp && up){
-      for(Action action : inputMoveEvent){
+      for(Action action : moveEvent){
         action.Execute(new Vector(0, 1));
       }
     }
     else if(!player.moveDown && down){
       // change down
-      for(Action action : inputMoveEvent){
+      for(Action action : moveEvent){
         action.Execute(new Vector(0, -1));
       }
     }
     else if(isMoving && !(left || right || up || down)){
-      for(Action action : inputMoveEvent){
+      for(Action action : moveEvent){
         action.Execute(new Vector(0, 0));
       }
     }
