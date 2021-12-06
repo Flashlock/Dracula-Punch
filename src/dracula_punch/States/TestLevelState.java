@@ -111,9 +111,9 @@ public class TestLevelState extends LevelState {
       gameObject.update(gameContainer, stateBasedGame, delta);
     }
     checkHasKey();
-    if(hasSKey){
+    if(hasGKey){
       openDoors();
-      hasSKey = false;
+      hasGKey = false;
     }
   }
 
