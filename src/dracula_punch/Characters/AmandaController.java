@@ -47,13 +47,11 @@ public class AmandaController extends PlayerController {
 
   @Override
   public String getRangedSheet() {
-    return DraculaPunchGame.getSheetHelper(
+    return getSheetHelper(
             DraculaPunchGame.AMANDA_ATTACK_0_DEG,
             DraculaPunchGame.AMANDA_ATTACK_180_DEG,
             DraculaPunchGame.AMANDA_ATTACK_90_DEG,
-            DraculaPunchGame.AMANDA_ATTACK_270_DEG,
-            (int) facingDir.getX(),
-            (int) facingDir.getY()
+            DraculaPunchGame.AMANDA_ATTACK_270_DEG
     );
   }
   //endregion
