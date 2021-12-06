@@ -21,6 +21,13 @@ public class TestLevelState extends LevelState {
   private GameObject playerOne, playerTwo, playerThree;
   private boolean isSpaceDown, isEDown, isUDown;
 
+  private Boolean hasGKey;
+  private Boolean hasSKey;
+  // Object IDs
+  private int GOLDKEY_ID = 33;
+  private int SILVKEY_ID = 34;
+  private int BLANK_ID = 63;
+
   @Override
   public int getID() {
     return DraculaPunchGame.TEST_STATE;
@@ -29,6 +36,10 @@ public class TestLevelState extends LevelState {
   @Override
   public void enter(GameContainer container, StateBasedGame game) throws SlickException {
     super.enter(container, game);
+    hasGKey = false;
+    hasSKey = false;
+    gameObjects = new ArrayList<>();
+    playerObjects = new ArrayList<>();
 
     map = new DPTiledMap(DraculaPunchGame.MAP);
     camera = new Camera(map, playerObjects);
@@ -85,6 +96,7 @@ public class TestLevelState extends LevelState {
     graphics.drawString("Test State", 10, 25);
     graphics.scale(camera.zoomFactor, camera.zoomFactor);
     map.renderLayersBehindObjects(camera.getCamPosition());
+    // this is where we render our characters
     for(GameObject gameObject : gameObjects){
       gameObject.render(gameContainer, stateBasedGame, graphics);
     }
@@ -98,14 +110,33 @@ public class TestLevelState extends LevelState {
     for(GameObject gameObject : gameObjects){
       gameObject.update(gameContainer, stateBasedGame, delta);
     }
+    checkHasKey();
+    if(hasSKey){
+      openDoors();
+      hasSKey = false;
+    }
+  }
 
-    // Remove dead objects
-    gameObjects.removeAll(deadObjects);
-    deadObjects.clear();
+  private void checkHasKey(){
+    for(CharacterController p : playerObjects){
+      if(map.getTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object")) == GOLDKEY_ID){
+        System.out.println(p.getName() + " took the gold key");
+        hasGKey = true;
+        map.setTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object"), BLANK_ID);
+      } else if(map.getTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object")) == SILVKEY_ID){
+        System.out.println(p.getName() + " took the silver key");
+        hasSKey = true;
+        map.setTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object"), BLANK_ID);
+      }
+    }
+  }
 
-    // add new objects
-    gameObjects.addAll(newObjects);
-    newObjects.clear();
+  private void openDoors(){
+    // x: 55, y:16-19
+    for(int i = 16; i <=19; i++){
+      map.setTileId(55, i, map.getLayerIndex("SW Walls"), 63);
+      map.isPassable[55][i] = true;
+    }
   }
 
   /**

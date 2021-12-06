@@ -15,8 +15,7 @@ public class RittaController extends PlayerController{
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 30;
-    scaleFactor = .8f;
-    rangedActionFrame = 0;
+    scaleFactor = .6f;  // changed scaling to new tiledmap!
 
     attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);
 
@@ -42,8 +41,13 @@ public class RittaController extends PlayerController{
   }
 
   @Override
-  public String getMeleeSheet() {
-    return null;
+  public String getName() {
+    return "Ritta";
+  }
+
+  @Override
+  public int getIdleWidth() {
+    return IDLE_WIDTH;
   }
 
   @Override

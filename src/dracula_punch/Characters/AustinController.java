@@ -16,8 +16,7 @@ public class AustinController extends PlayerController {
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 35;
-    scaleFactor = 1f;
-    meleeActionFrame = 10;
+    scaleFactor = .6f;  // changed scaling to new tiledmap!
 
     meleeDamage = 5;
     attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
@@ -61,12 +60,14 @@ public class AustinController extends PlayerController {
 
   //region IAttacker
   @Override
-  public void attack(AttackType attackType){
-    switch (attackType){
-      case MELEE:
-        // get the tile in front of me
-        int x = (int) (currentTile.x + facingDir.getX());
-        int y = (int) (currentTile.y - facingDir.getY());
+  public String getName() {
+    return "Austin";
+  }
+
+  @Override
+  public int getIdleWidth() {
+    return IDLE_WIDTH;
+  }
 
         // damage all the things
         ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(x, y);
