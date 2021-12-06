@@ -161,13 +161,14 @@ public class TestEnemy extends CharacterController {
     return "Enemy";
   }
 
-  @Override
   public String getMeleeSheet() {
-    return getSheetHelper(
+    return DraculaPunchGame.getSheetHelper(
             DraculaPunchGame.DRACULA_MELEE_0_DEG,
             DraculaPunchGame.DRACULA_MELEE_180_DEG,
             DraculaPunchGame.DRACULA_MELEE_90_DEG,
-            DraculaPunchGame.DRACULA_MELEE_270_DEG
+            DraculaPunchGame.DRACULA_MELEE_270_DEG,
+            (int) facingDir.getX(),
+            (int) facingDir.getY()
     );
   }
 

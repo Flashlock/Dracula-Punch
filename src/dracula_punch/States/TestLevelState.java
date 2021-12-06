@@ -115,6 +115,14 @@ public class TestLevelState extends LevelState {
       openDoors();
       hasGKey = false;
     }
+
+    // Remove dead objects
+    gameObjects.removeAll(deadObjects);
+    deadObjects.clear();
+
+    // add new objects
+    gameObjects.addAll(newObjects);
+    newObjects.clear();
   }
 
   private void checkHasKey(){
