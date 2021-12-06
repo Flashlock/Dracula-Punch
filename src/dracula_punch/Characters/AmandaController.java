@@ -14,8 +14,7 @@ public class AmandaController extends PlayerController {
     super(x, y, curLevelState);
     xRenderOffset = 10;
     yRenderOffset = 30;
-    scaleFactor = 1f;
-    rangedActionFrame = 15;
+    scaleFactor = .4f;  // changed scaling to new tiledmap!
 
     attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);
 
@@ -47,23 +46,26 @@ public class AmandaController extends PlayerController {
 
   @Override
   public String getRangedSheet() {
-    return getSheetHelper(
+    return DraculaPunchGame.getSheetHelper(
             DraculaPunchGame.AMANDA_ATTACK_0_DEG,
             DraculaPunchGame.AMANDA_ATTACK_180_DEG,
             DraculaPunchGame.AMANDA_ATTACK_90_DEG,
-            DraculaPunchGame.AMANDA_ATTACK_270_DEG
+            DraculaPunchGame.AMANDA_ATTACK_270_DEG,
+            (int) facingDir.getX(),
+            (int) facingDir.getY()
     );
   }
   //endregion
 
   //region IAttacker
   @Override
-  public void attack(AttackType attackType) {
-    // spawn the ball and set it free
-    Vector screen = curLevelState.camera.getScreenPositionFromTile(currentTile);
-    curLevelState.newObjects.add(
-            new MagicBall(screen.getX(), screen.getY(), currentTile, curLevelState, facingDir)
-    );
+  public String getName() {
+    return "Amanda";
+  }
+
+  @Override
+  public int getIdleWidth() {
+    return IDLE_WIDTH;
   }
   //endregion
 }

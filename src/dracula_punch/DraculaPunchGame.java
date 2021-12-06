@@ -15,7 +15,7 @@ public class DraculaPunchGame extends StateBasedGame {
   public static int CHARACTER_SELECT_STATE = 0;
   //endregion
 
-  public static final String MAP = "dracula_punch/Resources/Tiled/amandatest.tmx";
+  public static final String MAP = "dracula_punch/Resources/Tiled/dungeon_map.tmx";
   public static final int ANIMATION_DURATION = 50;
   public static final int SPRITE_SIZE = 500;
   public static int SCREEN_WIDTH, SCREEN_HEIGHT;

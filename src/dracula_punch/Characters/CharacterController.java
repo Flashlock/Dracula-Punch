@@ -116,44 +116,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
   //endregion
 
   /**
-   * Helper function for determining sprite sheet from facing direction
-   * @param up Upwards sprite sheet
-   * @param down Downwards sprite sheet
-   * @param left Leftwards sprite sheet
-   * @param right Rightwards sprite sheet
-   * @return The given sheet correlating to the facing direction
-   */
-  protected String getSheetHelper(String up, String down, String left, String right){
-    int x = (int) facingDir.getX();
-    int y = (int) facingDir.getY();
-
-    String sheet = null;
-    if(x == 1 && y == 0){
-      // right
-      sheet = right;
-    }
-    else if(x == -1 && y == 0){
-      // left
-      sheet = left;
-    }
-    else if(x == 0 && y == 1){
-      // up
-      sheet = up;
-    }
-    else if(x == 0 && y == -1){
-      // down
-      sheet = down;
-    }
-    else if(x == 0 && y == 0){
-      // stop - do nothing for now. No idle pose/anim
-    }
-    else{
-      System.out.println("Invalid Direction: Unable to Animate");
-    }
-    return sheet;
-  }
-
-  /**
    * Animate the controller's movement
    * @param direction The direction to move
    */
@@ -275,7 +237,12 @@ public abstract class CharacterController extends GameObject implements IDamagea
   public abstract String getIdleSheet();
 
   /**
-   * @return Sprite sheet for melee attack
+   * @return The character's Idle Sprite Sheet - currently no animation
+   */
+  public abstract String getName();
+
+  /**
+   * @return The width of each sprite in the character's idle animation
    */
   public abstract String getMeleeSheet();
 

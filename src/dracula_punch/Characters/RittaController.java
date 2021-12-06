@@ -15,8 +15,7 @@ public class RittaController extends PlayerController{
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 30;
-    scaleFactor = .8f;
-    rangedActionFrame = 0;
+    scaleFactor = .6f;  // changed scaling to new tiledmap!
 
     attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);
 
@@ -42,17 +41,24 @@ public class RittaController extends PlayerController{
   }
 
   @Override
-  public String getMeleeSheet() {
-    return null;
+  public String getName() {
+    return "Ritta";
+  }
+
+  @Override
+  public int getIdleWidth() {
+    return IDLE_WIDTH;
   }
 
   @Override
   public String getRangedSheet() {
-    return getSheetHelper(
+    return DraculaPunchGame.getSheetHelper(
             DraculaPunchGame.RITTA_ATTACK_0_DEG,
             DraculaPunchGame.RITTA_ATTACK_180_DEG,
             DraculaPunchGame.RITTA_ATTACK_90_DEG,
-            DraculaPunchGame.RITTA_ATTACK_270_DEG
+            DraculaPunchGame.RITTA_ATTACK_270_DEG,
+            (int) facingDir.getX(),
+            (int) facingDir.getY()
     );
   }
   //endregion
