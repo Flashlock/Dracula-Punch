@@ -46,9 +46,7 @@ public class RittaController extends PlayerController{
     return "Ritta";
   }
 
-  @Override
-  public int getIdleWidth() {
-    return IDLE_WIDTH;
+
   public String getMeleeSheet() {
     return null;
   }

@@ -67,10 +67,6 @@ public class AustinController extends PlayerController {
     return "Austin";
   }
 
-  @Override
-  public int getIdleWidth() {
-    return IDLE_WIDTH;
-  }
   public void attack(AttackType attackType){
     switch (attackType){
       case MELEE:

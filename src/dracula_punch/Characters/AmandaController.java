@@ -64,9 +64,7 @@ public class AmandaController extends PlayerController {
     return "Amanda";
   }
 
-  @Override
-  public int getIdleWidth() {
-    return IDLE_WIDTH;
+
   public void attack(AttackType attackType) {
     // spawn the ball and set it free
     Vector screen = curLevelState.camera.getScreenPositionFromTile(currentTile);
