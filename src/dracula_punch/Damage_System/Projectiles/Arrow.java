@@ -2,6 +2,7 @@ package dracula_punch.Damage_System.Projectiles;
 
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.GameObject;
+import dracula_punch.Characters.PlayerController;
 import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
@@ -32,7 +33,7 @@ public class Arrow extends Projectile{
   @Override
   protected void collide(ArrayList<GameObject> collisions) {
     for(GameObject gameObject : collisions){
-      if(gameObject instanceof IDamageable){
+      if(gameObject instanceof IDamageable && !(gameObject instanceof PlayerController)){
         ((IDamageable) gameObject).takeDamage(damage);
         curLevelState.deadObjects.add(this);
         return;

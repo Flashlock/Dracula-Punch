@@ -8,14 +8,13 @@ import dracula_punch.States.LevelState;
 import jig.Vector;
 
 public class AmandaController extends PlayerController {
-  private final int rangedActionFrame;
+  private final int rangedActionFrame = 13;
 
   public AmandaController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
     xRenderOffset = 10;
     yRenderOffset = 30;
     scaleFactor = 1f;
-    rangedActionFrame = 15;
 
     attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);
 

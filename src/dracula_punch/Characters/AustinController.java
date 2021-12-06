@@ -77,7 +77,7 @@ public class AustinController extends PlayerController {
         // damage all the things
         ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(x, y);
         for(GameObject target : targets){
-          if(target instanceof IDamageable){
+          if(target instanceof IDamageable && !(target instanceof PlayerController)){
             ((IDamageable) target).takeDamage(meleeDamage);
           }
         }
