@@ -169,6 +169,11 @@ public class TestEnemy extends CharacterController {
   }
 
   @Override
+  public String getName() {
+    return "Enemy";
+  }
+
+  @Override
   public int getIdleWidth() {
     return 0;
   }

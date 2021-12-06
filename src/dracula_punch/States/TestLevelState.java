@@ -18,6 +18,13 @@ public class TestLevelState extends LevelState {
   private ArrayList<GameObject> gameObjects;
   private GameObject playerOne, playerTwo, playerThree;
 
+  private Boolean hasGKey;
+  private Boolean hasSKey;
+  // Object IDs
+  private int GOLDKEY_ID = 33;
+  private int SILVKEY_ID = 34;
+  private int BLANK_ID = 63;
+
   @Override
   public int getID() {
     return DraculaPunchGame.TEST_STATE;
@@ -26,6 +33,8 @@ public class TestLevelState extends LevelState {
   @Override
   public void enter(GameContainer container, StateBasedGame game) throws SlickException {
     super.enter(container, game);
+    hasGKey = false;
+    hasSKey = false;
     gameObjects = new ArrayList<>();
     playerObjects = new ArrayList<>();
 
@@ -84,6 +93,33 @@ public class TestLevelState extends LevelState {
 
     for(GameObject gameObject : gameObjects){
       gameObject.update(gameContainer, stateBasedGame, delta);
+    }
+    checkHasKey();
+    if(hasSKey){
+      openDoors();
+      hasSKey = false;
+    }
+  }
+
+  private void checkHasKey(){
+    for(CharacterController p : playerObjects){
+      if(map.getTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object")) == GOLDKEY_ID){
+        System.out.println(p.getName() + " took the gold key");
+        hasGKey = true;
+        map.setTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object"), BLANK_ID);
+      } else if(map.getTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object")) == SILVKEY_ID){
+        System.out.println(p.getName() + " took the silver key");
+        hasSKey = true;
+        map.setTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object"), BLANK_ID);
+      }
+    }
+  }
+
+  private void openDoors(){
+    // x: 55, y:16-19
+    for(int i = 16; i <=19; i++){
+      map.setTileId(55, i, map.getLayerIndex("SW Walls"), 63);
+      map.isPassable[55][i] = true;
     }
   }
 

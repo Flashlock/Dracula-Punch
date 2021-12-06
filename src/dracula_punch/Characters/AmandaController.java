@@ -68,6 +68,11 @@ public class AmandaController extends CharacterController{
   }
 
   @Override
+  public String getName() {
+    return "Amanda";
+  }
+
+  @Override
   public int getIdleWidth() {
     return IDLE_WIDTH;
   }

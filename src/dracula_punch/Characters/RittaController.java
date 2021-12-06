@@ -68,6 +68,11 @@ public class RittaController extends CharacterController{
   }
 
   @Override
+  public String getName() {
+    return "Ritta";
+  }
+
+  @Override
   public int getIdleWidth() {
     return IDLE_WIDTH;
   }

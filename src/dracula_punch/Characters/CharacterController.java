@@ -239,6 +239,11 @@ public abstract class CharacterController extends GameObject {
   public abstract String getIdleSheet();
 
   /**
+   * @return The character's Idle Sprite Sheet - currently no animation
+   */
+  public abstract String getName();
+
+  /**
    * @return The width of each sprite in the character's idle animation
    */
   public abstract int getIdleWidth();
