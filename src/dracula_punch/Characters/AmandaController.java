@@ -14,7 +14,8 @@ public class AmandaController extends PlayerController {
     super(x, y, curLevelState);
     xRenderOffset = 10;
     yRenderOffset = 30;
-    scaleFactor = .4f;  // changed scaling to new tiledmap!
+    scaleFactor = 1f;
+    rangedActionFrame = 15;
 
     attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);
 
@@ -40,6 +41,11 @@ public class AmandaController extends PlayerController {
   }
 
   @Override
+  public String getName() {
+    return "Amanda";
+  }
+
+  @Override
   public String getMeleeSheet() {
     return null;
   }
@@ -57,13 +63,12 @@ public class AmandaController extends PlayerController {
 
   //region IAttacker
   @Override
-  public String getName() {
-    return "Amanda";
-  }
-
-  @Override
-  public int getIdleWidth() {
-    return IDLE_WIDTH;
+  public void attack(AttackType attackType) {
+    // spawn the ball and set it free
+    Vector screen = curLevelState.camera.getScreenPositionFromTile(currentTile);
+    curLevelState.newObjects.add(
+            new MagicBall(screen.getX(), screen.getY(), currentTile, curLevelState, facingDir)
+    );
   }
   //endregion
 }
