@@ -41,23 +41,30 @@ public class AmandaController extends PlayerController {
   }
 
   @Override
-  public String getMeleeSheet() {
-    return null;
-  }
-
-  @Override
   public String getRangedSheet() {
-    return getSheetHelper(
+    return DraculaPunchGame.getSheetHelper(
             DraculaPunchGame.AMANDA_ATTACK_0_DEG,
             DraculaPunchGame.AMANDA_ATTACK_180_DEG,
             DraculaPunchGame.AMANDA_ATTACK_90_DEG,
-            DraculaPunchGame.AMANDA_ATTACK_270_DEG
+            DraculaPunchGame.AMANDA_ATTACK_270_DEG,
+            (int) facingDir.getX(),
+            (int) facingDir.getY()
     );
   }
   //endregion
 
   //region IAttacker
   @Override
+  public String getName() {
+    return "Amanda";
+  }
+
+  @Override
+  public String getMeleeSheet() {
+    return null;
+  }
+
+
   public void attack(AttackType attackType) {
     // spawn the ball and set it free
     Vector screen = curLevelState.camera.getScreenPositionFromTile(currentTile);

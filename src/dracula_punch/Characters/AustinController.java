@@ -44,12 +44,19 @@ public class AustinController extends PlayerController {
   }
 
   @Override
+  public String getName() {
+    return "Austin";
+  }
+
+  @Override
   public String getMeleeSheet() {
-    return getSheetHelper(
+    return DraculaPunchGame.getSheetHelper(
             DraculaPunchGame.AUSTIN_ATTACK_0_DEG,
             DraculaPunchGame.AUSTIN_ATTACK_180_DEG,
             DraculaPunchGame.AUSTIN_ATTACK_90_DEG,
-            DraculaPunchGame.AUSTIN_ATTACK_270_DEG
+            DraculaPunchGame.AUSTIN_ATTACK_270_DEG,
+            (int) facingDir.getX(),
+            (int) facingDir.getY()
     );
   }
 
@@ -60,7 +67,6 @@ public class AustinController extends PlayerController {
   //endregion
 
   //region IAttacker
-  @Override
   public void attack(AttackType attackType){
     switch (attackType){
       case MELEE:

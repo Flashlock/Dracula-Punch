@@ -1,6 +1,7 @@
 package dracula_punch;
 
 import dracula_punch.States.CharacterSelectState;
+import dracula_punch.States.StartState;
 import dracula_punch.States.TestLevelState;
 import jig.ResourceManager;
 import org.newdawn.slick.AppGameContainer;
@@ -13,9 +14,10 @@ public class DraculaPunchGame extends StateBasedGame {
   //region State ID's
   public static int TEST_STATE = -1;
   public static int CHARACTER_SELECT_STATE = 0;
+  public static int START_STATE = 1;
   //endregion
 
-  public static final String MAP = "dracula_punch/Resources/Tiled/amandatest.tmx";
+  public static final String MAP = "dracula_punch/Resources/Tiled/dungeon_map.tmx";
   public static final int ANIMATION_DURATION = 50;
   public static final int SPRITE_SIZE = 500;
   public static int SCREEN_WIDTH, SCREEN_HEIGHT;
@@ -144,6 +146,13 @@ public class DraculaPunchGame extends StateBasedGame {
           "dracula_punch/Resources/Sprite_Sheets/Ammo/Arrow/Arrow_270.png";
   //endregion
 
+
+  //region Spash Screens
+  public static final String START_SCREEN =
+          "dracula_punch/Resources/Splash_Screens/Start_Screen.png";
+  //endregion
+
+
   public DraculaPunchGame(String name, int width, int height) {
     super(name);
     SCREEN_WIDTH = width;
@@ -154,6 +163,7 @@ public class DraculaPunchGame extends StateBasedGame {
 
   @Override
   public void initStatesList(GameContainer gameContainer) throws SlickException {
+    addState(new StartState());
     addState(new CharacterSelectState());
     addState(new TestLevelState());
 
@@ -218,6 +228,10 @@ public class DraculaPunchGame extends StateBasedGame {
     ResourceManager.loadImage(ARROW_90_DEG);
     ResourceManager.loadImage(ARROW_180_DEG);
     ResourceManager.loadImage(ARROW_270_DEG);
+    //endregion
+
+    //region Splash Screens
+    ResourceManager.loadImage(START_SCREEN);
     //endregion
   }
 
