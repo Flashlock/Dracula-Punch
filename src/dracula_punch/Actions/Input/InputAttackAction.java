@@ -1,10 +1,10 @@
 package dracula_punch.Actions.Input;
 
 import dracula_punch.Actions.Action;
-import dracula_punch.Characters.AmandaController;
-import dracula_punch.Characters.AustinController;
+import dracula_punch.Characters.Players.AmandaController;
+import dracula_punch.Characters.Players.AustinController;
 import dracula_punch.Characters.CharacterController;
-import dracula_punch.Characters.RittaController;
+import dracula_punch.Characters.Players.RittaController;
 import dracula_punch.DraculaPunchGame;
 
 public class InputAttackAction extends Action {

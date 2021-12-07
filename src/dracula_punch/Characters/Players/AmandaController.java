@@ -1,4 +1,4 @@
-package dracula_punch.Characters;
+package dracula_punch.Characters.Players;
 
 import dracula_punch.Actions.Damage_System.AttackAction;
 import dracula_punch.Damage_System.AttackType;
@@ -53,11 +53,6 @@ public class AmandaController extends PlayerController {
   //endregion
 
   //region IAttacker
-  @Override
-  public String getName() {
-    return "Amanda";
-  }
-
   @Override
   public String getMeleeSheet() {
     return null;

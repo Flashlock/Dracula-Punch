@@ -2,7 +2,7 @@ package dracula_punch.Damage_System.Projectiles;
 
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.GameObject;
-import dracula_punch.Characters.PlayerController;
+import dracula_punch.Characters.Players.PlayerController;
 import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;

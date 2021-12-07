@@ -1,6 +1,7 @@
-package dracula_punch.Characters;
+package dracula_punch.Characters.Players;
 
 import dracula_punch.Actions.Damage_System.AttackAction;
+import dracula_punch.Characters.GameObject;
 import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
@@ -41,11 +42,6 @@ public class AustinController extends PlayerController {
   @Override
   public String getIdleSheet() {
     return DraculaPunchGame.AUSTIN_IDLE;
-  }
-
-  @Override
-  public String getName() {
-    return "Austin";
   }
 
   @Override

@@ -1,4 +1,4 @@
-package dracula_punch.Characters;
+package dracula_punch.Characters.Players;
 
 import dracula_punch.Actions.Damage_System.AttackAction;
 import dracula_punch.Camera.Coordinate;
@@ -40,12 +40,6 @@ public class RittaController extends PlayerController{
   public String getIdleSheet() {
     return DraculaPunchGame.RITTA_IDLE;
   }
-
-  @Override
-  public String getName() {
-    return "Ritta";
-  }
-
 
   public String getMeleeSheet() {
     return null;

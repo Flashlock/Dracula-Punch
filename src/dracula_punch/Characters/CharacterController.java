@@ -237,10 +237,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
   public abstract String getIdleSheet();
 
   /**
-   * @return The character's Idle Sprite Sheet - currently no animation
-   */
-  public abstract String getName();
-  /**
    * @return Sprite sheet for melee attack
    */
   public abstract String getMeleeSheet();

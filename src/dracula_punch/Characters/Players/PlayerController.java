@@ -1,5 +1,6 @@
-package dracula_punch.Characters;
+package dracula_punch.Characters.Players;
 
+import dracula_punch.Characters.CharacterController;
 import dracula_punch.Damage_System.IAttacker;
 import dracula_punch.States.LevelState;
 import org.newdawn.slick.GameContainer;

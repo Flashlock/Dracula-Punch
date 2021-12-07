@@ -6,6 +6,9 @@ import dracula_punch.Actions.Input.InputMoveAction;
 import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.*;
+import dracula_punch.Characters.Players.AmandaController;
+import dracula_punch.Characters.Players.AustinController;
+import dracula_punch.Characters.Players.RittaController;
 import dracula_punch.TestEnemy;
 import dracula_punch.TiledMap.DPTiledMap;
 import jig.Vector;
@@ -14,7 +17,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import dracula_punch.DraculaPunchGame;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TestLevelState extends LevelState {
@@ -128,11 +130,9 @@ public class TestLevelState extends LevelState {
   private void checkHasKey(){
     for(CharacterController p : playerObjects){
       if(map.getTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object")) == GOLDKEY_ID){
-        System.out.println(p.getName() + " took the gold key");
         hasGKey = true;
         map.setTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object"), BLANK_ID);
       } else if(map.getTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object")) == SILVKEY_ID){
-        System.out.println(p.getName() + " took the silver key");
         hasSKey = true;
         map.setTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object"), BLANK_ID);
       }
