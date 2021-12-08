@@ -1,15 +1,15 @@
-package dracula_punch;
+package dracula_punch.Pathfinding;
 
 import dracula_punch.Camera.Coordinate;
 
 public class DijkstraNode implements Comparable<DijkstraNode>{
-  int x;
-  int y;
-  Coordinate coord;
-  int distance = Integer.MAX_VALUE;
-  DijkstraNode nextInPath = null;
-  boolean visited;
-  boolean isPassable;
+  public int x;
+  public int y;
+  public Coordinate coord;
+  public int distance = Integer.MAX_VALUE;
+  public DijkstraNode nextInPath = null;
+  public boolean visited;
+  public boolean isPassable;
 
   public DijkstraNode(int x, int y) {
     this.x = x;
