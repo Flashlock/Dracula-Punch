@@ -156,11 +156,6 @@ public class TestEnemy extends CharacterController {
     return DraculaPunchGame.DRACULA_IDLE;
   }
 
-  @Override
-  public String getName() {
-    return "Enemy";
-  }
-
   public String getMeleeSheet() {
     return DraculaPunchGame.getSheetHelper(
             DraculaPunchGame.DRACULA_MELEE_0_DEG,

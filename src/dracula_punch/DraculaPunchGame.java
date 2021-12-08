@@ -126,6 +126,29 @@ public class DraculaPunchGame extends StateBasedGame {
           "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Idle/Dracula_Idle.png";
   //endregion
 
+  //region Bat
+  public static final String BAT_FLY_0 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Fly/Bat_Fly_0.png";
+  public static final String BAT_FLY_90 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Fly/Bat_Fly_90.png";
+  public static final String BAT_FLY_180 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Fly/Bat_Fly_180.png";
+  public static final String BAT_FLY_270 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Fly/Bat_Fly_270.png";
+
+  public static final String BAT_ATTACK_0 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Attack/Bat_Attack_0.png";
+  public static final String BAT_ATTACK_90 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Attack/Bat_Attack_90.png";
+  public static final String BAT_ATTACK_180 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Attack/Bat_Attack_180.png";
+  public static final String BAT_ATTACK_270 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Attack/Bat_Attack_270.png";
+
+  public static final String BAT_IDLE =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Idle/Bat_Idle.png";
+  //endregion
+
   //region Projectiles
   public static final String MAGIC_BALL_0_DEG =
           "dracula_punch/Resources/Sprite_Sheets/Ammo/Magic_Ball/Ball_0.png";
@@ -145,7 +168,6 @@ public class DraculaPunchGame extends StateBasedGame {
   public static final String ARROW_270_DEG =
           "dracula_punch/Resources/Sprite_Sheets/Ammo/Arrow/Arrow_270.png";
   //endregion
-
 
   //region Spash Screens
   public static final String START_SCREEN =
@@ -216,6 +238,18 @@ public class DraculaPunchGame extends StateBasedGame {
     ResourceManager.loadImage(DRACULA_MELEE_90_DEG);
     ResourceManager.loadImage(DRACULA_MELEE_180_DEG);
     ResourceManager.loadImage(DRACULA_MELEE_270_DEG);
+    //endregion
+
+    //region Bat
+    ResourceManager.loadImage(BAT_IDLE);
+    ResourceManager.loadImage(BAT_ATTACK_0);
+    ResourceManager.loadImage(BAT_ATTACK_90);
+    ResourceManager.loadImage(BAT_ATTACK_180);
+    ResourceManager.loadImage(BAT_ATTACK_270);
+    ResourceManager.loadImage(BAT_FLY_0);
+    ResourceManager.loadImage(BAT_FLY_90);
+    ResourceManager.loadImage(BAT_FLY_180);
+    ResourceManager.loadImage(BAT_FLY_270);
     //endregion
 
     //region Projectiles
