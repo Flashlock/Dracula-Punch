@@ -39,7 +39,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
 
   public CharacterController(final float x, final float y, LevelState curLevelState){
     super(x, y);
-    currentTile = new Coordinate(curLevelState.map.playerSpawnCoordinate);
     TOTAL_MOVE_TIME = 100;
     movingTime = 99; // one less than total to trigger calculation once on startup
 
