@@ -6,10 +6,10 @@ import dracula_punch.Actions.Input.InputMoveAction;
 import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.*;
+import dracula_punch.Characters.Enemies.BatController;
 import dracula_punch.Characters.Players.AmandaController;
 import dracula_punch.Characters.Players.AustinController;
 import dracula_punch.Characters.Players.RittaController;
-import dracula_punch.TestEnemy;
 import dracula_punch.TiledMap.DPTiledMap;
 import jig.Vector;
 import org.newdawn.slick.*;
@@ -48,7 +48,8 @@ public class TestLevelState extends LevelState {
     gameObjects.add(camera);
 
     temporaryPlayerSelectionMethod();
-    GameObject testEnemy = new TestEnemy(new Coordinate(90,90), this);
+    Coordinate enemyStart = new Coordinate(90, 90);
+    GameObject testEnemy = new BatController(enemyStart, this);
     gameObjects.add(testEnemy);
   }
 
