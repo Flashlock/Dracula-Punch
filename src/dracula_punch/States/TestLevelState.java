@@ -87,6 +87,25 @@ public class TestLevelState extends LevelState {
     attack3Event.add(new InputAttackAction(c3));
   }
 
+  private void createCharacters() {
+    if (DraculaPunchGame.characterChoice[0] != DraculaPunchGame.charIdEnum.UNCHOSEN) {
+      playerOne = initCharacterControllers(0);
+      gameObjects.add(playerOne);
+      CharacterController c1 = (CharacterController) playerOne;
+      playerObjects.add(c1);
+      move1Event.add(new InputMoveAction(c1));
+      attack1Event.add(new InputAttackAction(c1));
+    }
+  }
+
+  private GameObject initCharacterControllers(int player) {
+    return switch (DraculaPunchGame.characterChoice[player]) {
+      case AUSTIN -> new AustinController(0,0, this);
+      case AMANDA -> new AmandaController(0, 0, this);
+      case RITTA, UNCHOSEN -> new RittaController(0,0, this);
+    };
+  }
+
   @Override
   public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
   }
