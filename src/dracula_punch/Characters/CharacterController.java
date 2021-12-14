@@ -115,6 +115,15 @@ public abstract class CharacterController extends GameObject implements IDamagea
   //endregion
 
   /**
+   * @return The tile immediately in front of the character.
+   */
+  public Coordinate getFacingTile(){
+    float x = currentTile.x + facingDir.getX();
+    float y = currentTile.y - facingDir.getY();
+    return new Coordinate(x, y);
+  }
+
+  /**
    * Animate the controller's movement
    * @param direction The direction to move
    */

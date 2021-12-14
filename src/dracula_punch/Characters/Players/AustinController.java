@@ -1,6 +1,7 @@
 package dracula_punch.Characters.Players;
 
 import dracula_punch.Actions.Damage_System.AttackAction;
+import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.GameObject;
 import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.IDamageable;
@@ -66,12 +67,10 @@ public class AustinController extends PlayerController {
   public void attack(AttackType attackType){
     switch (attackType){
       case MELEE:
-        // get the tile in front of me
-        int x = (int) (currentTile.x + facingDir.getX());
-        int y = (int) (currentTile.y - facingDir.getY());
+        Coordinate front = getFacingTile();
 
         // damage all the things
-        ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(x, y);
+        ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(front);
         for(GameObject target : targets){
           if(target instanceof IDamageable && !(target instanceof PlayerController)){
             ((IDamageable) target).takeDamage(meleeDamage);
