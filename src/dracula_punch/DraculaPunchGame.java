@@ -1,8 +1,6 @@
 package dracula_punch;
 
-import dracula_punch.States.CharacterSelectState;
-import dracula_punch.States.StartState;
-import dracula_punch.States.TestLevelState;
+import dracula_punch.States.*;
 import jig.ResourceManager;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -15,6 +13,8 @@ public class DraculaPunchGame extends StateBasedGame {
   public static int TEST_STATE = -1;
   public static int CHARACTER_SELECT_STATE = 0;
   public static int START_STATE = 1;
+  public static int LOSE_STATE = 2;
+  public static int WIN_STATE = 3;
   //endregion
 
   public static final String MAP = "dracula_punch/Resources/Tiled/dungeon_map.tmx";
@@ -150,6 +150,13 @@ public class DraculaPunchGame extends StateBasedGame {
   //region Spash Screens
   public static final String START_SCREEN =
           "dracula_punch/Resources/Splash_Screens/Start_Screen.png";
+
+  public static final String LOSE_SCREEN =
+          "dracula_punch/Resources/Splash_Screens/Lose_Screen.png";
+
+  public static final String WIN_SCREEN =
+          "dracula_punch/Resources/Splash_Screens/Win_Screen.png";
+
   //endregion
 
 
@@ -166,6 +173,8 @@ public class DraculaPunchGame extends StateBasedGame {
     addState(new StartState());
     addState(new CharacterSelectState());
     addState(new TestLevelState());
+    addState(new WinState());
+    addState(new LoseState());
 
     //region Amanda
     ResourceManager.loadImage(AMANDA_IDLE);
@@ -232,6 +241,8 @@ public class DraculaPunchGame extends StateBasedGame {
 
     //region Splash Screens
     ResourceManager.loadImage(START_SCREEN);
+    ResourceManager.loadImage(LOSE_SCREEN);
+    ResourceManager.loadImage(WIN_SCREEN);
     //endregion
   }
 
