@@ -111,9 +111,9 @@ public class CharacterSelectState extends BasicGameState {
         graphics.drawString("Press SPACE to accept selection", 10, yOffset);
         break;
       default:
-        graphics.drawString("Use D-Pad to change selection", 10, yOffset);
+        graphics.drawString("Use LEFT JOYSTICK to change selection", 10, yOffset);
         yOffset += 20;
-        graphics.drawString("Press X to accept selection", 10, yOffset);
+        graphics.drawString("Press X or START to accept selection", 10, yOffset);
     }
     yOffset += 20;
     graphics.drawString("Current selection = " + getCharacterName(), 10, yOffset);
@@ -136,7 +136,7 @@ public class CharacterSelectState extends BasicGameState {
       graphics.drawString("Press SPACE to select Arrow Keys", 10, yOffset);
       yOffset += 20;
     }
-    graphics.drawString("Press START to select Playstation 5 Controller", 10, yOffset);
+    graphics.drawString("Press X or START to select Playstation 5 Controller", 10, yOffset);
   }
 
   private String getCharacterName() {
@@ -197,7 +197,7 @@ public class CharacterSelectState extends BasicGameState {
           selectCharacter();
         lockInSelection();
     }
-    printButtonPresses(input);
+    //printButtonPresses(input);
   }
 
   private void determineController() {
@@ -205,9 +205,11 @@ public class CharacterSelectState extends BasicGameState {
     if (u) selectIfAvailable(DraculaPunchGame.KB_IJKL);
     if (space) selectIfAvailable(DraculaPunchGame.KB_ARROWS);
     for (int j = 0; j <= input.getControllerCount(); j++)
-      if (input.isControlPressed(DraculaPunchGame.PS5_CONTROLLER_START_BUTTON, j))
+      if (input.isControlPressed(DraculaPunchGame.PS5_CONTROLLER_START_BUTTON, j)
+          || input.isControlPressed(DraculaPunchGame.PS5_CONTROLLER_X_BUTTON, j))
         selectIfAvailable(j);
-    if (dpg.inputSource[player] != -1) { nextState(); }
+    if (dpg.inputSource[player] != -1)
+      nextState();
   }
 
   private void selectIfAvailable(int controller) {
@@ -269,7 +271,8 @@ public class CharacterSelectState extends BasicGameState {
             || (dpg.inputSource[player] == DraculaPunchGame.KB_ARROWS && space))
           nextState();
       }
-      else if ((input.isControlPressed(DraculaPunchGame.PS5_CONTROLLER_START_BUTTON, dpg.inputSource[player])))
+      else if ((input.isControlPressed(DraculaPunchGame.PS5_CONTROLLER_START_BUTTON, dpg.inputSource[player])
+          || input.isControlPressed(DraculaPunchGame.PS5_CONTROLLER_X_BUTTON, dpg.inputSource[player])))
         nextState();
     }
   }
@@ -300,44 +303,9 @@ public class CharacterSelectState extends BasicGameState {
   }
 
   private void printButtonPresses(Input input) {
-    for (int j = 0; j <= input.getControllerCount(); j++) {
-      for (int k = 0; k < 100; k++){
-        if (input.isControlPressed(k,j)) {
+    for (int j = 0; j <= input.getControllerCount(); j++)
+      for (int k = 0; k < 100; k++)
+        if (input.isControlPressed(k, j))
           System.out.println("Controller " + j + " Pressed Button " + k);
-        }
-      }
-    }
   }
-
-  /*
-  public void forReference(GameContainer gameContainer) {
-    Input input = gameContainer.getInput();
-
-    if (input.isControllerLeft(controller)) {
-      hovered = DraculaPunchGame.charIdEnum.values()[j - 1];
-    } else if (input.isControllerRight(controller)) {
-      hovered = DraculaPunchGame.charIdEnum.values()[j + 1];
-    }
-
-
-    if (controller <= -1) {
-      //gameContainer.getInput();
-      for (int j = 0; j <= gameContainer.getInput().getControllerCount(); j++) {
-        if (gameContainer.getInput().isButton1Pressed(j) gameContainer.getInput().isButton2Pressed(j)
-        gameContainer.getInput().isButton3Pressed(j) || gameContainer.getInput().isControllerDown(j)){
-          System.out.println(j);
-          controller = j;
-        }
-      }
-
-
-      if (gameContainer.getInput().isButton2Pressed(controller)) {
-        System.out.println("found controller number=" + controller);
-      } else {
-        System.out.println("reading");
-
-      }
-    }
-  }
-   */
 }

@@ -44,47 +44,9 @@ public class TestLevelState extends LevelState {
     camera = new Camera(map, playerObjects);
     gameObjects.add(camera);
 
-    //temporaryPlayerSelectionMethod();
     createCharacters();
     GameObject testEnemy = new TestEnemy(new Coordinate(90,90), this);
     gameObjects.add(testEnemy);
-  }
-
-  private void temporaryPlayerSelectionMethod() {
-    playerOne = new AmandaController(
-        DraculaPunchGame.SCREEN_WIDTH / 3f,
-        DraculaPunchGame.SCREEN_HEIGHT / 3f,
-        this
-    );
-    playerTwo = new AustinController(
-        DraculaPunchGame.SCREEN_WIDTH / 3f,
-        DraculaPunchGame.SCREEN_HEIGHT / 3f,
-        this
-    );
-    playerThree = new RittaController(
-        DraculaPunchGame.SCREEN_WIDTH / 3f,
-        DraculaPunchGame.SCREEN_HEIGHT / 3f,
-        this
-    );
-    gameObjects.add(playerOne);
-    gameObjects.add(playerTwo);
-    gameObjects.add(playerThree);
-
-    CharacterController c1 = (CharacterController) playerOne;
-    CharacterController c2 = (CharacterController) playerTwo;
-    CharacterController c3 = (CharacterController) playerThree;
-
-    playerObjects.add(c1);
-    playerObjects.add(c2);
-    playerObjects.add(c3);
-
-    move1Event.add(new InputMoveAction(c1));
-    move2Event.add(new InputMoveAction(c2));
-    move3Event.add(new InputMoveAction(c3));
-
-    attack1Event.add(new InputAttackAction(c1));
-    attack2Event.add(new InputAttackAction(c2));
-    attack3Event.add(new InputAttackAction(c3));
   }
 
   private void createCharacters() {
@@ -281,17 +243,13 @@ public class TestLevelState extends LevelState {
   }
 
   private boolean anyButtonOtherThanDPadPressed(Input input, int player) {
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 50; i++)
       if (i != DraculaPunchGame.PS5_CONTROLLER_LEFT_BUTTON
           && i != DraculaPunchGame.PS5_CONTROLLER_RIGHT_BUTTON
           && i != DraculaPunchGame.PS5_CONTROLLER_UP_BUTTON
           && i != DraculaPunchGame.PS5_CONTROLLER_DOWN_BUTTON
-      ) {
-        if (input.isControlPressed(i, DraculaPunchGame.inputSource[player])) {
-          return true;
-        }
-      }
-    }
+          && input.isControlPressed(i, DraculaPunchGame.inputSource[player]))
+        return true;
     return false;
   }
 
