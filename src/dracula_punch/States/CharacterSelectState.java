@@ -18,17 +18,9 @@ public class CharacterSelectState extends BasicGameState {
   private CharSelectButton[] charSelectButtons;
   private enum states {P_1_CONTROLLER, P_1_CHARACTER, P_2_CONTROLLER, P_2_CHARACTER, P_3_CONTROLLER, P_3_CHARACTER}
   private states state = states.P_1_CONTROLLER;
-  private static final int PS5_CONTROLLER_START_BUTTON = 5;
-  private static final int PS5_CONTROLLER_UP_BUTTON = 0;
-  private static final int PS5_CONTROLLER_DOWN_BUTTON = 1;
-  private static final int PS5_CONTROLLER_LEFT_BUTTON = 2;
-  private static final int PS5_CONTROLLER_RIGHT_BUTTON = 3;
   private DraculaPunchGame dpg;
   private Input input;
   private boolean upArrow, downArrow, leftArrow, rightArrow, space, w, a, s, d, e, i, j, k, l, u;
-  private final int KB_WASD = -2;
-  private final int KB_IJKL = -3;
-  private final int KB_ARROWS = -4;
   private int player = 0;
   private int buttonPressDelay = 0;
   private final int DELAY_TIME = 200;
@@ -99,20 +91,21 @@ public class CharacterSelectState extends BasicGameState {
 
   private void drawCharacterSelectPrompt(Graphics graphics) {
     int yOffset = 500;
-    graphics.drawString("Player " + player + " Select Character", 10, yOffset);
+    graphics.drawString("Player " + (player+1) + " Select Character", 10, yOffset);
+    graphics.drawString("_______________________________________", 10, yOffset);
     yOffset += 20;
     switch (dpg.inputSource[player]) {
-      case KB_WASD:
+      case DraculaPunchGame.KB_WASD:
         graphics.drawString("Press W, A, S, D to change selection", 10, yOffset);
         yOffset += 20;
         graphics.drawString("Press E to accept selection", 10, yOffset);
         break;
-      case KB_IJKL:
+      case DraculaPunchGame.KB_IJKL:
         graphics.drawString("Press I, J, K, L to change selection", 10, yOffset);
         yOffset += 20;
         graphics.drawString("Press U to accept selection", 10, yOffset);
         break;
-      case KB_ARROWS:
+      case DraculaPunchGame.KB_ARROWS:
         graphics.drawString("Press ARROW KEYS to change selection", 10, yOffset);
         yOffset += 20;
         graphics.drawString("Press SPACE to accept selection", 10, yOffset);
@@ -128,17 +121,18 @@ public class CharacterSelectState extends BasicGameState {
 
   private void drawControllerSelectPrompt(Graphics graphics) {
     int yOffset = 500;
-    graphics.drawString("Player " + player + " Select Controller", 10, yOffset);
+    graphics.drawString("Player " + (player+1) + " Select Controller", 10, yOffset);
+    graphics.drawString("_______________________________________", 10, yOffset);
     yOffset += 20;
-    if (controllerIsAvailable(KB_WASD)){
+    if (controllerIsAvailable(DraculaPunchGame.KB_WASD)){
       graphics.drawString("Press E to select WASD", 10, yOffset);
       yOffset += 20;
     }
-    if (controllerIsAvailable(KB_IJKL)) {
+    if (controllerIsAvailable(DraculaPunchGame.KB_IJKL)) {
       graphics.drawString("Press U to select IJKL", 10, yOffset);
       yOffset += 20;
     }
-    if (controllerIsAvailable(KB_ARROWS)) {
+    if (controllerIsAvailable(DraculaPunchGame.KB_ARROWS)) {
       graphics.drawString("Press SPACE to select Arrow Keys", 10, yOffset);
       yOffset += 20;
     }
@@ -170,7 +164,7 @@ public class CharacterSelectState extends BasicGameState {
       button.update(gameContainer, stateBasedGame, delta);
     }
     watchKeys();
-    characterSelectFiniteStateMachine(gameContainer);
+    characterSelectFiniteStateMachine();
     buttonPressDelay += delta;
     if (buttonPressDelay >= DELAY_TIME) { buttonPressDelay = DELAY_TIME; }
   }
@@ -193,45 +187,26 @@ public class CharacterSelectState extends BasicGameState {
     space = input.isKeyDown(Input.KEY_SPACE);
   }
 
-  public void characterSelectFiniteStateMachine(GameContainer gameContainer) {
+  public void characterSelectFiniteStateMachine() {
     switch (state) {
-      case P_1_CONTROLLER:
+      case P_1_CONTROLLER, P_2_CONTROLLER, P_3_CONTROLLER:
         determineController();
         break;
-      case P_1_CHARACTER:
+      case P_1_CHARACTER, P_2_CHARACTER, P_3_CHARACTER:
         if (buttonPressDelay == DELAY_TIME)
           selectCharacter();
         lockInSelection();
-        break;
-      case P_2_CONTROLLER:
-        determineController();
-        break;
-      case P_2_CHARACTER:
-        if (buttonPressDelay == DELAY_TIME)
-          selectCharacter();
-        lockInSelection();
-        break;
-      case P_3_CONTROLLER:
-        determineController();
-        break;
-      case P_3_CHARACTER:
-        if (buttonPressDelay == DELAY_TIME)
-          selectCharacter();
-        lockInSelection();
-        break;
     }
     printButtonPresses(input);
   }
 
   private void determineController() {
-    if (e) { selectIfAvailable(KB_WASD); }
-    if (u) { selectIfAvailable(KB_IJKL); }
-    if (space) { selectIfAvailable(KB_ARROWS); }
-    for (int j = 0; j <= input.getControllerCount(); j++) {
-      if (input.isControlPressed(j, PS5_CONTROLLER_START_BUTTON)) {
+    if (e) selectIfAvailable(DraculaPunchGame.KB_WASD);
+    if (u) selectIfAvailable(DraculaPunchGame.KB_IJKL);
+    if (space) selectIfAvailable(DraculaPunchGame.KB_ARROWS);
+    for (int j = 0; j <= input.getControllerCount(); j++)
+      if (input.isControlPressed(DraculaPunchGame.PS5_CONTROLLER_START_BUTTON, j))
         selectIfAvailable(j);
-      }
-    }
     if (dpg.inputSource[player] != -1) { nextState(); }
   }
 
@@ -241,68 +216,61 @@ public class CharacterSelectState extends BasicGameState {
   }
 
   private boolean controllerIsAvailable(int controller) {
-    for (int i = 0; i <= 2; i++) {
-      if (dpg.inputSource[i] == controller) {
+    for (int i = 0; i <= 2; i++)
+      if (dpg.inputSource[i] == controller)
         return false;
-      }
-    }
     return true;
   }
 
   private void selectCharacter() {
-    switch (dpg.inputSource[player]) {
-      case KB_WASD:
-        if (w || a) { decrementSelection(); }
-        if (s || d) { incrementSelection(); }
+    int controller = dpg.inputSource[player];
+    switch (controller) {
+      case DraculaPunchGame.KB_WASD:
+        if (w || a) decrementSelection();
+        if (s || d) incrementSelection();
         break;
-      case KB_IJKL:
-        if (i || j) { decrementSelection(); }
-        if (k || l) { incrementSelection(); }
+      case DraculaPunchGame.KB_IJKL:
+        if (i || j) decrementSelection();
+        if (k || l) incrementSelection();
         break;
-      case KB_ARROWS:
-        if (upArrow || leftArrow) { decrementSelection(); }
-        if (downArrow || rightArrow) { incrementSelection(); }
+      case DraculaPunchGame.KB_ARROWS:
+        if (upArrow || leftArrow) decrementSelection();
+        if (downArrow || rightArrow) incrementSelection();
         break;
       default:
-        if (input.isControlPressed(player, PS5_CONTROLLER_UP_BUTTON)
-            || input.isControlPressed(player, PS5_CONTROLLER_LEFT_BUTTON)) {
-          decrementSelection();
-        }
-        if (input.isControlPressed(player, PS5_CONTROLLER_DOWN_BUTTON)
-            || input.isControlPressed(player, PS5_CONTROLLER_RIGHT_BUTTON)) {
-          incrementSelection();
-        }
+        if (input.isControllerUp(controller) || input.isControllerLeft(controller)) { decrementSelection(); }
+        if (input.isControllerDown(controller) || input.isControllerRight(controller)) { incrementSelection(); }
     }
   }
 
   private void incrementSelection() {
     switch (dpg.characterChoice[player]) {
-      case UNCHOSEN:
-      case RITTA: dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.AMANDA; break;
-      case AMANDA: dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.AUSTIN; break;
-      case AUSTIN: dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.RITTA; break;
+      case UNCHOSEN, RITTA -> dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.AMANDA;
+      case AMANDA -> dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.AUSTIN;
+      case AUSTIN -> dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.RITTA;
     }
     buttonPressDelay = 0;
   }
 
   private void decrementSelection() {
     switch (dpg.characterChoice[player]) {
-      case UNCHOSEN:
-      case AMANDA: dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.RITTA; break;
-      case RITTA: dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.AUSTIN; break;
-      case AUSTIN: dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.AMANDA; break;
+      case UNCHOSEN, AMANDA -> dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.RITTA;
+      case RITTA -> dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.AUSTIN;
+      case AUSTIN -> dpg.characterChoice[player] = DraculaPunchGame.charIdEnum.AMANDA;
     }
     buttonPressDelay = 0;
   }
 
   private void lockInSelection() {
     if (dpg.characterChoice[player] != DraculaPunchGame.charIdEnum.UNCHOSEN) {
-      if ((dpg.inputSource[player] == KB_WASD && e)
-          || (dpg.inputSource[player] == KB_IJKL && u)
-          || (dpg.inputSource[player] == KB_ARROWS && space)
-          || (input.isControlPressed(player, PS5_CONTROLLER_START_BUTTON))) {
-        nextState();
+      if (dpg.inputSource[player] < 0) {
+        if ((dpg.inputSource[player] == DraculaPunchGame.KB_WASD && e)
+            || (dpg.inputSource[player] == DraculaPunchGame.KB_IJKL && u)
+            || (dpg.inputSource[player] == DraculaPunchGame.KB_ARROWS && space))
+          nextState();
       }
+      else if ((input.isControlPressed(DraculaPunchGame.PS5_CONTROLLER_START_BUTTON, dpg.inputSource[player])))
+        nextState();
     }
   }
 

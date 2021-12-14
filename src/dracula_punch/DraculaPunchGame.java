@@ -25,6 +25,15 @@ public class DraculaPunchGame extends StateBasedGame {
   public static charIdEnum[] characterChoice = {charIdEnum.UNCHOSEN, charIdEnum.UNCHOSEN, charIdEnum.UNCHOSEN};
   public static int[] inputSource = {-1, -1, -1};
 
+  public static final int PS5_CONTROLLER_START_BUTTON = 13;
+  public static final int PS5_CONTROLLER_UP_BUTTON = 2;
+  public static final int PS5_CONTROLLER_DOWN_BUTTON = 3;
+  public static final int PS5_CONTROLLER_LEFT_BUTTON = 0;
+  public static final int PS5_CONTROLLER_RIGHT_BUTTON = 1;
+
+  public static final int KB_WASD = -2;
+  public static final int KB_IJKL = -3;
+  public static final int KB_ARROWS = -4;
 
   //region Amanda
   public static final String AMANDA_RUN_0_DEG =
@@ -284,4 +293,3 @@ public class DraculaPunchGame extends StateBasedGame {
 
   }
 }
-
