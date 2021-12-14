@@ -24,7 +24,6 @@ public class DraculaPunchGame extends StateBasedGame {
   public static charIdEnum characterChoice = charIdEnum.UNCHOSEN;
   public enum charIdEnum { UNCHOSEN, AMANDA, AUSTIN, RITTA }
 
-
   //region Amanda
   public static final String AMANDA_RUN_0_DEG =
           "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_0.png";
@@ -297,7 +296,7 @@ public class DraculaPunchGame extends StateBasedGame {
       // stop - do nothing for now. No idle pose/anim
     }
     else{
-      System.out.println("Invalid Direction: Unable to Animate");
+      System.out.println("Invalid Direction: Unable to Animate " + x + ", " + y);
     }
     return sheet;
   }

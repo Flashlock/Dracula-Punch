@@ -48,7 +48,7 @@ public class TestLevelState extends LevelState {
     gameObjects.add(camera);
 
     temporaryPlayerSelectionMethod();
-    Coordinate enemyStart = new Coordinate(90, 90);
+    Coordinate enemyStart = new Coordinate(40, 15);
     GameObject testEnemy = new BatController(enemyStart, this);
     gameObjects.add(testEnemy);
   }

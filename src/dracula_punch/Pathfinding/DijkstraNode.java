@@ -1,8 +1,11 @@
 package dracula_punch.Pathfinding;
 
+import dracula_punch.Camera.Coordinate;
+
 public class DijkstraNode {
     public final boolean isPassable;
     public final int x, y;
+    public final Coordinate coordinate;
 
     int distance = Integer.MAX_VALUE;
     DijkstraNode prevNode;
@@ -11,6 +14,7 @@ public class DijkstraNode {
         this.isPassable = isPassable;
         this.x = x;
         this.y = y;
+        coordinate = new Coordinate(x, y);
     }
 
     /**

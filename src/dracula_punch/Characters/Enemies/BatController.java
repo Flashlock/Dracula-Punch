@@ -2,6 +2,7 @@ package dracula_punch.Characters.Enemies;
 
 import dracula_punch.Actions.Damage_System.AttackAction;
 import dracula_punch.Camera.Coordinate;
+import dracula_punch.Characters.CharacterController;
 import dracula_punch.Characters.GameObject;
 import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.IDamageable;
@@ -14,78 +15,82 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class BatController extends EnemyController{
     private int meleeDamage = 5;
     private final int meleeActionFrame = 7;
-
-    private Coordinate targetTile;
-    private boolean isMoving;
-    public boolean getIsMoving(){ return isMoving; }
+    private float moveSpeed = .1f;
 
     private final DijkstraGraph navGraph;
     private ArrayList<DijkstraNode> navPath;
+    private DijkstraNode navTarget;
 
     private final int refreshTargetTime = 3000;
-    private int refreshTargetClock = 0;
+    private int refreshTargetClock = 5000;
 
     public BatController(Coordinate startingTile, LevelState curLevelState) {
         super(0, 0, curLevelState);
+        TOTAL_MOVE_TIME = 100;
+        movingTime = 100;
         attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
         currentTile = new Coordinate(startingTile);
         currentTilePlusPartial = new Coordinate(startingTile);
+
         navGraph = new DijkstraGraph(curLevelState.map);
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
         super.update(gameContainer, stateBasedGame, delta);
-        System.out.println(currentTile.x + ", " + currentTile.y);
-//        refreshTargetClock += delta;
-//        if(refreshTargetClock > refreshTargetTime){
-//            determineTarget();
-//            refreshTargetClock = 0;
-//        }
-//        move();
-//        smoothlyCatchUpToCurrentTile(delta);
+
+        refreshTargetClock += delta;
+        if(refreshTargetClock > refreshTargetTime){
+            refreshTargetClock = 0;
+            refreshTarget();
+        }
+
+        move();
+        smoothlyCatchUpToCurrentTile(delta);
     }
 
-    private void determineTarget() {
-        // TODO Implement AI
-        GameObject target = curLevelState.playerObjects.get(0);
-        navPath = navGraph.findPath(
-                (int) currentTile.x,
-                (int) currentTile.y,
-                (int) target.currentTile.x,
-                (int) target.currentTile.y
-        );
+    private void refreshTarget() {
+        CharacterController target = curLevelState.playerObjects.get(0);
+        navPath = navGraph.findPath(currentTile, target.currentTile);
+        navTarget = navPath.isEmpty() ? null : navPath.remove(0);
     }
 
-    private void move() {
-        boolean moved = true;
-        if (movingTime < TOTAL_MOVE_TIME){ }
-        else if (targetTile != null && !currentTile.isEqual(targetTile) && !navPath.isEmpty()){
-            DijkstraNode node = navPath.remove(0);
-            Coordinate next = new Coordinate(node.x, node.y);
-            changeCurrentTile((int)(next.x - currentTile.x), (int)(next.y - currentTile.y));
+    private void move(){
+        if(navTarget == null) return;
+        float percentMoved = calculatePercentMoved();
+        if(percentMoved == 0 && currentTile.isEqual(navTarget.coordinate)){
+            // re-evaluate
+            // stop if we're empty
+            if(navPath.isEmpty()){
+                navTarget = null;
+                animateMove(new Vector(0, 0));
+                return;
+            }
 
-            float x = next.x - previousTile.x;
-            float y = previousTile.y - next.y;
-            Vector dir = new Vector(x, y);
-            dir = dir.scale(1 / dir.length());
-            if(dir.getX() != facingDir.getX() || dir.getY() != facingDir.getY()){
-                // Change directions
+            // get next node in the path
+            DijkstraNode nextTarget = navPath.remove(0);
+            Vector dir = new Vector(
+                    nextTarget.x - navTarget.x,
+                    navTarget.y - nextTarget.y
+            );
+            navTarget = nextTarget;
+
+            if(curAnim == null || dir.getX() != facingDir.getX() || dir.getY() != facingDir.getY()){
+                // change directions
                 animateMove(dir);
             }
         }
-        else moved = false;
-
-        if(!moved && isMoving){
-            // stopped
-            animateMove(new Vector(0,0));
+        else if(percentMoved == 0){
+            // update current tile
+            changeCurrentTile((int)(navTarget.x - currentTile.x), (int) (navTarget.y - currentTile.y));
         }
-        isMoving = moved;
     }
+
 
     //region Character Controller
     @Override

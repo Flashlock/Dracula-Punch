@@ -1,11 +1,13 @@
 package dracula_punch.Pathfinding;
 
+import dracula_punch.Camera.Coordinate;
 import dracula_punch.TiledMap.DPTiledMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class DijkstraGraph {
+
     private final DijkstraNode[][] graph;
 
     public DijkstraGraph(DPTiledMap tiledMap){
@@ -30,14 +32,28 @@ public class DijkstraGraph {
         ArrayList<DijkstraNode> path = new ArrayList<>();
         DijkstraNode curNode = graph[targetX][targetY];
 
-        do {
+        while(curNode != null) {
             path.add(curNode);
             curNode = curNode.prevNode;
-        } while (curNode != null);
+        }
         Collections.reverse(path);
 
         clearGraph();
         return path;
+    }
+
+    /**
+     * @param startTile Starting tile
+     * @param targetTile Target tile
+     * @return The shortest path from start to target
+     */
+    public ArrayList<DijkstraNode> findPath(Coordinate startTile, Coordinate targetTile){
+        return findPath(
+                (int) startTile.x,
+                (int) startTile.y,
+                (int) targetTile.x,
+                (int) targetTile.y
+        );
     }
 
     /**
