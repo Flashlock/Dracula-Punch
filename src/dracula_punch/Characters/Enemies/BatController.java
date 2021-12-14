@@ -7,51 +7,52 @@ import dracula_punch.Characters.GameObject;
 import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
-import dracula_punch.Pathfinding.DijkstraGraph;
-import dracula_punch.Pathfinding.DijkstraNode;
 import dracula_punch.States.LevelState;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
+/**
+ * Bats Fly at you, attack, and then retreat.
+ * They select their targets with weighted random numbers.
+ * The closer you are to the bat, the higher probability they'll attack.
+ */
 public class BatController extends EnemyController{
+    public enum BatState { IDLE, ATTACK, RETREAT }
+    private BatState batState;
+    public BatState getBatState(){ return batState; }
+
     private int meleeDamage = 5;
     private final int meleeActionFrame = 7;
-    private float moveSpeed = .1f;
-
-    private final DijkstraGraph navGraph;
-    private ArrayList<DijkstraNode> navPath;
-    private DijkstraNode navTarget;
 
     private final int refreshTargetTime = 3000;
     private int refreshTargetClock = 5000;
 
-    public BatController(Coordinate startingTile, LevelState curLevelState) {
-        super(0, 0, curLevelState);
-        TOTAL_MOVE_TIME = 100;
-        movingTime = 100;
-        attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
-        currentTile = new Coordinate(startingTile);
-        currentTilePlusPartial = new Coordinate(startingTile);
+    private boolean isAttacking;
 
-        navGraph = new DijkstraGraph(curLevelState.map);
+    public BatController(Coordinate startingTile, LevelState curLevelState) {
+        super(0, 0, startingTile, curLevelState);
+        attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
+        batState = BatState.ATTACK;
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
         super.update(gameContainer, stateBasedGame, delta);
-
-        refreshTargetClock += delta;
-        if(refreshTargetClock > refreshTargetTime){
-            refreshTargetClock = 0;
-            refreshTarget();
+        switch (batState){
+            case IDLE:
+                break;
+            case ATTACK:
+                attack(delta);
+                break;
+            case RETREAT:
+                retreat(delta);
+                break;
+            default:
+                System.out.println("Unknown State: " + batState);
         }
-
-        move();
-        smoothlyCatchUpToCurrentTile(delta);
     }
 
     private void refreshTarget() {
@@ -60,35 +61,36 @@ public class BatController extends EnemyController{
         navTarget = navPath.isEmpty() ? null : navPath.remove(0);
     }
 
-    private void move(){
-        if(navTarget == null) return;
-        float percentMoved = calculatePercentMoved();
-        if(percentMoved == 0 && currentTile.isEqual(navTarget.coordinate)){
-            // re-evaluate
-            // stop if we're empty
-            if(navPath.isEmpty()){
-                navTarget = null;
-                animateMove(new Vector(0, 0));
-                return;
-            }
-
-            // get next node in the path
-            DijkstraNode nextTarget = navPath.remove(0);
-            Vector dir = new Vector(
-                    nextTarget.x - navTarget.x,
-                    navTarget.y - nextTarget.y
-            );
-            navTarget = nextTarget;
-
-            if(curAnim == null || dir.getX() != facingDir.getX() || dir.getY() != facingDir.getY()){
-                // change directions
-                animateMove(dir);
-            }
+    /**
+     * Attack State.
+     * Charge at players until one is in front of me.
+     * Attack the player, then retreat.
+     * @param delta Time step from last frame.
+     */
+    private void attack(int delta){
+        if(isPlayerBeforeMe(1)){
+            navTarget = null;
+            animateAttack(getMeleeSheet());
+            isAttacking = true;
+            batState = BatState.RETREAT;
+            return;
         }
-        else if(percentMoved == 0){
-            // update current tile
-            changeCurrentTile((int)(navTarget.x - currentTile.x), (int) (navTarget.y - currentTile.y));
+
+        refreshTargetClock += delta;
+        if(refreshTargetClock > refreshTargetTime){
+            refreshTargetClock = 0;
+            refreshTarget();
         }
+    }
+
+    /**
+     * Retreat State. Run away from players.
+     * @param delta Time step from last frame.
+     */
+    private void retreat(int delta){
+        if(isAttacking && curAnim != null) return;
+        isAttacking = false;
+        System.out.println("Enter Retreat");
     }
 
 
@@ -127,16 +129,15 @@ public class BatController extends EnemyController{
     }
     //endregion
 
+    //region IAttacker
     @Override
     public void attack(AttackType attackType) {
         switch (attackType){
             case MELEE:
-                // get the tile in front of me
-                int x = (int) (currentTile.x + facingDir.getX());
-                int y = (int) (currentTile.y - facingDir.getY());
+                Coordinate front = getFacingTiles(1).getFirst();
 
                 // damage all the things
-                ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(x, y);
+                ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(front);
                 for(GameObject target : targets){
                     if(target instanceof IDamageable && !(target instanceof EnemyController)){
                         ((IDamageable) target).takeDamage(meleeDamage);
@@ -150,4 +151,5 @@ public class BatController extends EnemyController{
                 System.out.println("Unknown Attack Type: " + attackType);
         }
     }
+    //endregion
 }

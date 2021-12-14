@@ -14,6 +14,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.util.LinkedList;
+
 /**
  * All Characters - including enemies - will inherit from this class
  */
@@ -115,12 +117,22 @@ public abstract class CharacterController extends GameObject implements IDamagea
   //endregion
 
   /**
-   * @return The tile immediately in front of the character.
+   * @return The tiles immediately in front of the character.
+   * @param range The number of tiles to get.
    */
-  public Coordinate getFacingTile(){
-    float x = currentTile.x + facingDir.getX();
-    float y = currentTile.y - facingDir.getY();
-    return new Coordinate(x, y);
+  public LinkedList<Coordinate> getFacingTiles(int range){
+    if(range <= 0){
+      System.out.println("Invalid range: " + range);
+      return null;
+    }
+
+    LinkedList<Coordinate> tiles = new LinkedList<>();
+    for(int i = 1; i <= range; i++){
+      float x = currentTile.x + i * facingDir.getX();
+      float y = currentTile.y - i * facingDir.getY();
+      tiles.add(new Coordinate(x, y));
+    }
+    return tiles;
   }
 
   /**
