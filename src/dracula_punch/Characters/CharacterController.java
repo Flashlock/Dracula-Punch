@@ -3,6 +3,7 @@ package dracula_punch.Characters;
 import dracula_punch.Actions.Damage_System.AttackAction;
 import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
+import dracula_punch.Characters.Enemies.EnemyController;
 import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
@@ -94,6 +95,13 @@ public abstract class CharacterController extends GameObject implements IDamagea
       animLock = frame != curAnim.getFrameCount() - 1;
       if(!animLock && attackAction != null){
         attackAction.actionTriggered = false;
+        /*
+         * Perform any post attack actions.
+         * This is unique to EnemyController and therefore using the Action system seemed convoluted.
+         */
+        if(this instanceof EnemyController){
+          ((EnemyController) this).postAttackAction();
+        }
       }
     }
   }

@@ -43,6 +43,11 @@ public abstract class EnemyController extends CharacterController implements IAt
     }
 
     /**
+     * Perform any post attack actions
+     */
+    public abstract void postAttackAction();
+
+    /**
      * Updates the controllers current tile as it moves along its nav path
      */
     private void move(){
@@ -98,5 +103,37 @@ public abstract class EnemyController extends CharacterController implements IAt
             }
         }
         return false;
+    }
+
+    /**
+     * Targets players using weighted random numbers.
+     * The closer the player is, the more likely they'll be targeted.
+     * @return The targeted player
+     */
+    protected PlayerController targetPlayer(){
+        // find sum and distances
+        float sum = 0;
+        float[] distances = new float[curLevelState.playerObjects.size()];
+        for(int i = 0; i < distances.length; i++){
+            Vector myPos = new Vector(currentTile.x, currentTile.y);
+            Coordinate playerTile = curLevelState.playerObjects.get(i).currentTile;
+            Vector pPos = new Vector(playerTile.x, playerTile.y);
+            distances[i] = 1 / myPos.distanceSquared(pPos);
+            sum += distances[i];
+        }
+
+        // roll the dice
+        float value = (float) Math.random();
+        float base = 0;
+        for(int i = 0; i < distances.length; i++){
+            float weight = distances[i] / sum;
+            if(value > base && value <= weight + base){
+                return (PlayerController) curLevelState.playerObjects.get(i);
+            }
+            base += weight;
+        }
+
+        // if no character was selected then a 0 was rolled
+        return (PlayerController) curLevelState.playerObjects.get(0);
     }
 }

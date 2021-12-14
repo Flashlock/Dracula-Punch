@@ -28,12 +28,13 @@ public class BatController extends EnemyController{
     private final int meleeActionFrame = 7;
 
     private final int refreshTargetTime = 3000;
-    private int refreshTargetClock = 5000;
+    private int refreshTargetClock = 0;
 
-    private boolean isAttacking;
+    private int followThroughDist = 8;
 
     public BatController(Coordinate startingTile, LevelState curLevelState) {
         super(0, 0, startingTile, curLevelState);
+        setScale(.8f);
         attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
         batState = BatState.ATTACK;
     }
@@ -48,16 +49,43 @@ public class BatController extends EnemyController{
                 attack(delta);
                 break;
             case RETREAT:
-                retreat(delta);
+                retreat();
                 break;
             default:
                 System.out.println("Unknown State: " + batState);
         }
     }
 
+    /**
+     * Refreshes the target for either attacking or retreating.
+     */
     private void refreshTarget() {
-        CharacterController target = curLevelState.playerObjects.get(0);
-        navPath = navGraph.findPath(currentTile, target.currentTile);
+        Coordinate target;
+        switch (batState){
+            case ATTACK:
+                target = targetPlayer().currentTile;
+                break;
+            case RETREAT:
+                // follow through some distance
+                float x = facingDir.getX();
+                float y = facingDir.getY();
+                target = new Coordinate(
+                        x == 0 ? currentTile.x : currentTile.x + facingDir.getX() * followThroughDist,
+                        y == 0 ? currentTile.y : currentTile.y + facingDir.getY() * followThroughDist
+                );
+
+                // if the target is unpassable, backtrack
+                Vector back = facingDir.scale(-1);
+                while(!curLevelState.map.isPassable[(int) target.x][(int) target.y]){
+                    target.add(back.getX(), back.getY());
+                }
+                break;
+            default:
+                System.out.println("No need for targets: " + batState);
+                return;
+        }
+
+        navPath = navGraph.findPath(currentTile, target);
         navTarget = navPath.isEmpty() ? null : navPath.remove(0);
     }
 
@@ -68,11 +96,11 @@ public class BatController extends EnemyController{
      * @param delta Time step from last frame.
      */
     private void attack(int delta){
+        if(getAnimLock()) return;
+
         if(isPlayerBeforeMe(1)){
             navTarget = null;
             animateAttack(getMeleeSheet());
-            isAttacking = true;
-            batState = BatState.RETREAT;
             return;
         }
 
@@ -85,12 +113,11 @@ public class BatController extends EnemyController{
 
     /**
      * Retreat State. Run away from players.
-     * @param delta Time step from last frame.
      */
-    private void retreat(int delta){
-        if(isAttacking && curAnim != null) return;
-        isAttacking = false;
-        System.out.println("Enter Retreat");
+    private void retreat(){
+        if(navTarget == null){
+            batState = BatState.ATTACK;
+        }
     }
 
 
@@ -126,6 +153,15 @@ public class BatController extends EnemyController{
     @Override
     public String getRangedSheet() {
         return null;
+    }
+    //endregion
+
+    //region EnemyController
+    @Override
+    public void postAttackAction() {
+        batState = BatState.RETREAT;
+        refreshTarget();
+        animateMove(facingDir);
     }
     //endregion
 
