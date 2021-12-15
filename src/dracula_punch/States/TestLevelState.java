@@ -11,11 +11,16 @@ import dracula_punch.Characters.Players.AmandaController;
 import dracula_punch.Characters.Players.AustinController;
 import dracula_punch.Characters.Players.RittaController;
 import dracula_punch.TiledMap.DPTiledMap;
+import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 import dracula_punch.DraculaPunchGame;
+import org.newdawn.slick.state.transition.BlobbyTransition;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.ArrayList;
 
@@ -23,12 +28,17 @@ public class TestLevelState extends LevelState {
   private GameObject playerOne, playerTwo, playerThree;
   private boolean isSpaceDown, isEDown, isUDown;
 
+  private int timer = 400;
+
   private Boolean hasGKey;
   private Boolean hasSKey;
   // Object IDs
   private int GOLDKEY_ID = 33;
   private int SILVKEY_ID = 34;
   private int BLANK_ID = 63;
+
+  private int WINSTATE_ID = 9;
+  private int LOSESTATE_ID = 8;
 
   @Override
   public int getID() {
@@ -51,6 +61,8 @@ public class TestLevelState extends LevelState {
     Coordinate enemyStart = new Coordinate(40, 15);
     GameObject testEnemy = new BatController(enemyStart, this);
     gameObjects.add(testEnemy);
+
+    ResourceManager.getImage(DraculaPunchGame.WIN_SCREEN);
   }
 
 
@@ -153,6 +165,26 @@ public class TestLevelState extends LevelState {
     if(hasGKey){
       openDoors();
       hasGKey = false;
+    }
+
+    // check win state
+    for(CharacterController player : playerObjects){
+      if(map.getTileId((int) player.currentTile.x, (int) player.currentTile.y, map.getLayerIndex("placement")) == WINSTATE_ID){
+        // since transitions are wonky here, we create a timer to account for the transition
+        timer -= delta;
+        if (timer <= 0) {
+          stateBasedGame.enterState(DraculaPunchGame.WIN_STATE, new EmptyTransition(), new EmptyTransition());
+          timer = 400;
+        }
+      }
+      // check lose state
+      else if(map.getTileId((int) player.currentTile.x, (int)player.currentTile.y, map.getLayerIndex("placement")) == LOSESTATE_ID){
+        timer -= delta;
+        if (timer <= 0) {
+          stateBasedGame.enterState(DraculaPunchGame.LOSE_STATE, new EmptyTransition(), new EmptyTransition());
+          timer = 400;
+        }
+      }
     }
 
     // Remove dead objects
