@@ -49,7 +49,7 @@ public abstract class GameObject extends Entity {
     if(movingTime > TOTAL_MOVE_TIME) {
       movingTime = TOTAL_MOVE_TIME;
     }
-    float percentMoveDone = (TOTAL_MOVE_TIME - movingTime) / TOTAL_MOVE_TIME;
+    float percentMoveDone = calculatePercentMoved();
     float partialX = 0, partialY = 0;
     if (previousTile.y > currentTile.y){ partialY = percentMoveDone;}
     else if (previousTile.y < currentTile.y){ partialY = -percentMoveDone;}
@@ -57,5 +57,12 @@ public abstract class GameObject extends Entity {
     else if (previousTile.x < currentTile.x){ partialX = -percentMoveDone;}
     currentTilePlusPartial = new Coordinate(currentTile);
     currentTilePlusPartial.add(partialX, partialY);
+  }
+
+  /**
+   * @return Percent moved across current tile
+   */
+  public float calculatePercentMoved(){
+    return (TOTAL_MOVE_TIME - movingTime) / TOTAL_MOVE_TIME;
   }
 }

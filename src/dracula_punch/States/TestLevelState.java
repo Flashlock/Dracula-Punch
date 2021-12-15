@@ -6,7 +6,10 @@ import dracula_punch.Actions.Input.InputMoveAction;
 import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.*;
-import dracula_punch.TestEnemy;
+import dracula_punch.Characters.Enemies.BatController;
+import dracula_punch.Characters.Players.AmandaController;
+import dracula_punch.Characters.Players.AustinController;
+import dracula_punch.Characters.Players.RittaController;
 import dracula_punch.TiledMap.DPTiledMap;
 import jig.Vector;
 import org.newdawn.slick.*;
@@ -44,9 +47,48 @@ public class TestLevelState extends LevelState {
     camera = new Camera(map, playerObjects);
     gameObjects.add(camera);
 
-    createCharacters();
-    GameObject testEnemy = new TestEnemy(new Coordinate(90,90), this);
+    temporaryPlayerSelectionMethod();
+    Coordinate enemyStart = new Coordinate(40, 15);
+    GameObject testEnemy = new BatController(enemyStart, this);
     gameObjects.add(testEnemy);
+  }
+
+
+  private void temporaryPlayerSelectionMethod() {
+    playerOne = new AmandaController(
+            DraculaPunchGame.SCREEN_WIDTH / 3f,
+            DraculaPunchGame.SCREEN_HEIGHT / 3f,
+            this
+    );
+    playerTwo = new AustinController(
+            DraculaPunchGame.SCREEN_WIDTH / 3f,
+            DraculaPunchGame.SCREEN_HEIGHT / 3f,
+            this
+    );
+    playerThree = new RittaController(
+            DraculaPunchGame.SCREEN_WIDTH / 3f,
+            DraculaPunchGame.SCREEN_HEIGHT / 3f,
+            this
+    );
+    gameObjects.add(playerOne);
+    gameObjects.add(playerTwo);
+    gameObjects.add(playerThree);
+
+    CharacterController c1 = (CharacterController) playerOne;
+    CharacterController c2 = (CharacterController) playerTwo;
+    CharacterController c3 = (CharacterController) playerThree;
+
+    playerObjects.add(c1);
+    playerObjects.add(c2);
+    playerObjects.add(c3);
+
+    move1Event.add(new InputMoveAction(c1));
+    move2Event.add(new InputMoveAction(c2));
+    move3Event.add(new InputMoveAction(c3));
+
+    attack1Event.add(new InputAttackAction(c1));
+    attack2Event.add(new InputAttackAction(c2));
+    attack3Event.add(new InputAttackAction(c3));
   }
 
   private void createCharacters() {
@@ -125,11 +167,9 @@ public class TestLevelState extends LevelState {
   private void checkHasKey(){
     for(CharacterController p : playerObjects){
       if(map.getTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object")) == GOLDKEY_ID){
-        System.out.println(p.getName() + " took the gold key");
         hasGKey = true;
         map.setTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object"), BLANK_ID);
       } else if(map.getTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object")) == SILVKEY_ID){
-        System.out.println(p.getName() + " took the silver key");
         hasSKey = true;
         map.setTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object"), BLANK_ID);
       }
