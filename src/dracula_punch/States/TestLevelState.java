@@ -60,18 +60,12 @@ public class TestLevelState extends LevelState {
     camera = new Camera(map, playerObjects);
     gameObjects.add(camera);
 
-
     createCharacters();
     Coordinate enemyStart = new Coordinate(40, 15);
-    GameObject testEnemy = new BatController(enemyStart, this);
+    SwarmManager swarm = new SwarmManager(40, 15, 5, this);
+    GameObject testEnemy = new BatController(enemyStart, this, swarm);
 
-    // Example for how to use Swarm
-//    temporaryPlayerSelectionMethod();
-//    Coordinate enemyStart = new Coordinate(97, 94);
-//    SwarmManager swarm = new SwarmManager(97, 94, 5, this);
-//    GameObject testEnemy = new GargoyleController(enemyStart, this, swarm);
-//    gameObjects.add(swarm);
-
+    gameObjects.add(swarm);
     gameObjects.add(testEnemy);
 
     ResourceManager.getImage(DraculaPunchGame.WIN_SCREEN);
