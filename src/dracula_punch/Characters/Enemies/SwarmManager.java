@@ -1,6 +1,7 @@
 package dracula_punch.Characters.Enemies;
 
 import dracula_punch.Characters.GameObject;
+import dracula_punch.Characters.Players.PlayerController;
 import dracula_punch.States.LevelState;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
@@ -49,19 +50,25 @@ public class SwarmManager extends GameObject {
             return;
         }
 
-        // find avg distance to players
-        float dist = curLevelState.playerObjects.isEmpty() ?
-                Float.MAX_VALUE :
-                position.distanceSquared(curLevelState.getAvgPlayerPos());
-
-        if(dist < sqrEngageRad && !isActivated){
+        // compare distance to each player
+        // if only one activate signal, then activate
+        // if all deactivate signals, then deactivate
+        boolean activate = false;
+        int deactivates = 0;
+        for(PlayerController player : curLevelState.playerObjects){
+            float dist = position.distanceSquared(new Vector(player.currentTile.x, player.currentTile.y));
+            activate = dist < sqrEngageRad && !isActivated;
+            if(activate) break;
+            deactivates += dist > sqrEngageRad && isActivated ? 1 : 0;
+        }
+        if(activate){
             // activate
             for(EnemyController controller : swarm){
                 controller.activate();
             }
             isActivated = true;
         }
-        else if(dist > sqrEngageRad && isActivated){
+        else if(deactivates == curLevelState.playerObjects.size()){
             // deactivate
             for(EnemyController controller : swarm){
                 controller.deactivate();
