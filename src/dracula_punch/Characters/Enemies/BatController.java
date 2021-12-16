@@ -28,11 +28,11 @@ public class BatController extends EnemyController{
 
     private int followThroughDist = 8;
 
-    public BatController(Coordinate startingTile, LevelState curLevelState) {
-        super(0, 0, startingTile, curLevelState);
+    public BatController(Coordinate startingTile, LevelState curLevelState, SwarmManager swarmManager) {
+        super(0, 0, startingTile, curLevelState, swarmManager);
         setScale(.8f);
         attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
-        batState = BatState.ATTACK;
+        batState = BatState.IDLE;
     }
 
     @Override
@@ -50,6 +50,18 @@ public class BatController extends EnemyController{
             default:
                 System.out.println("Unknown State: " + batState);
         }
+    }
+
+    @Override
+    public void activate() {
+        batState = BatState.ATTACK;
+    }
+
+    @Override
+    public void deactivate() {
+        navPath = navGraph.findPath(currentTile, startingTile);
+        navTarget = navPath.get(0);
+        batState = BatState.IDLE;
     }
 
     /**

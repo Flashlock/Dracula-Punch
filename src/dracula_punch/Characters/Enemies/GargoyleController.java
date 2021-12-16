@@ -13,13 +13,18 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.ArrayList;
 
 public class GargoyleController extends EnemyController{
+    public enum GargoyleState { IDLE, ACTIVE }
+    private GargoyleState gargoyleState;
+    public GargoyleState getGargoyleState(){ return gargoyleState; }
+
     // how far from current tile to choose next tile
     private final int targetRadius = 8;
 
-    public GargoyleController(Coordinate startingTile, LevelState curLevelState) {
-        super(0, 0, startingTile, curLevelState);
+    public GargoyleController(Coordinate startingTile, LevelState curLevelState, SwarmManager swarmManager) {
+        super(0, 0, startingTile, curLevelState, swarmManager);
         attackAction = new AttackAction(this, 10, AttackType.RANGED);
         refreshTargetTime = 8000;
+        gargoyleState = GargoyleState.IDLE;
     }
 
     @Override
@@ -27,19 +32,33 @@ public class GargoyleController extends EnemyController{
         super.update(gameContainer, stateBasedGame, delta);
         if(getAnimLock()) return;
 
-        Vector direction = isPlayerAroundMe(10);
-        if(direction != null){
-            navTarget = null;
-            animateMove(direction);
-            animateAttack(getRangedSheet());
-            return;
-        }
+        if(gargoyleState == GargoyleState.ACTIVE) {
+            Vector direction = isPlayerAroundMe(10);
+            if (direction != null) {
+                navTarget = null;
+                animateMove(direction);
+                animateAttack(getRangedSheet());
+                return;
+            }
 
-        refreshTargetClock += delta;
-        if(refreshTargetClock > refreshTargetTime){
-            refreshTarget();
-            refreshTargetClock = 0;
+            refreshTargetClock += delta;
+            if (refreshTargetClock > refreshTargetTime) {
+                refreshTarget();
+                refreshTargetClock = 0;
+            }
         }
+    }
+
+    @Override
+    public void activate() {
+        gargoyleState = GargoyleState.ACTIVE;
+    }
+
+    @Override
+    public void deactivate() {
+        navPath = navGraph.findPath(currentTile, startingTile);
+        navTarget = navPath.get(0);
+        gargoyleState = GargoyleState.IDLE;
     }
 
     protected void refreshTarget() {

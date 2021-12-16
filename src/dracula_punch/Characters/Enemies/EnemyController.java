@@ -21,14 +21,22 @@ public abstract class EnemyController extends CharacterController implements IAt
     protected final DijkstraGraph navGraph;
     protected ArrayList<DijkstraNode> navPath;
     protected DijkstraNode navTarget;
+    protected final Coordinate startingTile;
 
     protected int refreshTargetTime = 3000;
     protected int refreshTargetClock = 0;
 
-    public EnemyController(float x, float y, Coordinate startingTile, LevelState curLevelState) {
+    protected final SwarmManager swarmManager;
+
+    public EnemyController(float x, float y, Coordinate startingTile, LevelState curLevelState, SwarmManager swarmManager) {
         super(x, y, curLevelState);
+        this.startingTile = startingTile;
+
         currentTile = new Coordinate(startingTile);
         currentTilePlusPartial = new Coordinate(startingTile);
+
+        this.swarmManager = swarmManager;
+        swarmManager.newSwarm.add(this);
 
         /*
          * TOTAL_MOVE_TIME acts as move speed.
@@ -47,10 +55,26 @@ public abstract class EnemyController extends CharacterController implements IAt
         smoothlyCatchUpToCurrentTile(delta);
     }
 
+    @Override
+    public void takeDamage(int damage) {
+        super.takeDamage(damage);
+        swarmManager.deadSwarm.add(this);
+    }
+
     /**
      * Perform any post attack actions
      */
     public abstract void postAttackAction();
+
+    /**
+     * A signal from the manager to activate
+     */
+    public abstract void activate();
+
+    /**
+     * A signal from the manager to deactivate
+     */
+    public abstract void deactivate();
 
     /**
      * Updates the controllers current tile as it moves along its nav path
