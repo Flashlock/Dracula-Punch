@@ -17,16 +17,17 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 import dracula_punch.DraculaPunchGame;
-import org.newdawn.slick.state.transition.BlobbyTransition;
 import org.newdawn.slick.state.transition.EmptyTransition;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.ArrayList;
 
 public class TestLevelState extends LevelState {
   private GameObject playerOne, playerTwo, playerThree;
   private boolean isSpaceDown, isEDown, isUDown;
+  private boolean[][] pressedButtons = {{false, false, false, false}, {false, false, false, false}, {false, false, false, false}};
+  private int[] mostRecentlyPressedButton = {0, 0, 0};
+  private final int LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3;
+  private final int P1 = 0, P2 = 1, P3 = 2;
 
   private int timer = 400;
 
@@ -57,7 +58,7 @@ public class TestLevelState extends LevelState {
     camera = new Camera(map, playerObjects);
     gameObjects.add(camera);
 
-    temporaryPlayerSelectionMethod();
+    createCharacters();
     Coordinate enemyStart = new Coordinate(40, 15);
     GameObject testEnemy = new BatController(enemyStart, this);
     gameObjects.add(testEnemy);
@@ -68,19 +69,19 @@ public class TestLevelState extends LevelState {
 
   private void temporaryPlayerSelectionMethod() {
     playerOne = new AmandaController(
-            DraculaPunchGame.SCREEN_WIDTH / 3f,
-            DraculaPunchGame.SCREEN_HEIGHT / 3f,
-            this
+        DraculaPunchGame.SCREEN_WIDTH / 3f,
+        DraculaPunchGame.SCREEN_HEIGHT / 3f,
+        this
     );
     playerTwo = new AustinController(
-            DraculaPunchGame.SCREEN_WIDTH / 3f,
-            DraculaPunchGame.SCREEN_HEIGHT / 3f,
-            this
+        DraculaPunchGame.SCREEN_WIDTH / 3f,
+        DraculaPunchGame.SCREEN_HEIGHT / 3f,
+        this
     );
     playerThree = new RittaController(
-            DraculaPunchGame.SCREEN_WIDTH / 3f,
-            DraculaPunchGame.SCREEN_HEIGHT / 3f,
-            this
+        DraculaPunchGame.SCREEN_WIDTH / 3f,
+        DraculaPunchGame.SCREEN_HEIGHT / 3f,
+        this
     );
     gameObjects.add(playerOne);
     gameObjects.add(playerTwo);
@@ -222,7 +223,7 @@ public class TestLevelState extends LevelState {
    */
   private void controls(Input input){
     // Check for Player 1 attack
-    boolean eDown = getAttackButton(input, 0);
+    boolean eDown = getAttackButton(input, P1);
     if(eDown && !isEDown){
       for(Action action : attack1Event){
         action.Execute();
@@ -231,7 +232,7 @@ public class TestLevelState extends LevelState {
     isEDown = eDown;
 
     // Check for Player 2 attack
-    boolean uDown = getAttackButton(input, 1);
+    boolean uDown = getAttackButton(input, P2);
     if(uDown && !isUDown){
       for(Action action : attack2Event){
         action.Execute();
@@ -240,7 +241,7 @@ public class TestLevelState extends LevelState {
     isUDown = uDown;
 
     // Check for Player 3 attack
-    boolean spaceDown = getAttackButton(input, 2);
+    boolean spaceDown = getAttackButton(input, P3);
     if(spaceDown && !isSpaceDown){
       for(Action action : attack3Event){
         action.Execute();
@@ -249,24 +250,42 @@ public class TestLevelState extends LevelState {
     isSpaceDown = spaceDown;
 
     // Observe movement input changes
-    boolean left, right, up, down;
-    left = getLeftButton(input, 0);
-    right = getRightButton(input, 0);
-    up = getUpButton(input, 0);
-    down = getDownButton(input, 0);
-    movePlayer((CharacterController)playerOne, move1Event, left, right, up, down);
+    movePlayer(input, P1, (CharacterController)playerOne, move1Event);
+    movePlayer(input, P2, (CharacterController)playerTwo, move2Event);
+    movePlayer(input, P3, (CharacterController)playerThree, move3Event);
+  }
 
-    left = getLeftButton(input, 1);
-    right = getRightButton(input, 1);
-    up = getUpButton(input, 1);
-    down = getDownButton(input, 1);
-    movePlayer((CharacterController)playerTwo, move2Event, left, right, up, down);
+  private boolean getAttackButton(Input input, int player) {
+    return switch (DraculaPunchGame.inputSource[player]) {
+      case DraculaPunchGame.KB_WASD -> input.isKeyDown(Input.KEY_E);
+      case DraculaPunchGame.KB_IJKL -> input.isKeyDown(Input.KEY_U);
+      case DraculaPunchGame.KB_ARROWS -> input.isKeyDown(Input.KEY_SPACE);
+      default -> (anyButtonOtherThanDPadPressed(input, player));
+    };
+  }
 
-    left = getLeftButton(input, 2);
-    right = getRightButton(input, 2);
-    up = getUpButton(input, 2);
-    down = getDownButton(input, 2);
-    movePlayer((CharacterController)playerThree, move3Event, left, right, up, down);
+  private boolean anyButtonOtherThanDPadPressed(Input input, int player) {
+    for (int i = 0; i < 50; i++)
+      if (i != DraculaPunchGame.PS5_CONTROLLER_LEFT_BUTTON
+          && i != DraculaPunchGame.PS5_CONTROLLER_RIGHT_BUTTON
+          && i != DraculaPunchGame.PS5_CONTROLLER_UP_BUTTON
+          && i != DraculaPunchGame.PS5_CONTROLLER_DOWN_BUTTON
+          && input.isControlPressed(i, DraculaPunchGame.inputSource[player]))
+        return true;
+    return false;
+  }
+
+  private void movePlayer(Input input, int player, CharacterController playerOne, ArrayList<Action> move1Event) {
+    boolean[] b = getPlayerMovementInput(input, player);
+    requestMovement(playerOne, move1Event, b[LEFT], b[RIGHT], b[UP], b[DOWN]);
+  }
+
+  private boolean[] getPlayerMovementInput(Input input, int player) {
+    boolean left = getLeftButton(input, player);
+    boolean right = getRightButton(input, player);
+    boolean up = getUpButton(input, player);
+    boolean down = getDownButton(input, player);
+    return mostRecentlyPressedOnly(player, left, right, up, down);
   }
 
   private boolean getLeftButton(Input input, int player) {
@@ -305,27 +324,36 @@ public class TestLevelState extends LevelState {
     };
   }
 
-  private boolean getAttackButton(Input input, int player) {
-    return switch (DraculaPunchGame.inputSource[player]) {
-      case DraculaPunchGame.KB_WASD -> input.isKeyDown(Input.KEY_E);
-      case DraculaPunchGame.KB_IJKL -> input.isKeyDown(Input.KEY_U);
-      case DraculaPunchGame.KB_ARROWS -> input.isKeyDown(Input.KEY_SPACE);
-      default -> (anyButtonOtherThanDPadPressed(input, player));
+  private boolean[] mostRecentlyPressedOnly(int player, boolean left, boolean right, boolean up, boolean down) {
+    setIfMostRecent(player, left, LEFT);
+    setIfMostRecent(player, right, RIGHT);
+    setIfMostRecent(player, up, UP);
+    setIfMostRecent(player, down, DOWN);
+    if (!left && !right && !up && !down) mostRecentlyPressedButton[player] = -1;
+    if (left && !right && !up && !down) mostRecentlyPressedButton[player] = LEFT;
+    if (!left && right && !up && !down) mostRecentlyPressedButton[player] = RIGHT;
+    if (!left && !right && up && !down) mostRecentlyPressedButton[player] = UP;
+    if (!left && !right && !up && down) mostRecentlyPressedButton[player] = DOWN;
+    return switch (mostRecentlyPressedButton[player]) {
+      case LEFT -> new boolean[]{true, false, false, false};
+      case RIGHT -> new boolean[]{false, true, false, false};
+      case UP -> new boolean[]{false, false, true, false};
+      case DOWN -> new boolean[]{false, false, false, true};
+      default -> new boolean[]{false, false, false, false};
     };
   }
 
-  private boolean anyButtonOtherThanDPadPressed(Input input, int player) {
-    for (int i = 0; i < 50; i++)
-      if (i != DraculaPunchGame.PS5_CONTROLLER_LEFT_BUTTON
-          && i != DraculaPunchGame.PS5_CONTROLLER_RIGHT_BUTTON
-          && i != DraculaPunchGame.PS5_CONTROLLER_UP_BUTTON
-          && i != DraculaPunchGame.PS5_CONTROLLER_DOWN_BUTTON
-          && input.isControlPressed(i, DraculaPunchGame.inputSource[player]))
-        return true;
-    return false;
+  private void setIfMostRecent(int player, boolean button, int buttonPosition) {
+    if (button && !pressedButtons[player][buttonPosition]) {
+      pressedButtons[player][buttonPosition] = true;
+      mostRecentlyPressedButton[player] = buttonPosition;
+    }
+    if (!button) {
+      pressedButtons[player][buttonPosition] = false;
+    }
   }
 
-  private void movePlayer(CharacterController player, ArrayList<Action> moveEvent, boolean left, boolean right, boolean up, boolean down) {
+  private void requestMovement(CharacterController player, ArrayList<Action> moveEvent, boolean left, boolean right, boolean up, boolean down) {
     boolean isMoving = player.moveLeft || player.moveRight || player.moveDown || player.moveUp;
 
     // Trigger event on change
