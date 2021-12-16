@@ -9,9 +9,11 @@ import dracula_punch.Pathfinding.DijkstraGraph;
 import dracula_punch.Pathfinding.DijkstraNode;
 import dracula_punch.States.LevelState;
 import jig.Vector;
+import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -19,6 +21,9 @@ public abstract class EnemyController extends CharacterController implements IAt
     protected final DijkstraGraph navGraph;
     protected ArrayList<DijkstraNode> navPath;
     protected DijkstraNode navTarget;
+
+    protected int refreshTargetTime = 3000;
+    protected int refreshTargetClock = 0;
 
     public EnemyController(float x, float y, Coordinate startingTile, LevelState curLevelState) {
         super(x, y, curLevelState);
@@ -83,12 +88,12 @@ public abstract class EnemyController extends CharacterController implements IAt
     }
 
     /**
-     * @param range Distance across the map in a line to check for players in front of me
-     * @return True if I encounter a player
+     * @param tiles The tiles to check
+     * @return Distance to the nearest player in the list. -1 if no player.
      */
-    protected boolean isPlayerBeforeMe(int range){
-        LinkedList<Coordinate> tiles = getFacingTiles(range);
+    private int isPlayerInTiles(LinkedList<Coordinate> tiles){
         ArrayList<GameObject> gameObjects;
+        int count = 0;
         for(Coordinate tile : tiles){
             // can preemptively stop if tiles are no longer passable
             if(!curLevelState.map.isPassable[(int) tile.x][(int) tile.y]){
@@ -98,11 +103,73 @@ public abstract class EnemyController extends CharacterController implements IAt
             gameObjects = curLevelState.getObjectsFromTile(tile);
             for(GameObject gameObject : gameObjects){
                 if(gameObject instanceof PlayerController) {
-                    return true;
+                    return count;
                 }
             }
+            count++;
         }
-        return false;
+        return -1;
+    }
+
+    /**
+     * @param range Distance across the map in a line to check for players in front of me
+     * @return True if I encounter a player
+     */
+    protected boolean isPlayerBeforeMe(int range){
+        LinkedList<Coordinate> tiles = getLinedTiles(range, facingDir);
+        return isPlayerInTiles(tiles) > -1;
+    }
+
+    /**
+     * @param range Distance across the map in lines to check for players
+     * @return Vector towards the closest player
+     */
+    protected Vector isPlayerAroundMe(int range){
+        // collect all the tiles
+        Vector up = new Vector(0, 1);
+        Vector down = new Vector(0, -1);
+        Vector left = new Vector(-1, 0);
+        Vector right = new Vector(1, 0);
+        LinkedList<Coordinate> upTiles = getLinedTiles(range, up);
+        LinkedList<Coordinate> downTiles = getLinedTiles(range, down);
+        LinkedList<Coordinate> leftTiles = getLinedTiles(range, left);
+        LinkedList<Coordinate> rightTiles = getLinedTiles(range, right);
+
+        // find the distances
+        int upDist = isPlayerInTiles(upTiles);
+        int downDist = isPlayerInTiles(downTiles);
+        int leftDist = isPlayerInTiles(leftTiles);
+        int rightDist = isPlayerInTiles(rightTiles);
+        int[] distances = new int[] {
+                upDist > -1 ? upDist : Integer.MAX_VALUE,
+                downDist > -1 ? downDist : Integer.MAX_VALUE,
+                leftDist > -1 ? leftDist : Integer.MAX_VALUE,
+                rightDist > -1 ? rightDist : Integer.MAX_VALUE
+        };
+
+        // find closest
+        int minDist = Integer.MAX_VALUE;
+        int minIndex = 0;
+        for(int i = 0; i < distances.length; i++){
+            if(distances[i] < minDist){
+                minDist = distances[i];
+                minIndex = i;
+            }
+        }
+
+        if(minDist == Integer.MAX_VALUE){
+            return null;
+        }
+        switch (minIndex){
+            case 0:
+                return up;
+            case 1:
+                return down;
+            case 2:
+                return left;
+            default:
+                return right;
+        }
     }
 
     /**

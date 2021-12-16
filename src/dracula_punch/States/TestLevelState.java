@@ -7,6 +7,7 @@ import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.*;
 import dracula_punch.Characters.Enemies.BatController;
+import dracula_punch.Characters.Enemies.GargoyleController;
 import dracula_punch.Characters.Players.AmandaController;
 import dracula_punch.Characters.Players.AustinController;
 import dracula_punch.Characters.Players.RittaController;
@@ -49,7 +50,7 @@ public class TestLevelState extends LevelState {
 
     temporaryPlayerSelectionMethod();
     Coordinate enemyStart = new Coordinate(40, 15);
-    GameObject testEnemy = new BatController(enemyStart, this);
+    GameObject testEnemy = new GargoyleController(enemyStart, this);
     gameObjects.add(testEnemy);
   }
 

@@ -67,7 +67,7 @@ public class AustinController extends PlayerController {
   public void attack(AttackType attackType){
     switch (attackType){
       case MELEE:
-        Coordinate front = getFacingTiles(1).getFirst();
+        Coordinate front = getLinedTiles(1, facingDir).getFirst();
 
         // damage all the things
         ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(front);

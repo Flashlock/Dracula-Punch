@@ -9,6 +9,8 @@ import java.util.Collections;
 public class DijkstraGraph {
 
     private final DijkstraNode[][] graph;
+    public int getGraphWidth(){ return graph.length; }
+    public int getGraphHeight(){ return graph[0].length; }
 
     public DijkstraGraph(DPTiledMap tiledMap){
         graph = new DijkstraNode[tiledMap.isPassable.length][tiledMap.isPassable[0].length];
