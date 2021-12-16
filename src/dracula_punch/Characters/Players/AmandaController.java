@@ -14,7 +14,7 @@ public class AmandaController extends PlayerController {
     super(x, y, curLevelState);
     xRenderOffset = 10;
     yRenderOffset = 30;
-    scaleFactor = 1f;
+    scaleFactor = 1.1f;
 
     attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);
 
