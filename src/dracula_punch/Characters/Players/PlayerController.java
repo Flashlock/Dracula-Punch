@@ -3,22 +3,62 @@ package dracula_punch.Characters.Players;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.CharacterController;
 import dracula_punch.Damage_System.IAttacker;
+import dracula_punch.Pathfinding.DijkstraGraph;
 import dracula_punch.States.LevelState;
+import jig.Vector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class PlayerController extends CharacterController implements IAttacker {
+  private boolean isDead;
+  public boolean getIsDead(){ return isDead; }
+  private final int respawnTime = 30000;
+  private int respawnClock;
+  private final DijkstraGraph respawnGraph;
+
   public PlayerController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
     currentTile = new Coordinate(curLevelState.map.playerSpawnCoordinate);
+    respawnGraph = new DijkstraGraph(curLevelState.map);
   }
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
     super.update(gameContainer, stateBasedGame, delta);
     if(getAnimLock()) return;
-    moveByPlayerControl();
-    smoothlyCatchUpToCurrentTile(delta);
+    if(isDead){
+      respawnClock += delta;
+      if(respawnClock > respawnTime){
+        Coordinate respawn = respawnGraph.playerRespawn(curLevelState);
+        currentTile = respawn;
+        currentTilePlusPartial = respawn;
+        respawnClock = 0;
+        isDead = false;
+        curLevelState.deadPlayers.remove(this);
+        curLevelState.playerObjects.add(this);
+        randomIdle();
+      }
+    }
+    else {
+      moveByPlayerControl();
+      smoothlyCatchUpToCurrentTile(delta);
+    }
+  }
+
+  @Override
+  public void takeDamage(int damage) {
+    currentHealth -= damage;
+    if(currentHealth <= 0){
+      curLevelState.playerObjects.remove(this);
+      curLevelState.deadPlayers.add(this);
+      if(curAnim != null){
+        removeAnimation(curAnim);
+      }
+      else{
+        removeImage(idleImage);
+      }
+      isDead = true;
+    }
   }
 
   private void moveByPlayerControl() {

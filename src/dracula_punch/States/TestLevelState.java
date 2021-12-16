@@ -11,6 +11,7 @@ import dracula_punch.Characters.Enemies.GargoyleController;
 import dracula_punch.Characters.Enemies.SwarmManager;
 import dracula_punch.Characters.Players.AmandaController;
 import dracula_punch.Characters.Players.AustinController;
+import dracula_punch.Characters.Players.PlayerController;
 import dracula_punch.Characters.Players.RittaController;
 import dracula_punch.TiledMap.DPTiledMap;
 import jig.ResourceManager;
@@ -24,7 +25,7 @@ import org.newdawn.slick.state.transition.EmptyTransition;
 import java.util.ArrayList;
 
 public class TestLevelState extends LevelState {
-  private GameObject playerOne, playerTwo, playerThree;
+  private PlayerController playerOne, playerTwo, playerThree;
   private boolean isSpaceDown, isEDown, isUDown;
   private boolean[][] pressedButtons = {{false, false, false, false}, {false, false, false, false}, {false, false, false, false}};
   private int[] mostRecentlyPressedButton = {0, 0, 0};
@@ -53,8 +54,6 @@ public class TestLevelState extends LevelState {
     super.enter(container, game);
     hasGKey = false;
     hasSKey = false;
-    gameObjects = new ArrayList<>();
-    playerObjects = new ArrayList<>();
 
     map = new DPTiledMap(DraculaPunchGame.MAP);
     camera = new Camera(map, playerObjects);
@@ -92,28 +91,24 @@ public class TestLevelState extends LevelState {
     gameObjects.add(playerTwo);
     gameObjects.add(playerThree);
 
-    CharacterController c1 = (CharacterController) playerOne;
-    CharacterController c2 = (CharacterController) playerTwo;
-    CharacterController c3 = (CharacterController) playerThree;
+    playerObjects.add(playerOne);
+    playerObjects.add(playerTwo);
+    playerObjects.add(playerThree);
 
-    playerObjects.add(c1);
-    playerObjects.add(c2);
-    playerObjects.add(c3);
+    move1Event.add(new InputMoveAction(playerOne));
+    move2Event.add(new InputMoveAction(playerTwo));
+    move3Event.add(new InputMoveAction(playerThree));
 
-    move1Event.add(new InputMoveAction(c1));
-    move2Event.add(new InputMoveAction(c2));
-    move3Event.add(new InputMoveAction(c3));
-
-    attack1Event.add(new InputAttackAction(c1));
-    attack2Event.add(new InputAttackAction(c2));
-    attack3Event.add(new InputAttackAction(c3));
+    attack1Event.add(new InputAttackAction(playerOne));
+    attack2Event.add(new InputAttackAction(playerTwo));
+    attack3Event.add(new InputAttackAction(playerThree));
   }
 
   private void createCharacters() {
     if (DraculaPunchGame.characterChoice[0] != DraculaPunchGame.charIdEnum.UNCHOSEN) {
       playerOne = initCharacterControllers(0);
       gameObjects.add(playerOne);
-      CharacterController c1 = (CharacterController) playerOne;
+      PlayerController c1 = playerOne;
       playerObjects.add(c1);
       move1Event.add(new InputMoveAction(c1));
       attack1Event.add(new InputAttackAction(c1));
@@ -121,7 +116,7 @@ public class TestLevelState extends LevelState {
     if (DraculaPunchGame.characterChoice[1] != DraculaPunchGame.charIdEnum.UNCHOSEN) {
       playerTwo = initCharacterControllers(1);
       gameObjects.add(playerTwo);
-      CharacterController c2 = (CharacterController) playerTwo;
+      PlayerController c2 = playerTwo;
       playerObjects.add(c2);
       move2Event.add(new InputMoveAction(c2));
       attack2Event.add(new InputAttackAction(c2));
@@ -129,14 +124,14 @@ public class TestLevelState extends LevelState {
     if (DraculaPunchGame.characterChoice[2] != DraculaPunchGame.charIdEnum.UNCHOSEN) {
       playerThree = initCharacterControllers(2);
       gameObjects.add(playerThree);
-      CharacterController c3 = (CharacterController) playerThree;
+      PlayerController c3 = playerThree;
       playerObjects.add(c3);
       move3Event.add(new InputMoveAction(c3));
       attack3Event.add(new InputAttackAction(c3));
     }
   }
 
-  private GameObject initCharacterControllers(int player) {
+  private PlayerController initCharacterControllers(int player) {
     return switch (DraculaPunchGame.characterChoice[player]) {
       case AUSTIN -> new AustinController(0,0, this);
       case AMANDA -> new AmandaController(0, 0, this);
@@ -162,16 +157,8 @@ public class TestLevelState extends LevelState {
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
+    super.update(gameContainer, stateBasedGame, delta);
     controls(gameContainer.getInput());
-
-    for(GameObject gameObject : gameObjects){
-      gameObject.update(gameContainer, stateBasedGame, delta);
-    }
-    checkHasKey();
-    if(hasGKey){
-      openDoors();
-      hasGKey = false;
-    }
 
     // check win state
     for(CharacterController player : playerObjects){
@@ -193,13 +180,14 @@ public class TestLevelState extends LevelState {
       }
     }
 
-    // Remove dead objects
-    gameObjects.removeAll(deadObjects);
-    deadObjects.clear();
-
-    // add new objects
-    gameObjects.addAll(newObjects);
-    newObjects.clear();
+    for(GameObject gameObject : gameObjects){
+      gameObject.update(gameContainer, stateBasedGame, delta);
+    }
+    checkHasKey();
+    if(hasGKey){
+      openDoors();
+      hasGKey = false;
+    }
   }
 
   private void checkHasKey(){

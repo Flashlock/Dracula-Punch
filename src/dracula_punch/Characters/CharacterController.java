@@ -48,6 +48,47 @@ public abstract class CharacterController extends GameObject implements IDamagea
     this.curLevelState = curLevelState;
 
     // Generate a random idle sprite
+    randomIdle();
+  }
+
+  @Override
+  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
+    Camera cam = curLevelState.camera;
+    setPosition(cam.getScreenPositionFromTile(currentTilePlusPartial));
+    if(cam.isInScreenRange(currentTile)) {
+      render(graphics);
+    }
+  }
+
+  @Override
+  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+    if(animLock){
+      if(curAnim == null){
+        animLock = false;
+        return;
+      }
+      // is this the animation frame where the action is triggered?
+      int frame = curAnim.getFrame();
+      if(attackAction != null && frame == attackAction.getFrameActionIndex() && !attackAction.actionTriggered){
+        attackAction.Execute();
+      }
+
+      // if the animation is over, remove lock and reset action trigger
+      animLock = frame != curAnim.getFrameCount() - 1;
+      if(!animLock && attackAction != null){
+        attackAction.actionTriggered = false;
+        /*
+         * Perform any post attack actions.
+         * This is unique to EnemyController and therefore using the Action system seemed convoluted.
+         */
+        if(this instanceof EnemyController){
+          ((EnemyController) this).postAttackAction();
+        }
+      }
+    }
+  }
+
+  protected void randomIdle(){
     int dirX, dirY;
     double randX = Math.random() * 1.5f;
     // X direction
@@ -71,39 +112,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
     facingDir = new Vector(dirX, dirY);
     idleImage = getIdleSprite();
     addImage(idleImage);
-  }
-
-  @Override
-  public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
-    Camera cam = curLevelState.camera;
-    setPosition(cam.getScreenPositionFromTile(currentTilePlusPartial));
-    if(cam.isInScreenRange(currentTile)) {
-      render(graphics);
-    }
-  }
-
-  @Override
-  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-    if(animLock){
-      // is this the animation frame where the action is triggered?
-      int frame = curAnim.getFrame();
-      if(attackAction != null && frame == attackAction.getFrameActionIndex() && !attackAction.actionTriggered){
-        attackAction.Execute();
-      }
-
-      // if the animation is over, remove lock and reset action trigger
-      animLock = frame != curAnim.getFrameCount() - 1;
-      if(!animLock && attackAction != null){
-        attackAction.actionTriggered = false;
-        /*
-         * Perform any post attack actions.
-         * This is unique to EnemyController and therefore using the Action system seemed convoluted.
-         */
-        if(this instanceof EnemyController){
-          ((EnemyController) this).postAttackAction();
-        }
-      }
-    }
   }
 
   //region Damage System

@@ -1,10 +1,14 @@
 package dracula_punch.Pathfinding;
 
 import dracula_punch.Camera.Coordinate;
+import dracula_punch.States.LevelState;
 import dracula_punch.TiledMap.DPTiledMap;
+import jig.Vector;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class DijkstraGraph {
 
@@ -63,6 +67,60 @@ public class DijkstraGraph {
     }
 
     /**
+     * @return The coordinate where a player would respawn
+     */
+    public Coordinate playerRespawn(LevelState levelState){
+        Vector avgPos = levelState.getAvgPlayerPos();
+        if(avgPos == null) return null;
+
+        int x = (int) avgPos.getX();
+        int y = (int) avgPos.getY();
+        LinkedList<DijkstraNode> nodeQueue = new LinkedList<>();
+        nodeQueue.add(graph[x][y]);
+        Coordinate spawn = playerRespawnHelper(nodeQueue);
+
+        clearGraph();
+        return spawn;
+    }
+
+    /**
+     * Breadth First Search to find passable tile
+     * @param bfsQueue Node Queue
+     * @return Coordinate of passable tile found
+     */
+    private Coordinate playerRespawnHelper(Queue<DijkstraNode> bfsQueue) {
+        DijkstraNode curNode;
+        do {
+            if (bfsQueue.isEmpty()) return null;
+            curNode = bfsQueue.poll();
+        } while (curNode.distance == 0);
+
+        if (curNode.isPassable) {
+            return new Coordinate(curNode.x, curNode.y);
+        }
+        curNode.distance = 0;
+
+        int posX = curNode.x + 1;
+        int negX = curNode.x - 1;
+        int posY = curNode.y + 1;
+        int negY = curNode.y - 1;
+
+        if (posX < getGraphWidth() && graph[posX][curNode.y].distance != 0) {
+            bfsQueue.add(graph[posX][curNode.y]);
+        }
+        if (negX > -1 && graph[negX][curNode.y].distance != 0) {
+            bfsQueue.add(graph[negX][curNode.y]);
+        }
+        if (posY < getGraphHeight() && graph[curNode.x][posY].distance != 0) {
+            bfsQueue.add(graph[curNode.x][posY]);
+        }
+        if (negY > -1 && graph[curNode.x][negY].distance != 0) {
+            bfsQueue.add(graph[curNode.x][negY]);
+        }
+        return playerRespawnHelper(bfsQueue);
+    }
+
+    /**
      * Run Dijkstra's from the starting position
      * @param x starting x value
      * @param y starting y value
@@ -113,7 +171,7 @@ public class DijkstraGraph {
     /**
      * Reset the graph
      */
-    public void clearGraph(){
+    private void clearGraph(){
         for(DijkstraNode[] nodes : graph){
             for(DijkstraNode node : nodes){
                 node.clearNode();

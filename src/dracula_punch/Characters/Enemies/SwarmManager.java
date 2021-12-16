@@ -50,18 +50,9 @@ public class SwarmManager extends GameObject {
         }
 
         // find avg distance to players
-        float dist;
-        if(curLevelState.playerObjects.isEmpty()){
-            dist = Float.MAX_VALUE;
-        }
-        else {
-            Vector avgPos = new Vector(0, 0);
-            for (GameObject player : curLevelState.playerObjects) {
-                avgPos = avgPos.add(new Vector(player.currentTile.x, player.currentTile.y));
-            }
-            avgPos = avgPos.scale(1f / curLevelState.playerObjects.size());
-            dist = avgPos.distanceSquared(position);
-        }
+        float dist = curLevelState.playerObjects.isEmpty() ?
+                Float.MAX_VALUE :
+                position.distanceSquared(curLevelState.getAvgPlayerPos());
 
         if(dist < sqrEngageRad && !isActivated){
             // activate
