@@ -1,8 +1,6 @@
 package dracula_punch;
 
-import dracula_punch.States.CharacterSelectState;
-import dracula_punch.States.StartState;
-import dracula_punch.States.TestLevelState;
+import dracula_punch.States.*;
 import jig.ResourceManager;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -15,6 +13,8 @@ public class DraculaPunchGame extends StateBasedGame {
   public static int TEST_STATE = -1;
   public static int CHARACTER_SELECT_STATE = 0;
   public static int START_STATE = 1;
+  public static int LOSE_STATE = 2;
+  public static int WIN_STATE = 3;
   //endregion
 
   public static final String MAP = "dracula_punch/Resources/Tiled/dungeon_map.tmx";
@@ -139,6 +139,29 @@ public class DraculaPunchGame extends StateBasedGame {
       "dracula_punch/Resources/Sprite_Sheets/Dracula/Dracula_Idle/Dracula_Idle.png";
   //endregion
 
+  //region Bat
+  public static final String BAT_FLY_0 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Fly/Bat_Fly_0.png";
+  public static final String BAT_FLY_90 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Fly/Bat_Fly_90.png";
+  public static final String BAT_FLY_180 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Fly/Bat_Fly_180.png";
+  public static final String BAT_FLY_270 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Fly/Bat_Fly_270.png";
+
+  public static final String BAT_ATTACK_0 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Attack/Bat_Attack_0.png";
+  public static final String BAT_ATTACK_90 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Attack/Bat_Attack_90.png";
+  public static final String BAT_ATTACK_180 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Attack/Bat_Attack_180.png";
+  public static final String BAT_ATTACK_270 =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Attack/Bat_Attack_270.png";
+
+  public static final String BAT_IDLE =
+          "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Idle/Bat_Idle.png";
+  //endregion
+
   //region Projectiles
   public static final String MAGIC_BALL_0_DEG =
       "dracula_punch/Resources/Sprite_Sheets/Ammo/Magic_Ball/Ball_0.png";
@@ -159,10 +182,16 @@ public class DraculaPunchGame extends StateBasedGame {
       "dracula_punch/Resources/Sprite_Sheets/Ammo/Arrow/Arrow_270.png";
   //endregion
 
-
   //region Spash Screens
   public static final String START_SCREEN =
-      "dracula_punch/Resources/Splash_Screens/Start_Screen.png";
+          "dracula_punch/Resources/Splash_Screens/Start_Screen.png";
+
+  public static final String LOSE_SCREEN =
+          "dracula_punch/Resources/Splash_Screens/Lose_Screen.png";
+
+  public static final String WIN_SCREEN =
+          "dracula_punch/Resources/Splash_Screens/Win_Screen.png";
+
   //endregion
 
 
@@ -179,6 +208,8 @@ public class DraculaPunchGame extends StateBasedGame {
     addState(new StartState());
     addState(new CharacterSelectState());
     addState(new TestLevelState());
+    addState(new WinState());
+    addState(new LoseState());
 
     //region Amanda
     ResourceManager.loadImage(AMANDA_IDLE);
@@ -231,6 +262,18 @@ public class DraculaPunchGame extends StateBasedGame {
     ResourceManager.loadImage(DRACULA_MELEE_270_DEG);
     //endregion
 
+    //region Bat
+    ResourceManager.loadImage(BAT_IDLE);
+    ResourceManager.loadImage(BAT_ATTACK_0);
+    ResourceManager.loadImage(BAT_ATTACK_90);
+    ResourceManager.loadImage(BAT_ATTACK_180);
+    ResourceManager.loadImage(BAT_ATTACK_270);
+    ResourceManager.loadImage(BAT_FLY_0);
+    ResourceManager.loadImage(BAT_FLY_90);
+    ResourceManager.loadImage(BAT_FLY_180);
+    ResourceManager.loadImage(BAT_FLY_270);
+    //endregion
+
     //region Projectiles
     ResourceManager.loadImage(MAGIC_BALL_0_DEG);
     ResourceManager.loadImage(MAGIC_BALL_90_DEG);
@@ -245,6 +288,8 @@ public class DraculaPunchGame extends StateBasedGame {
 
     //region Splash Screens
     ResourceManager.loadImage(START_SCREEN);
+    ResourceManager.loadImage(LOSE_SCREEN);
+    ResourceManager.loadImage(WIN_SCREEN);
     //endregion
   }
 
@@ -276,7 +321,7 @@ public class DraculaPunchGame extends StateBasedGame {
       // stop - do nothing for now. No idle pose/anim
     }
     else{
-      System.out.println("Invalid Direction: Unable to Animate");
+      System.out.println("Invalid Direction: Unable to Animate " + x + ", " + y);
     }
     return sheet;
   }

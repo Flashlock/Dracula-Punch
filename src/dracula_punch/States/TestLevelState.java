@@ -6,13 +6,21 @@ import dracula_punch.Actions.Input.InputMoveAction;
 import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.*;
-import dracula_punch.TestEnemy;
+import dracula_punch.Characters.Enemies.BatController;
+import dracula_punch.Characters.Players.AmandaController;
+import dracula_punch.Characters.Players.AustinController;
+import dracula_punch.Characters.Players.RittaController;
 import dracula_punch.TiledMap.DPTiledMap;
+import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 import dracula_punch.DraculaPunchGame;
+import org.newdawn.slick.state.transition.BlobbyTransition;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import java.util.ArrayList;
 
@@ -20,12 +28,17 @@ public class TestLevelState extends LevelState {
   private GameObject playerOne, playerTwo, playerThree;
   private boolean isSpaceDown, isEDown, isUDown;
 
+  private int timer = 400;
+
   private Boolean hasGKey;
   private Boolean hasSKey;
   // Object IDs
   private int GOLDKEY_ID = 33;
   private int SILVKEY_ID = 34;
   private int BLANK_ID = 63;
+
+  private int WINSTATE_ID = 9;
+  private int LOSESTATE_ID = 8;
 
   @Override
   public int getID() {
@@ -44,9 +57,50 @@ public class TestLevelState extends LevelState {
     camera = new Camera(map, playerObjects);
     gameObjects.add(camera);
 
-    createCharacters();
-    GameObject testEnemy = new TestEnemy(new Coordinate(90,90), this);
+    temporaryPlayerSelectionMethod();
+    Coordinate enemyStart = new Coordinate(40, 15);
+    GameObject testEnemy = new BatController(enemyStart, this);
     gameObjects.add(testEnemy);
+
+    ResourceManager.getImage(DraculaPunchGame.WIN_SCREEN);
+  }
+
+
+  private void temporaryPlayerSelectionMethod() {
+    playerOne = new AmandaController(
+            DraculaPunchGame.SCREEN_WIDTH / 3f,
+            DraculaPunchGame.SCREEN_HEIGHT / 3f,
+            this
+    );
+    playerTwo = new AustinController(
+            DraculaPunchGame.SCREEN_WIDTH / 3f,
+            DraculaPunchGame.SCREEN_HEIGHT / 3f,
+            this
+    );
+    playerThree = new RittaController(
+            DraculaPunchGame.SCREEN_WIDTH / 3f,
+            DraculaPunchGame.SCREEN_HEIGHT / 3f,
+            this
+    );
+    gameObjects.add(playerOne);
+    gameObjects.add(playerTwo);
+    gameObjects.add(playerThree);
+
+    CharacterController c1 = (CharacterController) playerOne;
+    CharacterController c2 = (CharacterController) playerTwo;
+    CharacterController c3 = (CharacterController) playerThree;
+
+    playerObjects.add(c1);
+    playerObjects.add(c2);
+    playerObjects.add(c3);
+
+    move1Event.add(new InputMoveAction(c1));
+    move2Event.add(new InputMoveAction(c2));
+    move3Event.add(new InputMoveAction(c3));
+
+    attack1Event.add(new InputAttackAction(c1));
+    attack2Event.add(new InputAttackAction(c2));
+    attack3Event.add(new InputAttackAction(c3));
   }
 
   private void createCharacters() {
@@ -113,6 +167,26 @@ public class TestLevelState extends LevelState {
       hasGKey = false;
     }
 
+    // check win state
+    for(CharacterController player : playerObjects){
+      if(map.getTileId((int) player.currentTile.x, (int) player.currentTile.y, map.getLayerIndex("placement")) == WINSTATE_ID){
+        // since transitions are wonky here, we create a timer to account for the transition
+        timer -= delta;
+        if (timer <= 0) {
+          stateBasedGame.enterState(DraculaPunchGame.WIN_STATE, new EmptyTransition(), new EmptyTransition());
+          timer = 400;
+        }
+      }
+      // check lose state
+      else if(map.getTileId((int) player.currentTile.x, (int)player.currentTile.y, map.getLayerIndex("placement")) == LOSESTATE_ID){
+        timer -= delta;
+        if (timer <= 0) {
+          stateBasedGame.enterState(DraculaPunchGame.LOSE_STATE, new EmptyTransition(), new EmptyTransition());
+          timer = 400;
+        }
+      }
+    }
+
     // Remove dead objects
     gameObjects.removeAll(deadObjects);
     deadObjects.clear();
@@ -125,11 +199,9 @@ public class TestLevelState extends LevelState {
   private void checkHasKey(){
     for(CharacterController p : playerObjects){
       if(map.getTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object")) == GOLDKEY_ID){
-        System.out.println(p.getName() + " took the gold key");
         hasGKey = true;
         map.setTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object"), BLANK_ID);
       } else if(map.getTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object")) == SILVKEY_ID){
-        System.out.println(p.getName() + " took the silver key");
         hasSKey = true;
         map.setTileId((int)p.currentTile.x, (int)p.currentTile.y, map.getLayerIndex("Object"), BLANK_ID);
       }

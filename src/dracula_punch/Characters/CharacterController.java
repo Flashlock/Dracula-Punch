@@ -3,6 +3,7 @@ package dracula_punch.Characters;
 import dracula_punch.Actions.Damage_System.AttackAction;
 import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
+import dracula_punch.Characters.Enemies.EnemyController;
 import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
@@ -13,6 +14,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
+
+import java.util.LinkedList;
 
 /**
  * All Characters - including enemies - will inherit from this class
@@ -39,7 +42,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
 
   public CharacterController(final float x, final float y, LevelState curLevelState){
     super(x, y);
-    currentTile = new Coordinate(curLevelState.map.playerSpawnCoordinate);
     TOTAL_MOVE_TIME = 100;
     movingTime = 99; // one less than total to trigger calculation once on startup
 
@@ -93,6 +95,13 @@ public abstract class CharacterController extends GameObject implements IDamagea
       animLock = frame != curAnim.getFrameCount() - 1;
       if(!animLock && attackAction != null){
         attackAction.actionTriggered = false;
+        /*
+         * Perform any post attack actions.
+         * This is unique to EnemyController and therefore using the Action system seemed convoluted.
+         */
+        if(this instanceof EnemyController){
+          ((EnemyController) this).postAttackAction();
+        }
       }
     }
   }
@@ -114,6 +123,25 @@ public abstract class CharacterController extends GameObject implements IDamagea
     }
   }
   //endregion
+
+  /**
+   * @return The tiles immediately in front of the character.
+   * @param range The number of tiles to get.
+   */
+  public LinkedList<Coordinate> getFacingTiles(int range){
+    if(range <= 0){
+      System.out.println("Invalid range: " + range);
+      return null;
+    }
+
+    LinkedList<Coordinate> tiles = new LinkedList<>();
+    for(int i = 1; i <= range; i++){
+      float x = currentTile.x + i * facingDir.getX();
+      float y = currentTile.y - i * facingDir.getY();
+      tiles.add(new Coordinate(x, y));
+    }
+    return tiles;
+  }
 
   /**
    * Animate the controller's movement
@@ -236,10 +264,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
    */
   public abstract String getIdleSheet();
 
-  /**
-   * @return The character's Idle Sprite Sheet - currently no animation
-   */
-  public abstract String getName();
   /**
    * @return Sprite sheet for melee attack
    */

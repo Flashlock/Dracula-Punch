@@ -1,5 +1,7 @@
-package dracula_punch.Characters;
+package dracula_punch.Characters.Players;
 
+import dracula_punch.Camera.Coordinate;
+import dracula_punch.Characters.CharacterController;
 import dracula_punch.Damage_System.IAttacker;
 import dracula_punch.States.LevelState;
 import org.newdawn.slick.GameContainer;
@@ -8,6 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public abstract class PlayerController extends CharacterController implements IAttacker {
   public PlayerController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
+    currentTile = new Coordinate(curLevelState.map.playerSpawnCoordinate);
   }
 
   @Override
