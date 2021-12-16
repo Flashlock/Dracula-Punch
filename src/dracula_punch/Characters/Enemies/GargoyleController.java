@@ -30,9 +30,7 @@ public class GargoyleController extends EnemyController{
         Vector direction = isPlayerAroundMe(10);
         if(direction != null){
             navTarget = null;
-            if(facingDir.getX() != direction.getX() && facingDir.getY() != direction.getY()){
-                animateMove(direction);
-            }
+            animateMove(direction);
             animateAttack(getRangedSheet());
             return;
         }
