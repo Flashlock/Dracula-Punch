@@ -82,6 +82,7 @@ public class BatController extends EnemyController{
         }
 
         navPath = navGraph.findPath(currentTile, target);
+        if(navPath == null) return;
         navTarget = navPath.isEmpty() ? null : navPath.remove(0);
     }
 

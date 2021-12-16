@@ -33,6 +33,10 @@ public class DijkstraGraph {
 
         ArrayList<DijkstraNode> path = new ArrayList<>();
         DijkstraNode curNode = graph[targetX][targetY];
+        if(curNode.distance == Integer.MAX_VALUE){
+            // it was never visited, and we don't have a path.
+            return null;
+        }
 
         while(curNode != null) {
             path.add(curNode);

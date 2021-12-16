@@ -71,6 +71,7 @@ public class GargoyleController extends EnemyController{
 
         int randIndex = (int) (Math.random() * tiles.size());
         navPath = navGraph.findPath(currentTile, tiles.get(randIndex));
+        if(navPath == null) return;
         navTarget = navPath.remove(0);
     }
 
