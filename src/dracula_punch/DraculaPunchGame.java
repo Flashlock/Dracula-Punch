@@ -162,6 +162,29 @@ public class DraculaPunchGame extends StateBasedGame {
           "dracula_punch/Resources/Sprite_Sheets/Bat/Bat_Idle/Bat_Idle.png";
   //endregion
 
+  //region Gargoyle
+  public static final String GARGOYLE_IDLE =
+          "dracula_punch/Resources/Sprite_Sheets/Gargoyle/Gargoyle_Idle/Gargoyle_Idle.png";
+
+  public static final String GARGOYLE_WALK_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Gargoyle/Gargoyle_Walk/Gargoyle_Walk_0.png";
+  public static final String GARGOYLE_WALK_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Gargoyle/Gargoyle_Walk/Gargoyle_Walk_90.png";
+  public static final String GARGOYLE_WALK_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Gargoyle/Gargoyle_Walk/Gargoyle_Walk_180.png";
+  public static final String GARGOYLE_WALK_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Gargoyle/Gargoyle_Walk/Gargoyle_Walk_270.png";
+
+  public static final String GARGOYLE_ATTACK_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Gargoyle/Gargoyle_Attack/Gargoyle_Attack_0.png";
+  public static final String GARGOYLE_ATTACK_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Gargoyle/Gargoyle_Attack/Gargoyle_Attack_90.png";
+  public static final String GARGOYLE_ATTACK_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Gargoyle/Gargoyle_Attack/Gargoyle_Attack_180.png";
+  public static final String GARGOYLE_ATTACK_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Gargoyle/Gargoyle_Attack/Gargoyle_Attack_270.png";
+  //endregion
+
   //region Projectiles
   public static final String MAGIC_BALL_0_DEG =
       "dracula_punch/Resources/Sprite_Sheets/Ammo/Magic_Ball/Ball_0.png";
@@ -180,6 +203,15 @@ public class DraculaPunchGame extends StateBasedGame {
       "dracula_punch/Resources/Sprite_Sheets/Ammo/Arrow/Arrow_180.png";
   public static final String ARROW_270_DEG =
       "dracula_punch/Resources/Sprite_Sheets/Ammo/Arrow/Arrow_270.png";
+
+  public static final String LASER_0_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Laser/Laser_0.png";
+  public static final String LASER_90_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Laser/Laser_90.png";
+  public static final String LASER_180_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Laser/Laser_180.png";
+  public static final String LASER_270_DEG =
+          "dracula_punch/Resources/Sprite_Sheets/Ammo/Laser/Laser_270.png";
   //endregion
 
   //region Spash Screens
@@ -274,6 +306,18 @@ public class DraculaPunchGame extends StateBasedGame {
     ResourceManager.loadImage(BAT_FLY_270);
     //endregion
 
+    //region Gargoyle
+    ResourceManager.loadImage(GARGOYLE_IDLE);
+    ResourceManager.loadImage(GARGOYLE_WALK_0_DEG);
+    ResourceManager.loadImage(GARGOYLE_WALK_90_DEG);
+    ResourceManager.loadImage(GARGOYLE_WALK_180_DEG);
+    ResourceManager.loadImage(GARGOYLE_WALK_270_DEG);
+    ResourceManager.loadImage(GARGOYLE_ATTACK_0_DEG);
+    ResourceManager.loadImage(GARGOYLE_ATTACK_90_DEG);
+    ResourceManager.loadImage(GARGOYLE_ATTACK_180_DEG);
+    ResourceManager.loadImage(GARGOYLE_ATTACK_270_DEG);
+    //endregion
+
     //region Projectiles
     ResourceManager.loadImage(MAGIC_BALL_0_DEG);
     ResourceManager.loadImage(MAGIC_BALL_90_DEG);
@@ -284,6 +328,11 @@ public class DraculaPunchGame extends StateBasedGame {
     ResourceManager.loadImage(ARROW_90_DEG);
     ResourceManager.loadImage(ARROW_180_DEG);
     ResourceManager.loadImage(ARROW_270_DEG);
+
+    ResourceManager.loadImage(LASER_0_DEG);
+    ResourceManager.loadImage(LASER_90_DEG);
+    ResourceManager.loadImage(LASER_180_DEG);
+    ResourceManager.loadImage(LASER_270_DEG);
     //endregion
 
     //region Splash Screens

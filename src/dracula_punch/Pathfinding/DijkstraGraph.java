@@ -9,6 +9,8 @@ import java.util.Collections;
 public class DijkstraGraph {
 
     private final DijkstraNode[][] graph;
+    public int getGraphWidth(){ return graph.length; }
+    public int getGraphHeight(){ return graph[0].length; }
 
     public DijkstraGraph(DPTiledMap tiledMap){
         graph = new DijkstraNode[tiledMap.isPassable.length][tiledMap.isPassable[0].length];
@@ -31,6 +33,10 @@ public class DijkstraGraph {
 
         ArrayList<DijkstraNode> path = new ArrayList<>();
         DijkstraNode curNode = graph[targetX][targetY];
+        if(curNode.distance == Integer.MAX_VALUE){
+            // it was never visited, and we don't have a path.
+            return null;
+        }
 
         while(curNode != null) {
             path.add(curNode);

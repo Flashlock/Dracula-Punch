@@ -7,6 +7,8 @@ import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.*;
 import dracula_punch.Characters.Enemies.BatController;
+import dracula_punch.Characters.Enemies.GargoyleController;
+import dracula_punch.Characters.Enemies.SwarmManager;
 import dracula_punch.Characters.Players.AmandaController;
 import dracula_punch.Characters.Players.AustinController;
 import dracula_punch.Characters.Players.RittaController;
@@ -58,9 +60,18 @@ public class TestLevelState extends LevelState {
     camera = new Camera(map, playerObjects);
     gameObjects.add(camera);
 
+
     createCharacters();
     Coordinate enemyStart = new Coordinate(40, 15);
     GameObject testEnemy = new BatController(enemyStart, this);
+
+    // Example for how to use Swarm
+//    temporaryPlayerSelectionMethod();
+//    Coordinate enemyStart = new Coordinate(97, 94);
+//    SwarmManager swarm = new SwarmManager(97, 94, 5, this);
+//    GameObject testEnemy = new GargoyleController(enemyStart, this, swarm);
+//    gameObjects.add(swarm);
+
     gameObjects.add(testEnemy);
 
     ResourceManager.getImage(DraculaPunchGame.WIN_SCREEN);

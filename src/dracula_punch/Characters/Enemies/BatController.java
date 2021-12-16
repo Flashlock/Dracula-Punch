@@ -2,7 +2,6 @@ package dracula_punch.Characters.Enemies;
 
 import dracula_punch.Actions.Damage_System.AttackAction;
 import dracula_punch.Camera.Coordinate;
-import dracula_punch.Characters.CharacterController;
 import dracula_punch.Characters.GameObject;
 import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.IDamageable;
@@ -27,16 +26,13 @@ public class BatController extends EnemyController{
     private int meleeDamage = 5;
     private final int meleeActionFrame = 7;
 
-    private final int refreshTargetTime = 3000;
-    private int refreshTargetClock = 0;
-
     private int followThroughDist = 8;
 
-    public BatController(Coordinate startingTile, LevelState curLevelState) {
-        super(0, 0, startingTile, curLevelState);
+    public BatController(Coordinate startingTile, LevelState curLevelState, SwarmManager swarmManager) {
+        super(0, 0, startingTile, curLevelState, swarmManager);
         setScale(.8f);
         attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
-        batState = BatState.ATTACK;
+        batState = BatState.IDLE;
     }
 
     @Override
@@ -54,6 +50,18 @@ public class BatController extends EnemyController{
             default:
                 System.out.println("Unknown State: " + batState);
         }
+    }
+
+    @Override
+    public void activate() {
+        batState = BatState.ATTACK;
+    }
+
+    @Override
+    public void deactivate() {
+        navPath = navGraph.findPath(currentTile, startingTile);
+        navTarget = navPath.get(0);
+        batState = BatState.IDLE;
     }
 
     /**
@@ -86,6 +94,7 @@ public class BatController extends EnemyController{
         }
 
         navPath = navGraph.findPath(currentTile, target);
+        if(navPath == null) return;
         navTarget = navPath.isEmpty() ? null : navPath.remove(0);
     }
 
@@ -170,7 +179,7 @@ public class BatController extends EnemyController{
     public void attack(AttackType attackType) {
         switch (attackType){
             case MELEE:
-                Coordinate front = getFacingTiles(1).getFirst();
+                Coordinate front = getLinedTiles(1, facingDir).getFirst();
 
                 // damage all the things
                 ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(front);
