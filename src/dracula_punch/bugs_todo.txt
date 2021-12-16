@@ -1,3 +1,0 @@
-Holding down a direction button, then press a different directional button
-    Expected: Change movement and animation to new direction
-    Apparent: Change animation but not movement
