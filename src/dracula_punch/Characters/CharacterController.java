@@ -125,10 +125,11 @@ public abstract class CharacterController extends GameObject implements IDamagea
   //endregion
 
   /**
-   * @return The tiles immediately in front of the character.
+   * @return The tiles in the given direction
    * @param range The number of tiles to get.
+   * @param direction The direction to look into
    */
-  public LinkedList<Coordinate> getFacingTiles(int range){
+  public LinkedList<Coordinate> getLinedTiles(int range, Vector direction){
     if(range <= 0){
       System.out.println("Invalid range: " + range);
       return null;
@@ -136,8 +137,8 @@ public abstract class CharacterController extends GameObject implements IDamagea
 
     LinkedList<Coordinate> tiles = new LinkedList<>();
     for(int i = 1; i <= range; i++){
-      float x = currentTile.x + i * facingDir.getX();
-      float y = currentTile.y - i * facingDir.getY();
+      float x = currentTile.x + i * direction.getX();
+      float y = currentTile.y - i * direction.getY();
       tiles.add(new Coordinate(x, y));
     }
     return tiles;
