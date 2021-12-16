@@ -15,7 +15,7 @@ public class RittaController extends PlayerController{
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 30;
-    scaleFactor = .8f;
+    scaleFactor = .95f;
     rangedActionFrame = 0;
 
     attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);

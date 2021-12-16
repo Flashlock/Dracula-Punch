@@ -18,7 +18,7 @@ public class AustinController extends PlayerController {
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 35;
-    scaleFactor = 1f;
+    scaleFactor = 1.3f;
     meleeActionFrame = 10;
 
     meleeDamage = 5;
