@@ -24,7 +24,7 @@ public abstract class EnemyController extends CharacterController implements IAt
     protected final Coordinate startingTile;
 
     protected int refreshTargetTime = 3000;
-    protected int refreshTargetClock = 0;
+    protected int refreshTargetClock = refreshTargetTime;
 
     protected final SwarmManager swarmManager;
 
@@ -86,7 +86,7 @@ public abstract class EnemyController extends CharacterController implements IAt
         float percentMoved = calculatePercentMoved();
         if(percentMoved == 0f && currentTile.isEqual(navTarget.coordinate)){
             // stop if we're empty
-            if(navPath.isEmpty()){
+            if(navPath == null || navPath.isEmpty()){
                 navTarget = null;
                 animateMove(new Vector(0, 0));
                 return;

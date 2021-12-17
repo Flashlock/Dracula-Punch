@@ -20,6 +20,8 @@ public class RittaController extends PlayerController{
     scaleFactor = .95f;
     rangedActionFrame = 0;
 
+    TOTAL_MOVE_TIME = 200;
+
     maxHealth = 3;
     currentHealth = maxHealth;
     healthBars = new Image[]{

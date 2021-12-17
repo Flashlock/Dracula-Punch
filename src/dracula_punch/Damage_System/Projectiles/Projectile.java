@@ -52,6 +52,10 @@ public abstract class Projectile extends GameObject {
   }
 
   private void checkCollision(){
+    if(currentTile.x < 0 || currentTile.y < 0){
+      curLevelState.deadObjects.add(this);
+      return;
+    }
     // collision with map
     if(!curLevelState.map.isPassable[(int) currentTile.x][(int) currentTile.y]){
       curLevelState.deadObjects.add(this);

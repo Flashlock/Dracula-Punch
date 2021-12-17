@@ -22,6 +22,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import dracula_punch.DraculaPunchGame;
 import org.newdawn.slick.state.transition.EmptyTransition;
+import org.pushingpixels.trident.interpolator.CorePropertyInterpolators;
 
 import java.util.ArrayList;
 
@@ -62,59 +63,74 @@ public class TestLevelState extends LevelState {
     gameObjects.add(camera);
 
     createCharacters();
-    Coordinate enemyStart = new Coordinate(40, 15);
-    SwarmManager swarm = new SwarmManager(40, 15, 5, this);
-    GameObject testEnemy = new DraculaController(enemyStart, this, swarm);
 
-    // level one bats
-    Coordinate enemy1Start = new Coordinate(67, 62);
-    Coordinate enemy2Start = new Coordinate(70, 62);
-    SwarmManager levelOneSwarm = new SwarmManager(69, 70, 12, this);
-    GameObject en1 = new BatController(enemy1Start, this, levelOneSwarm);
-    GameObject en2 = new BatController(enemy2Start, this, levelOneSwarm);
-    gameObjects.add(levelOneSwarm);
-    gameObjects.add(en1);
-    gameObjects.add(en2);
+    // Swarm 1
+    SwarmManager swarmManager = new SwarmManager(62, 91, 20, this);
+    gameObjects.add(swarmManager);
+    Coordinate coordinate = new Coordinate(69, 94);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(71, 93);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
 
-    // level two gargoyles
-    Coordinate enemy3Start = new Coordinate(87, 36);
-    Coordinate enemy4Start = new Coordinate(97, 36);
-    SwarmManager levelTwoSwarm = new SwarmManager(93, 40, 12, this);
-    GameObject en3 = new GargoyleController(enemy3Start, this, levelTwoSwarm);
-    GameObject en4 = new GargoyleController(enemy4Start, this, levelTwoSwarm);
-    gameObjects.add(levelTwoSwarm);
-    gameObjects.add(en3);
-    gameObjects.add(en4);
+    // Swarm 2
+    swarmManager = new SwarmManager(68, 58, 15, this);
+    gameObjects.add(swarmManager);
+    coordinate = new Coordinate(66, 58);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(70, 58);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(68, 61);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
 
-    // level three bats in room
-    Coordinate enemy5Start = new Coordinate(64, 33);
-    Coordinate enemy6Start = new Coordinate(70, 36);
-    SwarmManager levelThreeSwarm = new SwarmManager(66, 24, 12, this);
-    GameObject en5 = new BatController(enemy5Start, this, levelThreeSwarm);
-    GameObject en6 = new BatController(enemy6Start, this, levelThreeSwarm);
-    gameObjects.add(levelThreeSwarm);
-    gameObjects.add(en5);
-    gameObjects.add(en6);
+    // Swarm 3
+    swarmManager = new SwarmManager(89, 27, 40, this);
+    gameObjects.add(swarmManager);
+    coordinate = new Coordinate(83, 27);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(98, 27);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(90, 50);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(95, 43);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(86, 47);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(89, 16);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
 
-    // level four bats
-    Coordinate enemy7Start = new Coordinate(37, 12);
-    Coordinate enemy8Start = new Coordinate(38, 17);
-    SwarmManager levelFourSwarm = new SwarmManager(44, 14, 10, this);
-    GameObject en7 = new BatController(enemy7Start, this, levelFourSwarm);
-    GameObject en8 = new BatController(enemy8Start, this, levelFourSwarm);
-    gameObjects.add(levelFourSwarm);
-    gameObjects.add(en7);
-    gameObjects.add(en8);
+    // Swarm 4
+    swarmManager = new SwarmManager(67, 36, 10, this);
+    gameObjects.add(swarmManager);
+    coordinate = new Coordinate(61, 39);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(72, 41);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(65, 33);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(73, 32);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(67, 35);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
 
-    // level five gargoyles
-    Coordinate enemy9Start = new Coordinate(22, 47);
-    Coordinate enemy10Start = new Coordinate(26, 40);
-    SwarmManager levelFiveSwarm = new SwarmManager(19, 42, 10, this);
-    GameObject en9 = new GargoyleController(enemy9Start, this, levelFiveSwarm);
-    GameObject en10 = new GargoyleController(enemy10Start, this, levelFiveSwarm);
-    gameObjects.add(levelFiveSwarm);
-    gameObjects.add(en9);
-    gameObjects.add(en10);
+    // Swarm 5
+    swarmManager = new SwarmManager(39, 14, 20, this);
+    gameObjects.add(swarmManager);
+    coordinate = new Coordinate(41, 11);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(43, 17);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(30, 14);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+
+    // Swarm 6
+    swarmManager = new SwarmManager(19, 42, 30, this);
+    gameObjects.add(swarmManager);
+    coordinate = new Coordinate(21, 49);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(21, 36);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
   }
 
 
