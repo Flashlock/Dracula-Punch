@@ -40,14 +40,14 @@ public abstract class Projectile extends GameObject {
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
     Camera cam = curLevelState.camera;
     setPosition(cam.getScreenPositionFromTile(currentTilePlusPartial));
-    if(cam.isInScreenRange(currentTile)) {
+    if(cam.isInScreenRange(getPosition())) {
       render(graphics);
     }
   }
 
   private void move() {
     if (movingTime == TOTAL_MOVE_TIME) {
-        changeCurrentTile((int)direction.getX(), (int)-direction.getY());
+      changeCurrentTile((int)direction.getX(), (int)-direction.getY());
     }
   }
 

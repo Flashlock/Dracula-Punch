@@ -55,7 +55,7 @@ public abstract class CharacterController extends GameObject implements IDamagea
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics){
     Camera cam = curLevelState.camera;
     setPosition(cam.getScreenPositionFromTile(currentTilePlusPartial));
-    if(cam.isInScreenRange(currentTile)) {
+    if(cam.isInScreenRange(getPosition())) {
       render(graphics);
     }
   }
