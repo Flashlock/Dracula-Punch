@@ -71,5 +71,7 @@ public class BossSpawner extends SwarmManager {
         curLevelState.map.isPassable[42][87] = false;
         curLevelState.map.setTileId(42, 88, curLevelState.map.getLayerIndex("NE Walls"), 19);
         curLevelState.map.isPassable[42][88] = false;
+
+        dracula.activate();
     }
 }

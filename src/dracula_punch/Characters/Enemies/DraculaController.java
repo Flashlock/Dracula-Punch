@@ -10,6 +10,7 @@ import dracula_punch.States.LevelState;
 import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -19,6 +20,11 @@ public class DraculaController extends EnemyController{
     public enum DraculaState { IDLE, ATTACK, RETREAT, VANISH }
     private DraculaState draculaState;
     public DraculaState getDraculaState(){ return draculaState; }
+
+    private int phase2MaxHealth = 8;
+    private int phase1MaxHealth = 10;
+
+    private Image[] phase2HealthBars, phase1HealthBars;
 
     private int phaseCount = 3;
 
@@ -35,53 +41,44 @@ public class DraculaController extends EnemyController{
         bats = new ArrayList<>();
         attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
         draculaState = DraculaState.IDLE;
+        TOTAL_MOVE_TIME = 500;
 
-        if(phaseCount == 3){
-            maxHealth = 6;
-            currentHealth = maxHealth;
-            healthBars = new Image[]{
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_1),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_2),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_3),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_4),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_5),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_6),
-            };
-        }
-        else if(phaseCount == 2){
-            maxHealth = 8;
-            currentHealth = maxHealth;
-            healthBars = new Image[]{
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_1),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_2),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_3),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_4),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_5),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_6),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_7),
+        maxHealth = 6;
+        currentHealth = maxHealth;
+        healthBars = new Image[]{
+                ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_6),
+                ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_5),
+                ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_4),
+                ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_3),
+                ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_2),
+                ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_1),
+        };
+
+        phase2HealthBars = new Image[]{
                     ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_8),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_7),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_6),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_5),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_4),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_3),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_2),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_1),
             };
-        }
-        else if(phaseCount == 1){
-            maxHealth = 10;
-            currentHealth = maxHealth;
-            healthBars = new Image[]{
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_1),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_2),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_3),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_4),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_5),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_6),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_7),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_8),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_9),
-                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_10),
-            };
-        }
 
+        phase1HealthBars = new Image[]{
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_10),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_9),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_8),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_7),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_6),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_5),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_4),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_3),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_2),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_1),
+            };
 
         setHealthBar();
-
     }
 
     @Override
@@ -105,7 +102,15 @@ public class DraculaController extends EnemyController{
     }
 
     @Override
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
+        if(draculaState == DraculaState.VANISH) return;
+        super.render(gameContainer, stateBasedGame, graphics);
+    }
+
+    @Override
     public void takeDamage(int damage) {
+        if(draculaState == DraculaState.VANISH) return;
+        removeImage(healthBar);
         currentHealth -= damage;
         if(currentHealth <= 0){
             switch (phaseCount--){
@@ -117,6 +122,7 @@ public class DraculaController extends EnemyController{
                             new Coordinate(currentTile.x, currentTile.y + 1),
                             new Coordinate(currentTile.x, currentTile.y - 1)
                     };
+                    healthBars = phase2HealthBars;
                     spawnBats(tiles);
                     disappear();
                     break;
@@ -132,17 +138,18 @@ public class DraculaController extends EnemyController{
                             new Coordinate(currentTile.x - 1, currentTile.y + 1),
                             new Coordinate(currentTile.x - 1, currentTile.y - 1)
                     };
+                    healthBars = phase1HealthBars;
                     spawnBats(tiles);
                     disappear();
                     break;
                 case 1:
                     // die
-                    curLevelState.deadObjects.add(this);
-                    swarmManager.deadSwarm.add(this);
+                    curLevelState.iWantToGoToBed();
                     break;
             }
-
         }
+        if(currentHealth > 0)
+            setHealthBar();
     }
 
     /**
@@ -223,16 +230,34 @@ public class DraculaController extends EnemyController{
             currentTile = bat.currentTile;
             currentTilePlusPartial = bat.currentTilePlusPartial;
 
-            randomIdle();
             draculaState = DraculaState.ATTACK;
+
+            if(phaseCount == 2){
+                maxHealth = phase2MaxHealth;
+                currentHealth = maxHealth;
+            }
+            else if(phaseCount == 1){
+                maxHealth = phase1MaxHealth;
+                currentHealth = maxHealth;
+            }
+            setHealthBar();
         }
         else if(bats.isEmpty()){
             // respawn at starting tile
             currentTile = startingTile;
             currentTilePlusPartial = startingTile;
 
-            randomIdle();
             draculaState = DraculaState.ATTACK;
+
+            if(phaseCount == 2){
+                maxHealth = phase2MaxHealth;
+                currentHealth = maxHealth;
+            }
+            else if(phaseCount == 1){
+                maxHealth = phase1MaxHealth;
+                currentHealth = maxHealth;
+            }
+            setHealthBar();
         }
     }
 
@@ -299,7 +324,6 @@ public class DraculaController extends EnemyController{
     public void postAttackAction() {
         draculaState = DraculaState.RETREAT;
         refreshTarget();
-        animateMove(facingDir);
     }
 
     @Override
