@@ -7,6 +7,7 @@ import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
@@ -34,6 +35,53 @@ public class DraculaController extends EnemyController{
         bats = new ArrayList<>();
         attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
         draculaState = DraculaState.IDLE;
+
+        if(phaseCount == 3){
+            maxHealth = 6;
+            currentHealth = maxHealth;
+            healthBars = new Image[]{
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_1),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_2),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_3),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_4),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_5),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_1_HEALTH_6),
+            };
+        }
+        else if(phaseCount == 2){
+            maxHealth = 8;
+            currentHealth = maxHealth;
+            healthBars = new Image[]{
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_1),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_2),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_3),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_4),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_5),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_6),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_7),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_2_HEALTH_8),
+            };
+        }
+        else if(phaseCount == 1){
+            maxHealth = 10;
+            currentHealth = maxHealth;
+            healthBars = new Image[]{
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_1),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_2),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_3),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_4),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_5),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_6),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_7),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_8),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_9),
+                    ResourceManager.getImage(DraculaPunchGame.DRACULA_3_HEALTH_10),
+            };
+        }
+
+
+        setHealthBar();
+
     }
 
     @Override
