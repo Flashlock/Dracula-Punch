@@ -8,28 +8,28 @@ Defend yourself as you follow the malicious path to punch sexy SS Dracula in the
 <br />
 
 ### Lowbar checklist:
-- [ ] Start screen with character select
-- [ ] Game-over screen
-- [ ] Multiplayer
-- [ ] Isometric, scrolling world
-- [ ] Range + Melee Attacks
-- [ ] Health tracking
-- [ ] Respawn point
-- [ ] Enemy class
-- [ ] Boss
-- [ ] Tile based movement
-- [ ] Sounds and artwork
+- [X] Start screen with character select
+- [X] Game-over screen
+- [X] Multiplayer
+- [X] Isometric, scrolling world
+- [X] Range + Melee Attacks
+- [X] Health tracking
+- [X] Respawn point
+- [X] Enemy class
+- [X] Boss
+- [X] Tile based movement
+- [X] Sounds and artwork
 
 <br />
 
 ### Highbar checklist:
 - [ ] Powerups
-- [ ] Items
-- [ ] Idle animations
+- [X] Items
+- [X] Idle animations
 - [ ] Resurrection by teammates
 - [ ] Multiple levels
-
+- [X] PS5 Controller setup
 
 <br />
 
-## Current phase: Development
+## Current phase: Alpha
