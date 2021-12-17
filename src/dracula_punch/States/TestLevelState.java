@@ -7,6 +7,7 @@ import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.*;
 import dracula_punch.Characters.Enemies.BatController;
+import dracula_punch.Characters.Enemies.DraculaController;
 import dracula_punch.Characters.Enemies.GargoyleController;
 import dracula_punch.Characters.Enemies.SwarmManager;
 import dracula_punch.Characters.Players.AmandaController;
@@ -61,6 +62,9 @@ public class TestLevelState extends LevelState {
     gameObjects.add(camera);
 
     createCharacters();
+    Coordinate enemyStart = new Coordinate(40, 15);
+    SwarmManager swarm = new SwarmManager(40, 15, 5, this);
+    GameObject testEnemy = new DraculaController(enemyStart, this, swarm);
 
     // level one bats
     Coordinate enemy1Start = new Coordinate(67, 62);
