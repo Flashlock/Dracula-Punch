@@ -16,20 +16,6 @@ public class AustinController extends PlayerController {
   private int meleeDamage;
   private final int meleeActionFrame;
 
-  private final Image fullHealthImg = ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_1);
-  private final Image fourFifthHealthImg = ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_2);
-  private final Image threeFifthHealthImg = ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_3);
-  private final Image twoFifthHealthImg = ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_4);
-  private final Image oneFifthHealthImg = ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_5);
-
-  private Image[] Health = new Image[]{
-          oneFifthHealthImg,
-          twoFifthHealthImg,
-          threeFifthHealthImg,
-          fourFifthHealthImg,
-          fullHealthImg
-  };
-
   public AustinController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
     xRenderOffset = 0;
@@ -42,14 +28,16 @@ public class AustinController extends PlayerController {
 
     maxHealth = 5;
     currentHealth = maxHealth;
-    addImage(fullHealthImg);
+    healthBars = new Image[]{
+            ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_5),
+            ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_4),
+            ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_3),
+            ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_2),
+            ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_1)
+    };
+    setHealthBar();
 
     setScale(scaleFactor);
-  }
-
-  @Override
-  public Image getHealthBar() {
-    return Health[currentHealth - 1];
   }
 
   //region Character Controller

@@ -12,14 +12,6 @@ import org.newdawn.slick.Image;
 public class AmandaController extends PlayerController {
   private final int rangedActionFrame = 13;
 
-  private final Image fullHealthImg = ResourceManager.getImage(DraculaPunchGame.AMANDA_HEALTH_1);
-  private final Image halfHealthImg = ResourceManager.getImage(DraculaPunchGame.AMANDA_HEALTH_2);
-
-  private Image[] Health = new Image[]{
-          halfHealthImg,
-          fullHealthImg
-  };
-
   public AmandaController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
     xRenderOffset = 10;
@@ -28,16 +20,15 @@ public class AmandaController extends PlayerController {
 
     maxHealth = 2;
     currentHealth = maxHealth;
-    addImage(fullHealthImg);
+    healthBars = new Image[]{
+            ResourceManager.getImage(DraculaPunchGame.AMANDA_HEALTH_2),
+            ResourceManager.getImage(DraculaPunchGame.AMANDA_HEALTH_1)
+    };
+    setHealthBar();
 
     attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);
 
     setScale(scaleFactor);
-  }
-
-  @Override
-  public Image getHealthBar() {
-    return Health[currentHealth - 1];
   }
 
   @Override

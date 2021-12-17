@@ -97,11 +97,6 @@ public class DraculaController extends EnemyController{
         }
     }
 
-    @Override
-    public Image getHealthBar() {
-        return null;
-    }
-
     /**
      * Refreshes the target for either attacking or retreating.
      */

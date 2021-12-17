@@ -29,16 +29,6 @@ public class BatController extends EnemyController{
     private int meleeDamage = 1;
     private final int meleeActionFrame = 7;
 
-    private final Image fullHealthImg = ResourceManager.getImage(DraculaPunchGame.BAT_HEALTH_1);
-    private final Image twoThirdHealthImg = ResourceManager.getImage(DraculaPunchGame.BAT_HEALTH_2);
-    private final Image oneThirdHealthImg = ResourceManager.getImage(DraculaPunchGame.BAT_HEALTH_3);
-
-    private Image[] Health = new Image[]{
-            oneThirdHealthImg,
-            twoThirdHealthImg,
-            fullHealthImg
-    };
-
     private int followThroughDist = 8;
 
     public BatController(Coordinate startingTile, LevelState curLevelState, SwarmManager swarmManager) {
@@ -47,8 +37,12 @@ public class BatController extends EnemyController{
 
         maxHealth = 3;
         currentHealth = maxHealth;
-        addImage(fullHealthImg);
-
+        healthBars = new Image[]{
+                ResourceManager.getImage(DraculaPunchGame.BAT_HEALTH_3),
+                ResourceManager.getImage(DraculaPunchGame.BAT_HEALTH_2),
+                ResourceManager.getImage(DraculaPunchGame.BAT_HEALTH_1)
+        };
+        setHealthBar();
 
         attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
         batState = BatState.IDLE;
@@ -69,11 +63,6 @@ public class BatController extends EnemyController{
             default:
                 System.out.println("Unknown State: " + batState);
         }
-    }
-
-    @Override
-    public Image getHealthBar() {
-        return Health[currentHealth-1];
     }
 
     @Override

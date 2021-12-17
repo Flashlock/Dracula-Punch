@@ -19,16 +19,6 @@ public class GargoyleController extends EnemyController{
     private GargoyleState gargoyleState;
     public GargoyleState getGargoyleState(){ return gargoyleState; }
 
-
-    private final Image fullHealthImg = ResourceManager.getImage(DraculaPunchGame.GARGOYLE_HEALTH_1);
-    private final Image halfHealthImg = ResourceManager.getImage(DraculaPunchGame.GARGOYLE_HEALTH_2);
-
-    private Image[] Health = new Image[]{
-            halfHealthImg,
-            fullHealthImg
-    };
-
-
     // how far from current tile to choose next tile
     private final int targetRadius = 8;
 
@@ -40,8 +30,11 @@ public class GargoyleController extends EnemyController{
 
         maxHealth = 2;
         currentHealth = maxHealth;
-        addImage(fullHealthImg);
-
+        healthBars = new Image[]{
+                ResourceManager.getImage(DraculaPunchGame.GARGOYLE_HEALTH_2),
+                ResourceManager.getImage(DraculaPunchGame.GARGOYLE_HEALTH_1)
+        };
+        setHealthBar();
     }
 
     @Override
@@ -64,11 +57,6 @@ public class GargoyleController extends EnemyController{
                 refreshTargetClock = 0;
             }
         }
-    }
-
-    @Override
-    public Image getHealthBar() {
-        return Health[currentHealth-1];
     }
 
     @Override

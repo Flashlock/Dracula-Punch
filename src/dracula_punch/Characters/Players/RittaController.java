@@ -13,16 +13,6 @@ import org.newdawn.slick.Image;
 public class RittaController extends PlayerController{
   private final int rangedActionFrame;
 
-  private final Image fullHealthImg = ResourceManager.getImage(DraculaPunchGame.RITTA_HEALTH_1);
-  private final Image twoThirdHealthImg = ResourceManager.getImage(DraculaPunchGame.RITTA_HEALTH_2);
-  private final Image oneThirdHealthImg = ResourceManager.getImage(DraculaPunchGame.RITTA_HEALTH_3);
-
-  private Image[] Health = new Image[]{
-          oneThirdHealthImg,
-          twoThirdHealthImg,
-          fullHealthImg
-  };
-
   public RittaController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
     xRenderOffset = 0;
@@ -32,16 +22,16 @@ public class RittaController extends PlayerController{
 
     maxHealth = 3;
     currentHealth = maxHealth;
-    addImage(fullHealthImg);
+    healthBars = new Image[]{
+            ResourceManager.getImage(DraculaPunchGame.RITTA_HEALTH_3),
+            ResourceManager.getImage(DraculaPunchGame.RITTA_HEALTH_2),
+            ResourceManager.getImage(DraculaPunchGame.RITTA_HEALTH_1)
+    };
+    setHealthBar();
 
     attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);
 
     setScale(scaleFactor);
-  }
-
-  @Override
-  public Image getHealthBar() {
-    return Health[currentHealth-1];
   }
 
   //region Character Controller

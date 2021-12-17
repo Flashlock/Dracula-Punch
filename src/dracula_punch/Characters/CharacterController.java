@@ -39,6 +39,8 @@ public abstract class CharacterController extends GameObject implements IDamagea
   protected int currentHealth;
   @Override
   public int getCurrentHealth(){ return currentHealth; }
+  protected Image healthBar;
+  protected Image[] healthBars;
 
   public CharacterController(final float x, final float y, LevelState curLevelState){
     super(x, y);
@@ -117,13 +119,13 @@ public abstract class CharacterController extends GameObject implements IDamagea
   //region Damage System
   @Override
   public void takeDamage(int damage) {
-    if(currentHealth - damage > 0) {
-      removeImage(getHealthBar());
-      currentHealth -= damage;
-      addImage(getHealthBar());
+    removeImage(healthBar);
+    currentHealth -= damage;
+    if(currentHealth <= 0) {
+      curLevelState.deadObjects.add(this);
     }
     else {
-      curLevelState.deadObjects.add(this);
+      setHealthBar();
     }
   }
 
@@ -135,6 +137,14 @@ public abstract class CharacterController extends GameObject implements IDamagea
     }
   }
   //endregion
+
+  /**
+   * Set the health bar with your current health
+   */
+  protected void setHealthBar(){
+    healthBar = healthBars[currentHealth - 1];
+    addImage(healthBar);
+  }
 
   /**
    * @return The tiles in the given direction
@@ -264,8 +274,6 @@ public abstract class CharacterController extends GameObject implements IDamagea
       return null;
     }
   }
-
-  public abstract Image getHealthBar();
 
   /**
    * @return The character's Run Sprite Sheet for the given direction
