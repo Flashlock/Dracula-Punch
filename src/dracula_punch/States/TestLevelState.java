@@ -12,6 +12,7 @@ import dracula_punch.Characters.Players.AustinController;
 import dracula_punch.Characters.Players.PlayerController;
 import dracula_punch.Characters.Players.RittaController;
 import dracula_punch.TiledMap.DPTiledMap;
+import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
