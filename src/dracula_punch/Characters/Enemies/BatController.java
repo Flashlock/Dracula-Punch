@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public class BatController extends EnemyController{
     public enum BatState { IDLE, ATTACK, RETREAT }
-    private BatState batState;
+    protected BatState batState;
     public BatState getBatState(){ return batState; }
 
     private int meleeDamage = 5;

@@ -10,13 +10,18 @@ import dracula_punch.States.LevelState;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
+import org.pushingpixels.trident.interpolator.CorePropertyInterpolators;
 
 import java.util.ArrayList;
 
 public class DraculaController extends EnemyController{
-    public enum DraculaState { IDLE, ATTACK, RETREAT }
+    public enum DraculaState { IDLE, ATTACK, RETREAT, VANISH }
     private DraculaState draculaState;
     public DraculaState getDraculaState(){ return draculaState; }
+
+    private int phaseCount = 3;
+
+    public final ArrayList<DraculaBat> bats;
 
     private int meleeDamage = 5;
     private final int meleeActionFrame = 11;
@@ -26,6 +31,7 @@ public class DraculaController extends EnemyController{
     public DraculaController(Coordinate startingTile, LevelState curLevelState, SwarmManager swarmManager) {
         super(0, 0, startingTile, curLevelState, swarmManager);
         setScale(1.15f);
+        bats = new ArrayList<>();
         attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
         draculaState = DraculaState.IDLE;
     }
@@ -42,8 +48,52 @@ public class DraculaController extends EnemyController{
             case RETREAT:
                 retreat();
                 break;
+            case VANISH:
+                vanish();
+                break;
             default:
                 System.out.println("Unknown State: " + draculaState);
+        }
+    }
+
+    @Override
+    public void takeDamage(int damage) {
+        currentHealth -= damage;
+        if(currentHealth <= 0){
+            switch (phaseCount--){
+                case 3:
+                    // poof into bats
+                    Coordinate[] tiles = new Coordinate[] {
+                            new Coordinate(currentTile.x + 1, currentTile.y),
+                            new Coordinate(currentTile.x - 1, currentTile.y),
+                            new Coordinate(currentTile.x, currentTile.y + 1),
+                            new Coordinate(currentTile.x, currentTile.y - 1)
+                    };
+                    spawnBats(tiles);
+                    disappear();
+                    break;
+                case 2:
+                    // poof into more bats
+                    tiles = new Coordinate[] {
+                            new Coordinate(currentTile.x + 1, currentTile.y),
+                            new Coordinate(currentTile.x - 1, currentTile.y),
+                            new Coordinate(currentTile.x, currentTile.y + 1),
+                            new Coordinate(currentTile.x, currentTile.y - 1),
+                            new Coordinate(currentTile.x + 1, currentTile.y + 1),
+                            new Coordinate(currentTile.x + 1, currentTile.y - 1),
+                            new Coordinate(currentTile.x - 1, currentTile.y + 1),
+                            new Coordinate(currentTile.x - 1, currentTile.y - 1)
+                    };
+                    spawnBats(tiles);
+                    disappear();
+                    break;
+                case 1:
+                    // die
+                    curLevelState.deadObjects.add(this);
+                    swarmManager.deadSwarm.add(this);
+                    break;
+            }
+
         }
     }
 
@@ -110,6 +160,54 @@ public class DraculaController extends EnemyController{
         if(navTarget == null){
             draculaState = DraculaState.ATTACK;
         }
+    }
+
+    /**
+     * Vanish State. Wait for bats to die then reappear.
+     */
+    private void vanish(){
+        if(bats.size() == 1){
+            // respawn on that bat
+            DraculaBat bat = bats.remove(0);
+            swarmManager.deadSwarm.add(bat);
+            curLevelState.deadObjects.add(bat);
+
+            currentTile = bat.currentTile;
+            currentTilePlusPartial = bat.currentTilePlusPartial;
+
+            randomIdle();
+            draculaState = DraculaState.ATTACK;
+        }
+        else if(bats.isEmpty()){
+            // respawn at starting tile
+            currentTile = startingTile;
+            currentTilePlusPartial = startingTile;
+
+            randomIdle();
+            draculaState = DraculaState.ATTACK;
+        }
+    }
+
+    private void spawnBats(Coordinate[] spawnTiles) {
+        DraculaBat bat;
+        for (Coordinate spawnTile : spawnTiles) {
+            Coordinate tile = curLevelState.map.isPassable[(int) spawnTile.x][(int) spawnTile.y] ?
+                    spawnTile : currentTile;
+            bat = new DraculaBat(tile, curLevelState, swarmManager, this);
+            bats.add(bat);
+            curLevelState.newObjects.add(bat);
+            swarmManager.newSwarm.add(bat);
+        }
+    }
+
+    private void disappear(){
+        if(curAnim != null){
+            removeAnimation(curAnim);
+        }
+        else{
+            removeImage(idleImage);
+        }
+        draculaState = DraculaState.VANISH;
     }
 
     //region Character Controller
