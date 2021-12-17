@@ -226,6 +226,42 @@ public class DraculaPunchGame extends StateBasedGame {
 
   //endregion
 
+  //region Health Bars
+  public static final String GARGOYLE_HEALTH_1 =
+          "dracula_punch/UI/HealthBars/Gargoyle/Full.png";
+  public static final String GARGOYLE_HEALTH_2 =
+          "dracula_punch/UI/HealthBars/Gargoyle/1_2.png";
+
+  public static final String BAT_HEALTH_1 =
+          "dracula_punch/UI/HealthBars/Bat/Full.png";
+  public static final String BAT_HEALTH_2 =
+          "dracula_punch/UI/HealthBars/Bat/2_3.png";
+  public static final String BAT_HEALTH_3 =
+          "dracula_punch/UI/HealthBars/Bat/1_3.png";
+
+  public static final String AUSTIN_HEALTH_1 =
+          "dracula_punch/UI/HealthBars/Austin/Full.png";
+  public static final String AUSTIN_HEALTH_2 =
+          "dracula_punch/UI/HealthBars/Austin/4_5.png";
+  public static final String AUSTIN_HEALTH_3 =
+          "dracula_punch/UI/HealthBars/Austin/3_5.png";
+  public static final String AUSTIN_HEALTH_4 =
+          "dracula_punch/UI/HealthBars/Austin/2_5.png";
+  public static final String AUSTIN_HEALTH_5 =
+          "dracula_punch/UI/HealthBars/Austin/1_5.png";
+
+  public static final String RITTA_HEALTH_1 =
+          "dracula_punch/UI/HealthBars/Ritta/Full.png";
+  public static final String RITTA_HEALTH_2 =
+          "dracula_punch/UI/HealthBars/Ritta/2_3.png";
+  public static final String RITTA_HEALTH_3 =
+          "dracula_punch/UI/HealthBars/Ritta/1_3.png";
+
+  public static final String AMANDA_HEALTH_1 =
+          "dracula_punch/UI/HealthBars/Amanda/Full.png";
+  public static final String AMANDA_HEALTH_2 =
+          "dracula_punch/UI/HealthBars/Amanda/1_2.png";
+  //endregion
 
   public DraculaPunchGame(String name, int width, int height) {
     super(name);
@@ -339,6 +375,28 @@ public class DraculaPunchGame extends StateBasedGame {
     ResourceManager.loadImage(START_SCREEN);
     ResourceManager.loadImage(LOSE_SCREEN);
     ResourceManager.loadImage(WIN_SCREEN);
+    //endregion
+
+    //region health bars
+    ResourceManager.loadImage(GARGOYLE_HEALTH_1);
+    ResourceManager.loadImage(GARGOYLE_HEALTH_2);
+
+    ResourceManager.loadImage(BAT_HEALTH_1);
+    ResourceManager.loadImage(BAT_HEALTH_2);
+    ResourceManager.loadImage(BAT_HEALTH_3);
+
+    ResourceManager.loadImage(AUSTIN_HEALTH_1);
+    ResourceManager.loadImage(AUSTIN_HEALTH_2);
+    ResourceManager.loadImage(AUSTIN_HEALTH_3);
+    ResourceManager.loadImage(AUSTIN_HEALTH_4);
+    ResourceManager.loadImage(AUSTIN_HEALTH_5);
+
+    ResourceManager.loadImage(RITTA_HEALTH_1);
+    ResourceManager.loadImage(RITTA_HEALTH_2);
+    ResourceManager.loadImage(RITTA_HEALTH_3);
+
+    ResourceManager.loadImage(AMANDA_HEALTH_1);
+    ResourceManager.loadImage(AMANDA_HEALTH_2);
     //endregion
   }
 
