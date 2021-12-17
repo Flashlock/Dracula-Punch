@@ -13,6 +13,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class AustinController extends PlayerController {
   private int meleeDamage;
@@ -55,6 +56,12 @@ public class AustinController extends PlayerController {
 //    }
 //  }
 
+  @Override
+  public void takeDamage(int damage){
+    super.takeDamage(damage);
+    ResourceManager.getSound(DraculaPunchGame.AUSTIN_OW_SND).play();
+  }
+
   //region Character Controller
   @Override
   public String getRunSheet(int x, int y) {
@@ -95,13 +102,17 @@ public class AustinController extends PlayerController {
   public void attack(AttackType attackType){
     switch (attackType){
       case MELEE:
-        Coordinate front = getLinedTiles(1, facingDir).getFirst();
+        ResourceManager.getSound(DraculaPunchGame.AUSTIN_ATTACK_SND).play();
 
-        // damage all the things
-        ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(front);
-        for(GameObject target : targets){
-          if(target instanceof IDamageable && !(target instanceof PlayerController)){
-            ((IDamageable) target).takeDamage(meleeDamage);
+        LinkedList<Coordinate> fronts = getLinedTiles(4, facingDir);
+
+        for(Coordinate front : fronts) {
+          // damage all the things
+          ArrayList<GameObject> targets = curLevelState.getObjectsFromTile(front);
+          for (GameObject target : targets) {
+            if (target instanceof IDamageable && !(target instanceof PlayerController)) {
+              ((IDamageable) target).takeDamage(meleeDamage);
+            }
           }
         }
         break;

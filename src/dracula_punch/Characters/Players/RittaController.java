@@ -36,6 +36,12 @@ public class RittaController extends PlayerController{
     setScale(scaleFactor);
   }
 
+  @Override
+  public void takeDamage(int damage){
+    super.takeDamage(damage);
+    ResourceManager.getSound(DraculaPunchGame.RITTA_OW_SND).play();
+  }
+
   //region Character Controller
   @Override
   public String getRunSheet(int x, int y) {
@@ -74,6 +80,7 @@ public class RittaController extends PlayerController{
   //region IAttacker
   @Override
   public void attack(AttackType attackType) {
+    ResourceManager.getSound(DraculaPunchGame.RITTA_ATTACK_SND).play();
     // get the tile in front of me
     int x = (int) (currentTile.x + facingDir.getX());
     int y = (int) (currentTile.y - facingDir.getY());

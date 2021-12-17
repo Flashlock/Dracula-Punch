@@ -22,6 +22,12 @@ public class LoseState extends BasicGameState {
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
 
     }
+    @Override
+    public void enter(GameContainer container, StateBasedGame game) {
+        container.setSoundOn(true);
+        ResourceManager.getMusic(DraculaPunchGame.BGMUSIC_SND).stop();
+        ResourceManager.getSound(DraculaPunchGame.DRACULA_LAUGH_SND).play();
+    }
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {

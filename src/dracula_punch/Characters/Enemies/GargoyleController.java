@@ -68,6 +68,7 @@ public class GargoyleController extends EnemyController{
 
     @Override
     public void deactivate() {
+        ResourceManager.getSound(DraculaPunchGame.GARGOYLE_SND).stop();
         navPath = navGraph.findPath(currentTile, startingTile);
         navTarget = navPath.get(0);
         gargoyleState = GargoyleState.IDLE;

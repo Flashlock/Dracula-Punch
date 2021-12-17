@@ -38,6 +38,35 @@ public class DraculaPunchGame extends StateBasedGame {
   public static final int KB_ARROWS = -4;
   //endregion
 
+
+  //region Sounds
+  public static final String AMANDA_OW_SND =
+          "dracula_punch/Resources/Sounds/AmandaOw.wav";
+  public static final String AMANDA_ATTACK_SND =
+          "dracula_punch/Resources/Sounds/AmandaAttack.wav";
+
+  public static final String AUSTIN_ATTACK_SND =
+          "dracula_punch/Resources/Sounds/AustinAttack.wav";
+  public static final String AUSTIN_OW_SND =
+          "dracula_punch/Resources/Sounds/AustinOw.wav";
+
+  public static final String RITTA_ATTACK_SND =
+          "dracula_punch/Resources/Sounds/RittaAttack.wav";
+  public static final String RITTA_OW_SND =
+          "dracula_punch/Resources/Sounds/RittaOw.wav";
+
+  public static final String BAT_SND =
+          "dracula_punch/Resources/Sounds/Bat.wav";
+  public static final String GARGOYLE_SND =
+          "dracula_punch/Resources/Sounds/GargoyleGrowl.wav";
+  public static final String DRACULA_SPAWN_SND =
+          "dracula_punch/Resources/Sounds/DraculaSpawnLaugh.wav";
+  public static final String DRACULA_LAUGH_SND =
+          "dracula_punch/Resources/Sounds/DraculaLaugh.wav";
+  public static final String BGMUSIC_SND =
+          "dracula_punch/Resources/Sounds/BGMusic.wav";
+  //endregion
+
   //region Amanda
   public static final String AMANDA_RUN_0_DEG =
       "dracula_punch/Resources/Sprite_Sheets/Amanda/Amanda_Run/Amanda_Run_0.png";
@@ -327,11 +356,27 @@ public class DraculaPunchGame extends StateBasedGame {
 
   @Override
   public void initStatesList(GameContainer gameContainer) throws SlickException {
-    addState(new StartState());
+    //addState(new StartState());
     addState(new CharacterSelectState());
     addState(new TestLevelState());
     addState(new WinState());
     addState(new LoseState());
+
+    //region Sound
+    ResourceManager.loadMusic(BGMUSIC_SND);
+
+    ResourceManager.loadSound(GARGOYLE_SND);
+    ResourceManager.loadSound(BAT_SND);
+    ResourceManager.loadSound(DRACULA_LAUGH_SND);
+    ResourceManager.loadSound(DRACULA_SPAWN_SND);
+
+    ResourceManager.loadSound(AMANDA_OW_SND);
+    ResourceManager.loadSound(AMANDA_ATTACK_SND);
+    ResourceManager.loadSound(AUSTIN_OW_SND);
+    ResourceManager.loadSound(AUSTIN_ATTACK_SND);
+    ResourceManager.loadSound(RITTA_OW_SND);
+    ResourceManager.loadSound(RITTA_ATTACK_SND);
+    //endregion
 
     //region Amanda
     ResourceManager.loadImage(AMANDA_IDLE);

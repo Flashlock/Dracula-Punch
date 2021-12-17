@@ -58,6 +58,9 @@ public class TestLevelState extends LevelState {
     hasGKey = false;
     hasSKey = false;
 
+    container.setSoundOn(true);
+    ResourceManager.getMusic(DraculaPunchGame.BGMUSIC_SND).loop();
+
     map = new DPTiledMap(DraculaPunchGame.MAP);
     camera = new Camera(map, playerObjects);
     gameObjects.add(camera);

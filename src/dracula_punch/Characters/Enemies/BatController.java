@@ -69,11 +69,13 @@ public class BatController extends EnemyController{
 
     @Override
     public void activate() {
+        ResourceManager.getSound(DraculaPunchGame.BAT_SND).play();
         batState = BatState.ATTACK;
     }
 
     @Override
     public void deactivate() {
+        ResourceManager.getSound(DraculaPunchGame.BAT_SND).stop();
         navPath = navGraph.findPath(currentTile, startingTile);
         navTarget = navPath.get(0);
         batState = BatState.IDLE;

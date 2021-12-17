@@ -2,7 +2,9 @@ package dracula_punch.Characters.Enemies;
 
 import dracula_punch.Characters.GameObject;
 import dracula_punch.Characters.Players.PlayerController;
+import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -62,9 +64,16 @@ public class SwarmManager extends GameObject {
             deactivates += dist > sqrEngageRad && isActivated ? 1 : 0;
         }
         if(activate){
+
             // activate
             for(EnemyController controller : swarm){
                 controller.activate();
+                if(controller instanceof BatController){
+                    ResourceManager.getSound(DraculaPunchGame.BAT_SND).play();
+                }
+                if(controller instanceof GargoyleController){
+                    ResourceManager.getSound(DraculaPunchGame.GARGOYLE_SND).play();
+                }
             }
             isActivated = true;
         }
