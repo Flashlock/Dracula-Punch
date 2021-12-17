@@ -233,10 +233,12 @@ public class DraculaController extends EnemyController{
             draculaState = DraculaState.ATTACK;
 
             if(phaseCount == 2){
+                ResourceManager.getSound(DraculaPunchGame.DRACULA_LAUGH_SND).play();
                 maxHealth = phase2MaxHealth;
                 currentHealth = maxHealth;
             }
             else if(phaseCount == 1){
+                ResourceManager.getSound(DraculaPunchGame.DRACULA_LAUGH_SND).play();
                 maxHealth = phase1MaxHealth;
                 currentHealth = maxHealth;
             }

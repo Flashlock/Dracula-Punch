@@ -3,6 +3,7 @@ package dracula_punch.Characters.Enemies;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -52,6 +53,7 @@ public class BossSpawner extends SwarmManager {
             }
         }
         if(activate){
+
             isActivated = true;
             activate();
         }
@@ -66,7 +68,7 @@ public class BossSpawner extends SwarmManager {
                 this
         );
         curLevelState.newObjects.add(dracula);
-
+        ResourceManager.getSound(DraculaPunchGame.DRACULA_SPAWN_SND).play();
         curLevelState.map.setTileId(42, 87, curLevelState.map.getLayerIndex("NE Walls"), 19);
         curLevelState.map.isPassable[42][87] = false;
         curLevelState.map.setTileId(42, 88, curLevelState.map.getLayerIndex("NE Walls"), 19);
