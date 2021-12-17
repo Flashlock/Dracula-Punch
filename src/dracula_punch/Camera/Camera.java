@@ -25,6 +25,7 @@ public class Camera extends GameObject {
   private float zoomingTime = 99; // one less than total to trigger calculation once on startup
   private DPTiledMap map;
   private ArrayList<PlayerController> playerObjects;
+  private float displayWidth, displayHeight;
 
   public Camera(DPTiledMap map, ArrayList<PlayerController> playerObjects) {
     super(0,0);
@@ -32,8 +33,14 @@ public class Camera extends GameObject {
     this.playerObjects = playerObjects;
   }
 
-  public boolean isInScreenRange(Coordinate currentTile){
-    return true;
+  public boolean isInScreenRange(Vector position){
+    float pixelsFromEdgesOfScreenToDraw = 50;
+    float screenRangeBuffer = pixelsFromEdgesOfScreenToDraw / currentZoom;
+    return (position.getX() > -screenRangeBuffer
+        && position.getX() < displayWidth + screenRangeBuffer
+        && position.getY() > -screenRangeBuffer
+        && position.getY() < displayHeight + screenRangeBuffer
+    );
   }
 
   public Vector getScreenPositionFromTile(Coordinate tile) {
@@ -99,8 +106,6 @@ public class Camera extends GameObject {
       if (player.getY() > highestY) { highestY = player.getY(); }
       if (player.getY() < lowestY) { lowestY = player.getY(); }
     }
-    float displayWidth = DraculaPunchGame.SCREEN_WIDTH / currentZoom;
-    float displayHeight = DraculaPunchGame.SCREEN_HEIGHT / currentZoom;
     float pixelsFromEdgesOfScreenToInitiateZoomOut = 100;
     float pixelsFromEdgesOfScreenToInitiateZoomIn = 200;
     float zoomOutBuffer = pixelsFromEdgesOfScreenToInitiateZoomOut / currentZoom;
@@ -140,5 +145,7 @@ public class Camera extends GameObject {
     if (previousZoom > currentZoom) { partialZ = zoomIncrementSize * percentZoomDone; }
     else if (previousZoom < currentZoom) { partialZ = zoomIncrementSize * -percentZoomDone; }
     zoomFactor = currentZoom + partialZ;
+    displayWidth = DraculaPunchGame.SCREEN_WIDTH / currentZoom;
+    displayHeight = DraculaPunchGame.SCREEN_HEIGHT / currentZoom;
   }
 }
