@@ -8,11 +8,12 @@ import dracula_punch.States.LevelState;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
+import org.pushingpixels.lafwidget.animation.AnimationConfigurationManager;
 
 public abstract class PlayerController extends CharacterController implements IAttacker {
   private boolean isDead;
   public boolean getIsDead(){ return isDead; }
-  private final int respawnTime = 30000;
+  private final int respawnTime = 5000;
   private int respawnClock;
   private final DijkstraGraph respawnGraph;
 
@@ -29,14 +30,7 @@ public abstract class PlayerController extends CharacterController implements IA
     if(isDead){
       respawnClock += delta;
       if(respawnClock > respawnTime){
-        Coordinate respawn = respawnGraph.playerRespawn(curLevelState);
-        currentTile = respawn;
-        currentTilePlusPartial = respawn;
-        respawnClock = 0;
-        isDead = false;
-        curLevelState.deadPlayers.remove(this);
-        curLevelState.playerObjects.add(this);
-        randomIdle();
+        respawn();
       }
     }
     else {
@@ -57,6 +51,7 @@ public abstract class PlayerController extends CharacterController implements IA
       else{
         removeImage(idleImage);
       }
+      currentTile = new Coordinate(-1,-1);
       isDead = true;
     }
   }
@@ -82,5 +77,16 @@ public abstract class PlayerController extends CharacterController implements IA
       changeCurrentTile(dx, dy);
       //System.out.println("Player Moved " + currentTile.x + " " + currentTile.y);
     }
+  }
+
+  protected void respawn(){
+    Coordinate respawn = respawnGraph.playerRespawn(curLevelState);
+    currentTile = respawn;
+    currentTilePlusPartial = respawn;
+    respawnClock = 0;
+    isDead = false;
+    curLevelState.deadPlayers.remove(this);
+    curLevelState.playerObjects.add(this);
+    randomIdle();
   }
 }
