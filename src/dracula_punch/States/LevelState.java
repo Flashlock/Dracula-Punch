@@ -8,6 +8,7 @@ import dracula_punch.Characters.GameObject;
 import dracula_punch.Characters.Players.PlayerController;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.TiledMap.DPTiledMap;
+import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 public abstract class LevelState extends BasicGameState {
   public DPTiledMap map;
   public Camera camera;
+  public PlayerController playerOne, playerTwo, playerThree;
+
   protected final ArrayList<GameObject> gameObjects = new ArrayList<>();
   public final ArrayList<GameObject> deadObjects = new ArrayList<>();
   public final ArrayList<GameObject> newObjects = new ArrayList<>();
@@ -34,6 +37,12 @@ public abstract class LevelState extends BasicGameState {
   public ArrayList<Action> attack1Event = new ArrayList<>();
   public ArrayList<Action> attack2Event = new ArrayList<>();
   public ArrayList<Action> attack3Event = new ArrayList<>();
+
+  private StateBasedGame game;
+  @Override
+  public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+    this.game = game;
+  }
 
   @Override
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
@@ -81,5 +90,9 @@ public abstract class LevelState extends BasicGameState {
     }
     avgPos = avgPos.scale(1f / playerObjects.size());
     return avgPos;
+  }
+
+  public void iWantToGoToBed(){
+    game.enterState(DraculaPunchGame.WIN_STATE);
   }
 }

@@ -8,7 +8,9 @@ import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
 import jig.ResourceManager;
 import jig.Vector;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class RittaController extends PlayerController{
   private final int rangedActionFrame;
@@ -35,6 +37,17 @@ public class RittaController extends PlayerController{
 
     setScale(scaleFactor);
   }
+
+//  int count = 0;
+//  @Override
+//  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+//    super.update(gameContainer, stateBasedGame, delta);
+//    count += delta;
+//    if(count > 3000) {
+//      System.out.println(currentTile.x + ", " + currentTile.y);
+//      count = 0;
+//    }
+//  }
 
   //region Character Controller
   @Override

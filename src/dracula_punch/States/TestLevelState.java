@@ -6,28 +6,21 @@ import dracula_punch.Actions.Input.InputMoveAction;
 import dracula_punch.Camera.Camera;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.*;
-import dracula_punch.Characters.Enemies.BatController;
-import dracula_punch.Characters.Enemies.DraculaController;
-import dracula_punch.Characters.Enemies.GargoyleController;
-import dracula_punch.Characters.Enemies.SwarmManager;
+import dracula_punch.Characters.Enemies.*;
 import dracula_punch.Characters.Players.AmandaController;
 import dracula_punch.Characters.Players.AustinController;
 import dracula_punch.Characters.Players.PlayerController;
 import dracula_punch.Characters.Players.RittaController;
 import dracula_punch.TiledMap.DPTiledMap;
-import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 import dracula_punch.DraculaPunchGame;
-import org.newdawn.slick.state.transition.EmptyTransition;
-import org.pushingpixels.trident.interpolator.CorePropertyInterpolators;
 
 import java.util.ArrayList;
 
 public class TestLevelState extends LevelState {
-  private PlayerController playerOne, playerTwo, playerThree;
   private boolean isSpaceDown, isEDown, isUDown;
   private boolean[][] pressedButtons = {{false, false, false, false}, {false, false, false, false}, {false, false, false, false}};
   private int[] mostRecentlyPressedButton = {0, 0, 0};
@@ -59,6 +52,9 @@ public class TestLevelState extends LevelState {
     hasSKey = false;
 
     map = new DPTiledMap(DraculaPunchGame.MAP);
+    // Doors to boss. Idk how Tiled works. No time to learn.
+    map.isPassable[42][87] = true;
+    map.isPassable[42][88] = true;
     camera = new Camera(map, playerObjects);
     gameObjects.add(camera);
 
@@ -131,6 +127,11 @@ public class TestLevelState extends LevelState {
     gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
     coordinate = new Coordinate(21, 36);
     gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+
+    // Boss
+    swarmManager = new BossSpawner(17, 86, 20, this,
+            null, null);
+    gameObjects.add(swarmManager);
   }
 
 
@@ -234,27 +235,6 @@ public class TestLevelState extends LevelState {
     if(hasSKey){
       openSDoors();
       hasSKey = false;
-    }
-
-
-    // check win state
-    for(CharacterController player : playerObjects){
-      if(map.getTileId((int) player.currentTile.x, (int) player.currentTile.y, map.getLayerIndex("placement")) == WINSTATE_ID){
-        // since transitions are wonky here, we create a timer to account for the transition
-        timer -= delta;
-        if (timer <= 0) {
-          stateBasedGame.enterState(DraculaPunchGame.WIN_STATE, new EmptyTransition(), new EmptyTransition());
-          timer = 400;
-        }
-      }
-      // check lose state
-      else if(map.getTileId((int) player.currentTile.x, (int)player.currentTile.y, map.getLayerIndex("placement")) == LOSESTATE_ID){
-        timer -= delta;
-        if (timer <= 0) {
-          stateBasedGame.enterState(DraculaPunchGame.LOSE_STATE, new EmptyTransition(), new EmptyTransition());
-          timer = 400;
-        }
-      }
     }
 
     for(GameObject gameObject : gameObjects){

@@ -15,11 +15,11 @@ public class SwarmManager extends GameObject {
     public final ArrayList<EnemyController> deadSwarm;
     public final ArrayList<EnemyController> newSwarm;
     private final LinkedList<EnemyController> swarm;
-    private final float sqrEngageRad;
-    private final LevelState curLevelState;
-    private final Vector position;
+    protected float sqrEngageRad;
+    protected final LevelState curLevelState;
+    protected final Vector position;
 
-    private boolean isActivated;
+    protected boolean isActivated;
 
     /**
      * There's no image, so use x and y for coordinates
