@@ -5,10 +5,20 @@ import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.Projectiles.MagicBall;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
 import jig.Vector;
+import org.newdawn.slick.Image;
 
 public class AmandaController extends PlayerController {
   private final int rangedActionFrame = 13;
+
+  private final Image fullHealthImg = ResourceManager.getImage(DraculaPunchGame.AMANDA_HEALTH_1);
+  private final Image halfHealthImg = ResourceManager.getImage(DraculaPunchGame.AMANDA_HEALTH_2);
+
+  private Image[] Health = new Image[]{
+          halfHealthImg,
+          fullHealthImg
+  };
 
   public AmandaController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
@@ -16,9 +26,18 @@ public class AmandaController extends PlayerController {
     yRenderOffset = 30;
     scaleFactor = 1.1f;
 
+    maxHealth = 2;
+    currentHealth = maxHealth;
+    addImage(fullHealthImg);
+
     attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);
 
     setScale(scaleFactor);
+  }
+
+  @Override
+  public Image getHealthBar() {
+    return Health[currentHealth - 1];
   }
 
   @Override

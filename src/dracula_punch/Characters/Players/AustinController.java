@@ -7,12 +7,28 @@ import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
+import org.newdawn.slick.Image;
 
 import java.util.ArrayList;
 
 public class AustinController extends PlayerController {
   private int meleeDamage;
   private final int meleeActionFrame;
+
+  private final Image fullHealthImg = ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_1);
+  private final Image fourFifthHealthImg = ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_2);
+  private final Image threeFifthHealthImg = ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_3);
+  private final Image twoFifthHealthImg = ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_4);
+  private final Image oneFifthHealthImg = ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_5);
+
+  private Image[] Health = new Image[]{
+          oneFifthHealthImg,
+          twoFifthHealthImg,
+          threeFifthHealthImg,
+          fourFifthHealthImg,
+          fullHealthImg
+  };
 
   public AustinController(float x, float y, LevelState curLevelState) {
     super(x, y, curLevelState);
@@ -21,10 +37,19 @@ public class AustinController extends PlayerController {
     scaleFactor = 1.3f;
     meleeActionFrame = 10;
 
-    meleeDamage = 5;
+    meleeDamage = 3;
     attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
 
+    maxHealth = 5;
+    currentHealth = maxHealth;
+    addImage(fullHealthImg);
+
     setScale(scaleFactor);
+  }
+
+  @Override
+  public Image getHealthBar() {
+    return Health[currentHealth - 1];
   }
 
   //region Character Controller

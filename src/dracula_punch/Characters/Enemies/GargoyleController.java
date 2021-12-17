@@ -6,8 +6,10 @@ import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.Projectiles.Laser;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
@@ -17,6 +19,16 @@ public class GargoyleController extends EnemyController{
     private GargoyleState gargoyleState;
     public GargoyleState getGargoyleState(){ return gargoyleState; }
 
+
+    private final Image fullHealthImg = ResourceManager.getImage(DraculaPunchGame.GARGOYLE_HEALTH_1);
+    private final Image halfHealthImg = ResourceManager.getImage(DraculaPunchGame.GARGOYLE_HEALTH_2);
+
+    private Image[] Health = new Image[]{
+            halfHealthImg,
+            fullHealthImg
+    };
+
+
     // how far from current tile to choose next tile
     private final int targetRadius = 8;
 
@@ -25,6 +37,11 @@ public class GargoyleController extends EnemyController{
         attackAction = new AttackAction(this, 10, AttackType.RANGED);
         refreshTargetTime = 8000;
         gargoyleState = GargoyleState.IDLE;
+
+        maxHealth = 2;
+        currentHealth = maxHealth;
+        addImage(fullHealthImg);
+
     }
 
     @Override
@@ -47,6 +64,11 @@ public class GargoyleController extends EnemyController{
                 refreshTargetClock = 0;
             }
         }
+    }
+
+    @Override
+    public Image getHealthBar() {
+        return Health[currentHealth-1];
     }
 
     @Override

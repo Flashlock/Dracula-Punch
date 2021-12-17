@@ -117,8 +117,12 @@ public abstract class CharacterController extends GameObject implements IDamagea
   //region Damage System
   @Override
   public void takeDamage(int damage) {
-    currentHealth -= damage;
-    if(currentHealth <= 0){
+    if(currentHealth - damage > 0) {
+      removeImage(getHealthBar());
+      currentHealth -= damage;
+      addImage(getHealthBar());
+    }
+    else {
       curLevelState.deadObjects.add(this);
     }
   }
@@ -260,6 +264,8 @@ public abstract class CharacterController extends GameObject implements IDamagea
       return null;
     }
   }
+
+  public abstract Image getHealthBar();
 
   /**
    * @return The character's Run Sprite Sheet for the given direction

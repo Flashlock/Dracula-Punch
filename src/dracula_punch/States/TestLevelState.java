@@ -220,7 +220,6 @@ public class TestLevelState extends LevelState {
       hasSKey = false;
     }
 
-    System.out.println("x: " + playerOne.currentTile.x + "," + "y: " + playerOne.currentTile.y);
 
     // check win state
     for(CharacterController player : playerObjects){

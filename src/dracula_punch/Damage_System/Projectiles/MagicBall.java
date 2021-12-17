@@ -11,7 +11,7 @@ import jig.Vector;
 import java.util.ArrayList;
 
 public class MagicBall extends Projectile{
-  private final int damage = 5;
+  private final int damage = 2;
 
   public MagicBall(float x, float y, Coordinate curTile, LevelState curLevelState, Vector direction) {
     super(x, y, curTile, curLevelState, direction);

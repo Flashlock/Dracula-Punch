@@ -9,6 +9,7 @@ import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
@@ -94,6 +95,11 @@ public class DraculaController extends EnemyController{
             }
 
         }
+    }
+
+    @Override
+    public Image getHealthBar() {
+        return null;
     }
 
     /**
