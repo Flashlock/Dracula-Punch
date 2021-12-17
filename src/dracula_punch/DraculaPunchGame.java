@@ -237,7 +237,7 @@ public class DraculaPunchGame extends StateBasedGame {
 
   @Override
   public void initStatesList(GameContainer gameContainer) throws SlickException {
-    addState(new StartState());
+//    addState(new StartState());
     addState(new CharacterSelectState());
     addState(new TestLevelState());
     addState(new WinState());
