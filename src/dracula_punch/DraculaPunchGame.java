@@ -261,6 +261,60 @@ public class DraculaPunchGame extends StateBasedGame {
           "dracula_punch/UI/HealthBars/Amanda/Full.png";
   public static final String AMANDA_HEALTH_2 =
           "dracula_punch/UI/HealthBars/Amanda/1_2.png";
+
+  public static final String DRACULA_1_HEALTH_1 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase1/Full.png";
+  public static final String DRACULA_1_HEALTH_2 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase1/5_6.png";
+  public static final String DRACULA_1_HEALTH_3 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase1/4_6.png";
+  public static final String DRACULA_1_HEALTH_4 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase1/3_6.png";
+  public static final String DRACULA_1_HEALTH_5 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase1/2_6.png";
+  public static final String DRACULA_1_HEALTH_6 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase1/1_6.png";
+
+
+  public static final String DRACULA_2_HEALTH_1 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase2/Full.png";
+  public static final String DRACULA_2_HEALTH_2 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase2/7_8.png";
+  public static final String DRACULA_2_HEALTH_3 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase2/6_8.png";
+  public static final String DRACULA_2_HEALTH_4 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase2/5_8.png";
+  public static final String DRACULA_2_HEALTH_5 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase2/4_8.png";
+  public static final String DRACULA_2_HEALTH_6 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase2/3_8.png";
+  public static final String DRACULA_2_HEALTH_7 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase2/2_8.png";
+  public static final String DRACULA_2_HEALTH_8 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase2/1_8.png";
+
+
+  public static final String DRACULA_3_HEALTH_1 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase3/Full.png";
+  public static final String DRACULA_3_HEALTH_2 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase3/9_10.png";
+  public static final String DRACULA_3_HEALTH_3 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase3/8_10.png";
+  public static final String DRACULA_3_HEALTH_4 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase3/7_10.png";
+  public static final String DRACULA_3_HEALTH_5 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase3/6_10.png";
+  public static final String DRACULA_3_HEALTH_6 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase3/5_10.png";
+  public static final String DRACULA_3_HEALTH_7 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase3/4_10.png";
+  public static final String DRACULA_3_HEALTH_8 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase3/3_10.png";
+  public static final String DRACULA_3_HEALTH_9 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase3/2_10.png";
+  public static final String DRACULA_3_HEALTH_10 =
+          "dracula_punch/UI/HealthBars/Dracula/Phase3/1_10.png";
+
   //endregion
 
   public DraculaPunchGame(String name, int width, int height) {
@@ -273,7 +327,7 @@ public class DraculaPunchGame extends StateBasedGame {
 
   @Override
   public void initStatesList(GameContainer gameContainer) throws SlickException {
-//    addState(new StartState());
+    addState(new StartState());
     addState(new CharacterSelectState());
     addState(new TestLevelState());
     addState(new WinState());
@@ -397,6 +451,34 @@ public class DraculaPunchGame extends StateBasedGame {
 
     ResourceManager.loadImage(AMANDA_HEALTH_1);
     ResourceManager.loadImage(AMANDA_HEALTH_2);
+
+    ResourceManager.loadImage(DRACULA_1_HEALTH_1);
+    ResourceManager.loadImage(DRACULA_1_HEALTH_2);
+    ResourceManager.loadImage(DRACULA_1_HEALTH_3);
+    ResourceManager.loadImage(DRACULA_1_HEALTH_4);
+    ResourceManager.loadImage(DRACULA_1_HEALTH_5);
+    ResourceManager.loadImage(DRACULA_1_HEALTH_6);
+
+    ResourceManager.loadImage(DRACULA_2_HEALTH_1);
+    ResourceManager.loadImage(DRACULA_2_HEALTH_2);
+    ResourceManager.loadImage(DRACULA_2_HEALTH_3);
+    ResourceManager.loadImage(DRACULA_2_HEALTH_4);
+    ResourceManager.loadImage(DRACULA_2_HEALTH_5);
+    ResourceManager.loadImage(DRACULA_2_HEALTH_6);
+    ResourceManager.loadImage(DRACULA_2_HEALTH_7);
+    ResourceManager.loadImage(DRACULA_2_HEALTH_8);
+
+    ResourceManager.loadImage(DRACULA_3_HEALTH_1);
+    ResourceManager.loadImage(DRACULA_3_HEALTH_2);
+    ResourceManager.loadImage(DRACULA_3_HEALTH_3);
+    ResourceManager.loadImage(DRACULA_3_HEALTH_4);
+    ResourceManager.loadImage(DRACULA_3_HEALTH_5);
+    ResourceManager.loadImage(DRACULA_3_HEALTH_6);
+    ResourceManager.loadImage(DRACULA_3_HEALTH_7);
+    ResourceManager.loadImage(DRACULA_3_HEALTH_8);
+    ResourceManager.loadImage(DRACULA_3_HEALTH_9);
+    ResourceManager.loadImage(DRACULA_3_HEALTH_10);
+
     //endregion
   }
 

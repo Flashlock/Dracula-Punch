@@ -30,7 +30,7 @@ public abstract class CharacterController extends GameObject implements IDamagea
   protected LevelState curLevelState;
 
   protected AttackAction attackAction;
-  private boolean animLock;
+  protected boolean animLock;
   public boolean getAnimLock(){ return animLock; }
 
   protected int maxHealth;
