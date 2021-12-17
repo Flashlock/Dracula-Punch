@@ -15,7 +15,7 @@ import org.pushingpixels.lafwidget.animation.AnimationConfigurationManager;
 public abstract class PlayerController extends CharacterController implements IAttacker {
   private boolean isDead;
   public boolean getIsDead(){ return isDead; }
-  private final int respawnTime = 15000;
+  private final int respawnTime = 20000;
   private int respawnClock;
   private final DijkstraGraph respawnGraph;
 

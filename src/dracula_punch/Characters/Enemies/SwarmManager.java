@@ -58,6 +58,7 @@ public class SwarmManager extends GameObject {
         boolean activate = false;
         int deactivates = 0;
         for(PlayerController player : curLevelState.playerObjects){
+            if(player == null || player.currentTile == null) return;
             float dist = position.distanceSquared(new Vector(player.currentTile.x, player.currentTile.y));
             activate = dist < sqrEngageRad && !isActivated;
             if(activate) break;

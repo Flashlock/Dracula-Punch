@@ -39,7 +39,8 @@ public class LoseState extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         Input input = gameContainer.getInput();
         if (input.isKeyDown(Input.KEY_SPACE)) {
-            stateBasedGame.enterState(DraculaPunchGame.START_STATE, new FadeOutTransition(), new FadeInTransition());
+//            stateBasedGame.enterState(DraculaPunchGame.START_STATE, new FadeOutTransition(), new FadeInTransition());
+            gameContainer.exit();
         }
     }
 }
