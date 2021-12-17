@@ -70,8 +70,14 @@ public class AmandaController extends PlayerController {
     return null;
   }
 
+  @Override
+  public void takeDamage(int damage){
+    super.takeDamage(damage);
+    ResourceManager.getSound(DraculaPunchGame.AMANDA_OW_SND).play();
+  }
 
   public void attack(AttackType attackType) {
+    ResourceManager.getSound(DraculaPunchGame.AMANDA_ATTACK_SND).play();
     // spawn the ball and set it free
     Vector screen = curLevelState.camera.getScreenPositionFromTile(currentTile);
     curLevelState.newObjects.add(

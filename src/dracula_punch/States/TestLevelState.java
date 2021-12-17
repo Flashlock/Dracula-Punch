@@ -51,6 +51,9 @@ public class TestLevelState extends LevelState {
     hasGKey = false;
     hasSKey = false;
 
+    container.setSoundOn(true);
+    ResourceManager.getMusic(DraculaPunchGame.BGMUSIC_SND).loop();
+
     map = new DPTiledMap(DraculaPunchGame.MAP);
     // Doors to boss. Idk how Tiled works. No time to learn.
     map.isPassable[42][87] = true;

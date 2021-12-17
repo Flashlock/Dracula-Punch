@@ -20,6 +20,11 @@ public class WinState extends BasicGameState {
     }
 
     @Override
+    public void enter(GameContainer container, StateBasedGame game) {
+        container.setSoundOn(true);
+    }
+
+    @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
     }
 
