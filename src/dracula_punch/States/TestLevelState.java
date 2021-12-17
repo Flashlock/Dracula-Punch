@@ -61,76 +61,75 @@ public class TestLevelState extends LevelState {
     createCharacters();
 
     // Swarm 1
-//    SwarmManager swarmManager = new SwarmManager(62, 91, 20, this);
-//    gameObjects.add(swarmManager);
-//    Coordinate coordinate = new Coordinate(69, 94);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(71, 93);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//
-//    // Swarm 2
-//    swarmManager = new SwarmManager(68, 58, 15, this);
-//    gameObjects.add(swarmManager);
-//    coordinate = new Coordinate(66, 58);
-//    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(70, 58);
-//    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(68, 61);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//
-//    // Swarm 3
-//    swarmManager = new SwarmManager(89, 27, 40, this);
-//    gameObjects.add(swarmManager);
-//    coordinate = new Coordinate(83, 27);
-//    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(98, 27);
-//    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(90, 50);
-//    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(95, 43);
-//    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(86, 47);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(89, 16);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//
-//    // Swarm 4
-//    swarmManager = new SwarmManager(67, 36, 10, this);
-//    gameObjects.add(swarmManager);
-//    coordinate = new Coordinate(61, 39);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(72, 41);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(65, 33);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(73, 32);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(67, 35);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//
-//    // Swarm 5
-//    swarmManager = new SwarmManager(39, 14, 20, this);
-//    gameObjects.add(swarmManager);
-//    coordinate = new Coordinate(41, 11);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(43, 17);
-//    gameObjects.add(new BatController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(30, 14);
-//    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
-//
-//    // Swarm 6
-//    swarmManager = new SwarmManager(19, 42, 30, this);
-//    gameObjects.add(swarmManager);
-//    coordinate = new Coordinate(21, 49);
-//    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
-//    coordinate = new Coordinate(21, 36);
-//    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    SwarmManager swarmManager = new SwarmManager(62, 91, 20, this);
+    gameObjects.add(swarmManager);
+    Coordinate coordinate = new Coordinate(69, 94);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(71, 93);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+
+    // Swarm 2
+    swarmManager = new SwarmManager(68, 58, 15, this);
+    gameObjects.add(swarmManager);
+    coordinate = new Coordinate(66, 58);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(70, 58);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(68, 61);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+
+    // Swarm 3
+    swarmManager = new SwarmManager(89, 27, 40, this);
+    gameObjects.add(swarmManager);
+    coordinate = new Coordinate(83, 27);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(98, 27);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(90, 50);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(95, 43);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(86, 47);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(89, 16);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+
+    // Swarm 4
+    swarmManager = new SwarmManager(67, 36, 10, this);
+    gameObjects.add(swarmManager);
+    coordinate = new Coordinate(61, 39);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(72, 41);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(65, 33);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(73, 32);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(67, 35);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+
+    // Swarm 5
+    swarmManager = new SwarmManager(39, 14, 20, this);
+    gameObjects.add(swarmManager);
+    coordinate = new Coordinate(41, 11);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(43, 17);
+    gameObjects.add(new BatController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(30, 14);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+
+    // Swarm 6
+    swarmManager = new SwarmManager(19, 42, 30, this);
+    gameObjects.add(swarmManager);
+    coordinate = new Coordinate(21, 49);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
+    coordinate = new Coordinate(21, 36);
+    gameObjects.add(new GargoyleController(coordinate, this, swarmManager));
 
     // Boss
-//    SwarmManager swarmManager = new MinionSpawner();
-    SwarmManager swarmManager = new BossSpawner(17, 86, 20, this,
+    swarmManager = new BossSpawner(17, 86, 20, this,
             null, null);
     gameObjects.add(swarmManager);
   }
