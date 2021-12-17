@@ -10,7 +10,6 @@ import dracula_punch.States.LevelState;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
-import org.pushingpixels.trident.interpolator.CorePropertyInterpolators;
 
 import java.util.ArrayList;
 
