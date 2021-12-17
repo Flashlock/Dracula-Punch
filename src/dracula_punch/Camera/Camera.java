@@ -2,6 +2,7 @@ package dracula_punch.Camera;
 
 import dracula_punch.Characters.CharacterController;
 import dracula_punch.Characters.GameObject;
+import dracula_punch.Characters.Players.PlayerController;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.TiledMap.DPTiledMap;
 import jig.Vector;
@@ -23,9 +24,9 @@ public class Camera extends GameObject {
   private final float TOTAL_ZOOM_TIME = 100;
   private float zoomingTime = 99; // one less than total to trigger calculation once on startup
   private DPTiledMap map;
-  private ArrayList<CharacterController> playerObjects;
+  private ArrayList<PlayerController> playerObjects;
 
-  public Camera(DPTiledMap map, ArrayList<CharacterController> playerObjects) {
+  public Camera(DPTiledMap map, ArrayList<PlayerController> playerObjects) {
     super(0,0);
     this.map = map;
     this.playerObjects = playerObjects;
