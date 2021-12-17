@@ -3,8 +3,10 @@ package dracula_punch.Characters.Players;
 import dracula_punch.Camera.Coordinate;
 import dracula_punch.Characters.CharacterController;
 import dracula_punch.Damage_System.IAttacker;
+import dracula_punch.DraculaPunchGame;
 import dracula_punch.Pathfinding.DijkstraGraph;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
@@ -46,10 +48,11 @@ public abstract class PlayerController extends CharacterController implements IA
     if(currentHealth <= 0){
       curLevelState.playerObjects.remove(this);
       curLevelState.deadPlayers.add(this);
+      animLock = false;
       if(curAnim != null){
         removeAnimation(curAnim);
       }
-      else{
+      if(idleImage != null){
         removeImage(idleImage);
       }
       currentTile = new Coordinate(-1,-1);
@@ -93,6 +96,6 @@ public abstract class PlayerController extends CharacterController implements IA
     isDead = false;
     curLevelState.deadPlayers.remove(this);
     curLevelState.playerObjects.add(this);
-    randomIdle();
+//    randomIdle();
   }
 }

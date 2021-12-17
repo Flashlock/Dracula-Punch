@@ -35,6 +35,8 @@ public class BatController extends EnemyController{
         super(0, 0, startingTile, curLevelState, swarmManager);
         setScale(.8f);
 
+        TOTAL_MOVE_TIME = 200;
+
         maxHealth = 3;
         currentHealth = maxHealth;
         healthBars = new Image[]{

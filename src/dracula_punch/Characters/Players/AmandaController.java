@@ -18,6 +18,8 @@ public class AmandaController extends PlayerController {
     yRenderOffset = 30;
     scaleFactor = 1.1f;
 
+    TOTAL_MOVE_TIME = 250;
+
     maxHealth = 2;
     currentHealth = maxHealth;
     healthBars = new Image[]{

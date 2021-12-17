@@ -28,6 +28,8 @@ public class GargoyleController extends EnemyController{
         refreshTargetTime = 8000;
         gargoyleState = GargoyleState.IDLE;
 
+        TOTAL_MOVE_TIME = 300;
+
         maxHealth = 2;
         currentHealth = maxHealth;
         healthBars = new Image[]{

@@ -8,7 +8,9 @@ import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
 import jig.ResourceManager;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,8 @@ public class AustinController extends PlayerController {
     yRenderOffset = 35;
     scaleFactor = 1.3f;
     meleeActionFrame = 10;
+
+    TOTAL_MOVE_TIME = 275;
 
     meleeDamage = 3;
     attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
@@ -39,6 +43,17 @@ public class AustinController extends PlayerController {
 
     setScale(scaleFactor);
   }
+
+//  int count = 0;
+//  @Override
+//  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
+//    super.update(gameContainer, stateBasedGame, delta);
+//    count += delta;
+//    if(count > 3000) {
+//      System.out.println(currentTile.x + ", " + currentTile.y);
+//      count = 0;
+//    }
+//  }
 
   //region Character Controller
   @Override
