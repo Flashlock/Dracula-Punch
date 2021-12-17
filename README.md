@@ -7,6 +7,8 @@ Defend yourself as you follow the malicious path to punch sexy SS Dracula in the
 
 <br />
 
+<em> If the game doesn't play after character select, restart IntelliJ <em />
+
 ### Lowbar checklist:
 - [X] Start screen with character select
 - [X] Game-over screen
