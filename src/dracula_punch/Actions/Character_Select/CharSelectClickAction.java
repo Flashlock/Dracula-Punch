@@ -20,7 +20,7 @@ public class CharSelectClickAction extends Action {
   @Override
   public void Execute() {
     System.out.println("Button Clicked: " + button.getCharID());
-    DraculaPunchGame.characterChoice = button.getCharID();
+    //DraculaPunchGame.characterChoice = button.getCharID();
     dpg.enterState(TEST_STATE, new FadeOutTransition(), new EmptyTransition());
   }
 }
