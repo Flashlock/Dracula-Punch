@@ -20,6 +20,8 @@ import java.util.ArrayList;
 public abstract class LevelState extends BasicGameState {
   public DPTiledMap map;
   public Camera camera;
+  public PlayerController playerOne, playerTwo, playerThree;
+
   protected final ArrayList<GameObject> gameObjects = new ArrayList<>();
   public final ArrayList<GameObject> deadObjects = new ArrayList<>();
   public final ArrayList<GameObject> newObjects = new ArrayList<>();

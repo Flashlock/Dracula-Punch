@@ -44,17 +44,6 @@ public class AustinController extends PlayerController {
     setScale(scaleFactor);
   }
 
-//  int count = 0;
-//  @Override
-//  public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-//    super.update(gameContainer, stateBasedGame, delta);
-//    count += delta;
-//    if(count > 3000) {
-//      System.out.println(currentTile.x + ", " + currentTile.y);
-//      count = 0;
-//    }
-//  }
-
   //region Character Controller
   @Override
   public String getRunSheet(int x, int y) {
