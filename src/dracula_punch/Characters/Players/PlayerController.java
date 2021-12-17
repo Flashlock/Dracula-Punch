@@ -41,6 +41,7 @@ public abstract class PlayerController extends CharacterController implements IA
 
   @Override
   public void takeDamage(int damage) {
+    removeImage(healthBar);
     currentHealth -= damage;
     if(currentHealth <= 0){
       curLevelState.playerObjects.remove(this);
@@ -53,6 +54,9 @@ public abstract class PlayerController extends CharacterController implements IA
       }
       currentTile = new Coordinate(-1,-1);
       isDead = true;
+    }
+    else{
+      setHealthBar();
     }
   }
 
@@ -84,6 +88,8 @@ public abstract class PlayerController extends CharacterController implements IA
     currentTile = respawn;
     currentTilePlusPartial = respawn;
     respawnClock = 0;
+    currentHealth = maxHealth;
+    setHealthBar();
     isDead = false;
     curLevelState.deadPlayers.remove(this);
     curLevelState.playerObjects.add(this);

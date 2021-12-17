@@ -6,8 +6,10 @@ import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.Projectiles.Laser;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
@@ -25,6 +27,14 @@ public class GargoyleController extends EnemyController{
         attackAction = new AttackAction(this, 10, AttackType.RANGED);
         refreshTargetTime = 8000;
         gargoyleState = GargoyleState.IDLE;
+
+        maxHealth = 2;
+        currentHealth = maxHealth;
+        healthBars = new Image[]{
+                ResourceManager.getImage(DraculaPunchGame.GARGOYLE_HEALTH_2),
+                ResourceManager.getImage(DraculaPunchGame.GARGOYLE_HEALTH_1)
+        };
+        setHealthBar();
     }
 
     @Override

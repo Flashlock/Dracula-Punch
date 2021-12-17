@@ -7,8 +7,10 @@ import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
 import jig.Vector;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
@@ -19,11 +21,12 @@ import java.util.ArrayList;
  * The closer you are to the bat, the higher probability they'll attack.
  */
 public class BatController extends EnemyController{
+
     public enum BatState { IDLE, ATTACK, RETREAT }
     protected BatState batState;
     public BatState getBatState(){ return batState; }
 
-    private int meleeDamage = 5;
+    private int meleeDamage = 1;
     private final int meleeActionFrame = 7;
 
     private int followThroughDist = 8;
@@ -31,6 +34,16 @@ public class BatController extends EnemyController{
     public BatController(Coordinate startingTile, LevelState curLevelState, SwarmManager swarmManager) {
         super(0, 0, startingTile, curLevelState, swarmManager);
         setScale(.8f);
+
+        maxHealth = 3;
+        currentHealth = maxHealth;
+        healthBars = new Image[]{
+                ResourceManager.getImage(DraculaPunchGame.BAT_HEALTH_3),
+                ResourceManager.getImage(DraculaPunchGame.BAT_HEALTH_2),
+                ResourceManager.getImage(DraculaPunchGame.BAT_HEALTH_1)
+        };
+        setHealthBar();
+
         attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
         batState = BatState.IDLE;
     }

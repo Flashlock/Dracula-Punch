@@ -7,6 +7,8 @@ import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.IDamageable;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
+import org.newdawn.slick.Image;
 
 import java.util.ArrayList;
 
@@ -18,11 +20,22 @@ public class AustinController extends PlayerController {
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 35;
-    scaleFactor = 1f;
+    scaleFactor = 1.3f;
     meleeActionFrame = 10;
 
-    meleeDamage = 5;
+    meleeDamage = 3;
     attackAction = new AttackAction(this, meleeActionFrame, AttackType.MELEE);
+
+    maxHealth = 5;
+    currentHealth = maxHealth;
+    healthBars = new Image[]{
+            ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_5),
+            ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_4),
+            ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_3),
+            ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_2),
+            ResourceManager.getImage(DraculaPunchGame.AUSTIN_HEALTH_1)
+    };
+    setHealthBar();
 
     setScale(scaleFactor);
   }

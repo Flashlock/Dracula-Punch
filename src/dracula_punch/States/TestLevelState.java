@@ -38,12 +38,13 @@ public class TestLevelState extends LevelState {
   private Boolean hasGKey;
   private Boolean hasSKey;
   // Object IDs
-  private int GOLDKEY_ID = 33;
-  private int SILVKEY_ID = 34;
-  private int BLANK_ID = 63;
+  private final int GOLDKEY_ID = 33;
+  private final int SILVKEY_ID = 34;
+  private final int BLANK_ID = 63;
 
-  private int WINSTATE_ID = 9;
-  private int LOSESTATE_ID = 8;
+  // temporary tile trigger win/lose states
+  private final int WINSTATE_ID = 9;
+  private final int LOSESTATE_ID = 8;
 
   @Override
   public int getID() {
@@ -65,10 +66,55 @@ public class TestLevelState extends LevelState {
     SwarmManager swarm = new SwarmManager(40, 15, 5, this);
     GameObject testEnemy = new DraculaController(enemyStart, this, swarm);
 
-    gameObjects.add(swarm);
-    gameObjects.add(testEnemy);
+    // level one bats
+    Coordinate enemy1Start = new Coordinate(67, 62);
+    Coordinate enemy2Start = new Coordinate(70, 62);
+    SwarmManager levelOneSwarm = new SwarmManager(69, 70, 12, this);
+    GameObject en1 = new BatController(enemy1Start, this, levelOneSwarm);
+    GameObject en2 = new BatController(enemy2Start, this, levelOneSwarm);
+    gameObjects.add(levelOneSwarm);
+    gameObjects.add(en1);
+    gameObjects.add(en2);
 
-    ResourceManager.getImage(DraculaPunchGame.WIN_SCREEN);
+    // level two gargoyles
+    Coordinate enemy3Start = new Coordinate(87, 36);
+    Coordinate enemy4Start = new Coordinate(97, 36);
+    SwarmManager levelTwoSwarm = new SwarmManager(93, 40, 12, this);
+    GameObject en3 = new GargoyleController(enemy3Start, this, levelTwoSwarm);
+    GameObject en4 = new GargoyleController(enemy4Start, this, levelTwoSwarm);
+    gameObjects.add(levelTwoSwarm);
+    gameObjects.add(en3);
+    gameObjects.add(en4);
+
+    // level three bats in room
+    Coordinate enemy5Start = new Coordinate(64, 33);
+    Coordinate enemy6Start = new Coordinate(70, 36);
+    SwarmManager levelThreeSwarm = new SwarmManager(66, 24, 12, this);
+    GameObject en5 = new BatController(enemy5Start, this, levelThreeSwarm);
+    GameObject en6 = new BatController(enemy6Start, this, levelThreeSwarm);
+    gameObjects.add(levelThreeSwarm);
+    gameObjects.add(en5);
+    gameObjects.add(en6);
+
+    // level four bats
+    Coordinate enemy7Start = new Coordinate(37, 12);
+    Coordinate enemy8Start = new Coordinate(38, 17);
+    SwarmManager levelFourSwarm = new SwarmManager(44, 14, 10, this);
+    GameObject en7 = new BatController(enemy7Start, this, levelFourSwarm);
+    GameObject en8 = new BatController(enemy8Start, this, levelFourSwarm);
+    gameObjects.add(levelFourSwarm);
+    gameObjects.add(en7);
+    gameObjects.add(en8);
+
+    // level five gargoyles
+    Coordinate enemy9Start = new Coordinate(22, 47);
+    Coordinate enemy10Start = new Coordinate(26, 40);
+    SwarmManager levelFiveSwarm = new SwarmManager(19, 42, 10, this);
+    GameObject en9 = new GargoyleController(enemy9Start, this, levelFiveSwarm);
+    GameObject en10 = new GargoyleController(enemy10Start, this, levelFiveSwarm);
+    gameObjects.add(levelFiveSwarm);
+    gameObjects.add(en9);
+    gameObjects.add(en10);
   }
 
 
@@ -146,7 +192,6 @@ public class TestLevelState extends LevelState {
 
   @Override
   public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-    graphics.drawString("Test State", 10, 25);
     graphics.scale(camera.zoomFactor, camera.zoomFactor);
     map.renderLayersBehindObjects(camera.getCamPosition());
     // this is where we render our characters
@@ -160,6 +205,21 @@ public class TestLevelState extends LevelState {
   public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
     super.update(gameContainer, stateBasedGame, delta);
     controls(gameContainer.getInput());
+
+    for(GameObject gameObject : gameObjects){
+      gameObject.update(gameContainer, stateBasedGame, delta);
+    }
+    checkHasKey();
+    if(hasGKey){
+      openDoors();
+      hasGKey = false;
+    }
+
+    if(hasSKey){
+      openSDoors();
+      hasSKey = false;
+    }
+
 
     // check win state
     for(CharacterController player : playerObjects){
@@ -210,6 +270,15 @@ public class TestLevelState extends LevelState {
       map.isPassable[55][i] = true;
     }
   }
+
+  private void openSDoors(){
+    // x: 88, y:95 - 100
+    for(int i = 95; i <=100; i++){
+      map.setTileId(88, i, map.getLayerIndex("NE Walls"), 63);
+      map.isPassable[88][i] = true;
+    }
+  }
+
 
   /**
    * Handles game input

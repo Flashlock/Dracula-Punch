@@ -6,7 +6,9 @@ import dracula_punch.Damage_System.AttackType;
 import dracula_punch.Damage_System.Projectiles.Arrow;
 import dracula_punch.DraculaPunchGame;
 import dracula_punch.States.LevelState;
+import jig.ResourceManager;
 import jig.Vector;
+import org.newdawn.slick.Image;
 
 public class RittaController extends PlayerController{
   private final int rangedActionFrame;
@@ -15,8 +17,17 @@ public class RittaController extends PlayerController{
     super(x, y, curLevelState);
     xRenderOffset = 0;
     yRenderOffset = 30;
-    scaleFactor = .8f;
+    scaleFactor = .95f;
     rangedActionFrame = 0;
+
+    maxHealth = 3;
+    currentHealth = maxHealth;
+    healthBars = new Image[]{
+            ResourceManager.getImage(DraculaPunchGame.RITTA_HEALTH_3),
+            ResourceManager.getImage(DraculaPunchGame.RITTA_HEALTH_2),
+            ResourceManager.getImage(DraculaPunchGame.RITTA_HEALTH_1)
+    };
+    setHealthBar();
 
     attackAction = new AttackAction(this, rangedActionFrame, AttackType.RANGED);
 
